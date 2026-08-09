@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://s3.tradingview.com" />
+  <link rel="dns-prefetch" href="https://scanner.tradingview.com" />
+  <link rel="dns-prefetch" href="https://web-api.forinvestcdn.com" />
+
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0"/>
+  <meta http-equiv="Pragma" content="no-cache"/>
+  <meta http-equiv="Expires" content="0"/>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>BorsaKaynak — Profesyonel Yönetim Paneli</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #060B13;
+      --bg-card: #0D1522;
+      --bg-input: #121D2F;
+      --bg-input-focus: #18273E;
+      --border: rgba(255, 255, 255, 0.05);
+      --text: #F3F7FA;
+      --text-dim: #9FAEC2;
+      --text-muted: #6B7C93;
+      --accent: #C8A96B;
+      --accent-hover: #D6B57A;
+      --green: #00B56E;
+      --red: #E04F5F;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background: radial-gradient(1000px 500px at 50% -10%, rgba(200,169,107,.05), transparent 50%);
+    }
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      position: relative;
+      z-index: 1;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      overflow: hidden;
+    }
+    
+    /* Login Screen */
+    .login-container {
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 45px 35px;
+      text-align: center;
+    }
+    .logo-area {
+      margin-bottom: 25px;
+    }
+    .logo-area img {
+      height: 45px;
+      width: auto;
+      border-radius: 8px;
+    }
+    .title {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
+    }
+    .subtitle {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-bottom: 25px;
+    }
+    
+    /* Main Layout with Sidebar Accordions & Tabs */
+    .admin-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 650px;
+    }
+    .sidebar {
+      background: rgba(0, 0, 0, 0.2);
+      border-right: 1px solid var(--border);
+      padding: 25px 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-y: auto;
+    }
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 10px 25px 10px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 15px;
+    }
+    .sidebar-brand img {
+      height: 32px;
+      border-radius: 4px;
+    }
+    .sidebar-brand span {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.01em;
+    }
+    
+    /* Accordion Category Menu */
+    .menu-cat {
+      margin-bottom: 10px;
+    }
+    .menu-cat-header {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      padding: 8px 12px;
+      margin-top: 15px;
+      margin-bottom: 5px;
+    }
+    .tab-btn {
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 12.5px;
+      font-weight: 500;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      margin-bottom: 4px;
+    }
+    .tab-btn:hover {
+      background: rgba(255,255,255,0.02);
+      color: var(--text);
+    }
+    .tab-btn.active {
+      background: var(--bg-input);
+      color: var(--accent);
+      box-shadow: inset 3px 0 0 var(--accent);
+      font-weight: 600;
+    }
+    
+    /* Main Form Panel */
+    .form-panel {
+      padding: 35px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-y: auto;
+    }
+    .panel-header {
+      margin-bottom: 25px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 15px;
+    }
+    .panel-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .panel-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.2s ease-in-out;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Form controls */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group.full-width {
+      grid-column: span 2;
+    }
+    .form-group label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+    }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 13.5px;
+      transition: all 0.2s;
+      outline: none;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+      border-color: var(--accent);
+      background: var(--bg-input-focus);
+    }
+    .form-group select {
+      cursor: pointer;
+    }
+    .form-group textarea {
+      resize: vertical;
+    }
+    
+    /* Buttons and Alerts */
+    .btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--accent);
+      border: none;
+      border-radius: 8px;
+      color: #060B13;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn:hover {
+      background: var(--accent-hover);
+    }
+    .btn-save {
+      margin-top: 20px;
+    }
+    .btn-logout {
+      background: rgba(224, 79, 95, 0.1);
+      color: var(--red);
+      border: 1px solid rgba(224, 79, 95, 0.2);
+      font-size: 12px;
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+      width: 100%;
+    }
+    .btn-logout:hover {
+      background: rgba(224, 79, 95, 0.2);
+    }
+    .alert {
+      padding: 14px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-bottom: 25px;
+      display: none;
+    }
+    .alert.danger {
+      background: rgba(224, 79, 95, 0.1);
+      border: 1px solid rgba(224, 79, 95, 0.2);
+      color: var(--red);
+      display: block;
+    }
+    .alert.success {
+      background: rgba(0, 181, 110, 0.1);
+      border: 1px solid rgba(0, 181, 110, 0.2);
+      color: var(--green);
+      display: block;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .admin-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 15px;
+      }
+      .form-panel {
+        padding: 20px;
+      }
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      .form-group.full-width {
+        grid-column: span 1;
+      }
+    }
+  </style>
+
+  <!-- Schema.org Structured Data for AI Agents & Search Engines -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FinancialService",
+    "name": "BorsaKaynak",
+    "url": "https://borsakaynak.com/",
+    "logo": "https://borsakaynak.com/logo.jpg",
+    "description": "Borsa İstanbul (BIST) 586 şirket hissesi, 674 enstrüman, canlı borsa fiyatları, para giriş/çıkış analizleri ve TradingView entegrasyonu.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://borsakaynak.com/piyasalar.html?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta property="og:image" content="https://borsakaynak.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://borsakaynak.com/og-image.png">
+<link rel="stylesheet" href="header-footer-shared.css">
+<style>body{display:block!important}</style>
+</head>
+<body><div class="bk-shared-chrome">
+<div class="ticker">
+<div class="ticker-track" id="ticker-track">
+<div class="tick" data-tsym="XU100"><span class="tick-dot"></span><span class="tick-name">BIST 100</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="USDTRY"><span class="tick-name">USD/TRY</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="EURTRY"><span class="tick-name">EUR/TRY</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="GBPTRY"><span class="tick-name">GBP/TRY</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="XAUGRAM"><span class="tick-name">ALTIN/GR</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="XAUUSD"><span class="tick-name">XAU/USD</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="BRENT"><span class="tick-name">BRENT</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="BTCUSDT"><span class="tick-name">BTC/USDT</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="ETHUSDT"><span class="tick-name">ETH/USDT</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="DAX"><span class="tick-name">DAX</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="SPX"><span class="tick-name">S&amp;P 500</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="IXIC"><span class="tick-name">NASDAQ</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+</div>
+</div>
+<!-- HEADER -->
+<header class="header">
+<div class="container">
+<nav class="nav">
+<a aria-label="Sayfa Bağlantısı" href="index.html" style="text-decoration:none;color:inherit;display:flex;align-items:center">
+<img src="logo-kaynak.png" alt="BorsaKaynak" style="height:32px;width:auto;flex-shrink:0">
+</a>
+<div class="nav-menu">
+<a aria-label="Sayfa Bağlantısı" href="index.html">Anasayfa</a>
+<a aria-label="Sayfa Bağlantısı" href="piyasalar.html">Piyasalar</a>
+<a aria-label="Sayfa Bağlantısı" href="piyasa-hareketleri.html">Piyasa Hareketleri</a>
+<a aria-label="Sayfa Bağlantısı" href="endeksler.html">Endeksler</a>
+<a aria-label="Sayfa Bağlantısı" href="sektorler.html">Sektörler</a>
+<a aria-label="Sayfa Bağlantısı" href="haberler.html">Haberler</a>
+<a aria-label="Sayfa Bağlantısı" href="analizler.html">Analizler</a>
+<a aria-label="Sayfa Bağlantısı" href="araci-kurum.html">Aracı Kurum</a>
+<a aria-label="Sayfa Bağlantısı" href="halka-arz.html">Halka Arz</a>
+<a aria-label="Sayfa Bağlantısı" href="viop.html">VİOP</a>
+<a aria-label="Sayfa Bağlantısı" href="kripto.html">Kripto</a>
+</div>
+<div class="nav-actions"><button class="ham-btn" aria-label="Menü" aria-expanded="false"><span></span><span></span><span></span></button>
+<button aria-label="BİST Veri Butonu" class="nav-btn"><svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg></button>
+<button aria-label="BİST Veri Butonu" class="nav-btn"><svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg></button>
+</div>
+</nav>
+</div>
+</header>
+<div class="mob-nav" id="mobNav">
+<button class="mob-nav-close" aria-label="Kapat">✕</button>
+
+<!-- Mini canlı ticker -->
+<div class="mob-ticker-grid">
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">BIST 100</span>
+    <span class="mob-tick-val" id="ham-bist">—</span>
+    <span class="mob-tick-chg" id="ham-bist-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">USD/TRY</span>
+    <span class="mob-tick-val" id="ham-usd">—</span>
+    <span class="mob-tick-chg" id="ham-usd-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">EUR/TRY</span>
+    <span class="mob-tick-val" id="ham-eur">—</span>
+    <span class="mob-tick-chg" id="ham-eur-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">ALTIN/GR</span>
+    <span class="mob-tick-val" id="ham-altin">—</span>
+    <span class="mob-tick-chg" id="ham-altin-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">BTC/USD</span>
+    <span class="mob-tick-val" id="ham-btc">—</span>
+    <span class="mob-tick-chg" id="ham-btc-chg">—</span>
+  </div>
+</div>
+<div class="mob-nav-divider"></div>
+
+<div class="mob-nav-section-title">ANA SAYFALAR</div>
+  <a aria-label="Sayfa Bağlantısı" href="index.html">🏠 Anasayfa</a>
+  <a aria-label="Sayfa Bağlantısı" href="piyasalar.html">📈 Piyasalar</a>
+  <a aria-label="Sayfa Bağlantısı" href="sektorler.html">🏭 Sektörler</a>
+  <a aria-label="Sayfa Bağlantısı" href="haberler.html">📰 Haberler</a>
+  <a aria-label="Sayfa Bağlantısı" href="analizler.html">📊 Analizler</a>
+  <a aria-label="Sayfa Bağlantısı" href="model-portfoy.html">💼 Model Portföy</a>
+<div class="mob-nav-divider"></div>
+<div class="mob-nav-section-title">ENDEKSİ</div>
+  <a aria-label="Sayfa Bağlantısı" href="endeksler.html">📊 Tüm Endeksler</a>
+  <a aria-label="Sayfa Bağlantısı" href="endeks-XU100.html">📈 BIST 100</a>
+  <a aria-label="Sayfa Bağlantısı" href="endeks-XU030.html">📉 BIST 30</a>
+<div class="mob-nav-divider"></div>
+<div class="mob-nav-section-title">YATIRIM</div>
+  <a aria-label="Sayfa Bağlantısı" href="araci-kurum.html">🏦 Aracı Kurum</a>
+  <a aria-label="Sayfa Bağlantısı" href="halka-arz.html">📋 Halka Arz</a>
+  <a aria-label="Sayfa Bağlantısı" href="viop.html">📉 VİOP</a>
+  <a aria-label="Sayfa Bağlantısı" href="kripto.html">₿ Kripto</a>
+<div class="mob-nav-divider"></div>
+  <a aria-label="Sayfa Bağlantısı" href="hakkimizda.html">ℹ️ Hakkımızda</a>
+</div>
+<div class="premium-command"><div class="premium-command__inner"><label class="premium-search">⌕ <input data-premium-search="" placeholder="Site içinde hisse, haber, analiz veya halka arz ara..."/></label><div class="premium-actions"><button aria-label="BİST Veri Butonu" class="premium-btn" data-theme-toggle="">🌗 Tema</button><button aria-label="BİST Veri Butonu" class="premium-btn" data-export=".premium-table">⬇ Excel/CSV</button><button aria-label="BİST Veri Butonu" class="premium-btn" data-open-modal="#notifyModal">🔔 Bildirim</button><a aria-label="Sayfa Bağlantısı" class="premium-btn gold" href="model-portfoy.html">PRO Model Portföy</a></div></div></div>
+<script>
+  // Tema (aydınlık/koyu) değiştirici
+  (function () {
+    const STORAGE_KEY = 'bk-theme-light';
+    function applyTheme(isLight) {
+      document.body.classList.toggle('premium-light', isLight);
+    }
+    const saved = localStorage.getItem(STORAGE_KEY) === '1';
+    applyTheme(saved);
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.querySelector('[data-theme-toggle]');
+      if (!btn) return;
+      btn.addEventListener('click', () => {
+        const nowLight = !document.body.classList.contains('premium-light');
+        applyTheme(nowLight);
+        localStorage.setItem(STORAGE_KEY, nowLight ? '1' : '0');
+      });
+    });
+  })();
+</script>
+
+<script>
+// Site geneli arama kutusu: Enter'a basilinca piyasalar.html'e yonlendirir.
+(function(){
+  document.querySelectorAll('[data-premium-search]').forEach(function(inp){
+    inp.addEventListener('keydown', function(e){
+      if (e.key === 'Enter') {
+        var q = inp.value.trim();
+        if (q) window.location.href = 'piyasalar.html?q=' + encodeURIComponent(q);
+      }
+    });
+  });
+})();
+</script>
+</div>
+
+
+  <div class="container">
+    
+    <!-- LOGIN SCREEN -->
+    <div class="card login-container" id="loginCard">
+      <div class="logo-area">
+        <img src="logo.jpg" alt="BorsaKaynak"/>
+      </div>
+      <div class="title">BorsaKaynak CMS</div>
+      <div class="subtitle">Yönetim paneline erişmek için giriş yapın</div>
+      
+      <div class="alert danger" id="loginError" style="display: none;"></div>
+      
+      <div class="form-group" style="text-align: left;">
+        <label for="loginUser">Kullanıcı Adı</label>
+        <input type="text" id="loginUser" placeholder="admin..."/>
+      </div>
+      
+      <div class="form-group" style="text-align: left;">
+        <label for="loginPass">Giriş Şifresi</label>
+        <input type="password" id="loginPass" placeholder="Şifreniz..."/>
+      </div>
+      
+      <button class="btn" onclick="login()">Yönetim Paneline Giriş Yap</button>
+    </div>
+
+    <!-- MAIN ADMIN INTERFACE -->
+    <div class="card admin-layout" id="adminCard" style="display: none;">
+      
+      <!-- Left Sidebar accordion menu -->
+      <div class="sidebar">
+        <div>
+          <div class="sidebar-brand">
+            <img src="logo.jpg" alt="Logo"/>
+            <span>BorsaKaynak CMS v4.0</span>
+          </div>
+          
+          <!-- Category 1: Sistem & Sunucu -->
+          <div class="menu-cat">
+            <div class="menu-cat-header">1. Sistem & Sunucu</div>
+            <button class="tab-btn active" onclick="switchTab('t-1-1', this)">1.1. Genel Site Ayarları</button>
+            <button class="tab-btn" onclick="switchTab('t-1-2', this)">1.2. Logo & Branding</button>
+            <button class="tab-btn" onclick="switchTab('t-1-3', this)">1.3. Sistem Teması</button>
+            <button class="tab-btn" onclick="switchTab('t-1-4', this)">1.4. Canlı Veri Hızı</button>
+          </div>
+
+          <!-- Category 2: Ana Sayfa -->
+          <div class="menu-cat">
+            <div class="menu-cat-header">2. Ana Sayfa Ayarları</div>
+            <button class="tab-btn" onclick="switchTab('t-2-1', this)">2.1. Slider Slide-1 Başlığı</button>
+            <button class="tab-btn" onclick="switchTab('t-2-2', this)">2.2. Slider Slide-1 Metni</button>
+            <button class="tab-btn" onclick="switchTab('t-2-3', this)">2.3. Slider Slide-1 Linki</button>
+            <button class="tab-btn" onclick="switchTab('t-2-4', this)">2.4. Reklam Banner-1</button>
+          </div>
+
+          <!-- Category 3: Piyasalar & Radar -->
+          <div class="menu-cat">
+            <div class="menu-cat-header">3. Piyasalar & Radar</div>
+            <button class="tab-btn" onclick="switchTab('t-3-1', this)">3.1. Tablo Satır Sayısı</button>
+            <button class="tab-btn" onclick="switchTab('t-3-2', this)">3.2. Para Giriş Limitleri</button>
+            <button class="tab-btn" onclick="switchTab('t-3-3', this)">3.3. Aracı Kurum Limiti</button>
+            <button class="tab-btn" onclick="switchTab('t-3-4', this)">3.4. Yabancı Giriş Limiti</button>
+          </div>
+
+          <!-- Category 4: Haber & Analiz -->
+          <div class="menu-cat">
+            <div class="menu-cat-header">4. Haberler & Analizler</div>
+            <button class="tab-btn" onclick="switchTab('t-4-1', this)">4.1. Son Dakika Başlığı</button>
+            <button class="tab-btn" onclick="switchTab('t-4-2', this)">4.2. Günlük Analiz Bülteni</button>
+            <button class="tab-btn" onclick="switchTab('t-4-3', this)">4.3. Teknik Analiz Yorumu</button>
+          </div>
+
+          <!-- Category 5: Sektör & Treemap -->
+          <div class="menu-cat">
+            <div class="menu-cat-header">5. Sektör & Treemap</div>
+            <button class="tab-btn" onclick="switchTab('t-5-1', this)">5.1. Harita Varsayılan Periyodu</button>
+            <button class="tab-btn" onclick="switchTab('t-5-2', this)">5.2. Treemap Renk Skalası</button>
+            <button class="tab-btn" onclick="switchTab('t-5-3', this)">5.3. Sektör Gösterim Sayısı</button>
+          </div>
+
+          <!-- Category 6: Finansal Veri Değerleri -->
+          <div class="menu-cat">
+            <div class="menu-cat-header">6. Finansal Değerler (Manuel)</div>
+            <button class="tab-btn" onclick="switchTab('t-6-1', this)">6.1. BIST 100 Manuel Değeri</button>
+            <button class="tab-btn" onclick="switchTab('t-6-2', this)">6.2. BIST 30 Manuel Değeri</button>
+            <button class="tab-btn" onclick="switchTab('t-6-3', this)">6.3. BIST Bankacılık Değeri</button>
+            <button class="tab-btn" onclick="switchTab('t-6-4', this)">6.4. BIST Sanayi Değeri</button>
+            <button class="tab-btn" onclick="switchTab('t-6-5', this)">6.5. Dolar Kuru (USD/TRY)</button>
+            <button class="tab-btn" onclick="switchTab('t-6-6', this)">6.6. Euro Kuru (EUR/TRY)</button>
+            <button class="tab-btn" onclick="switchTab('t-6-7', this)">6.7. Gram Altın Fiyatı (GOLDGR)</button>
+            <button class="tab-btn" onclick="switchTab('t-6-8', this)">6.8. Brent Petrol Fiyatı</button>
+            <button class="tab-btn" onclick="switchTab('t-6-9', this)">6.9. Bitcoin Fiyatı (BTC/USD)</button>
+          </div>
+
+          <!-- Category 7: İletişim & Hakkımızda -->
+          <div class="menu-cat">
+            <div class="menu-cat-header">7. Kurumsal & İletişim</div>
+            <button class="tab-btn" onclick="switchTab('t-7-1', this)">7.1. Hakkımızda Misyon/Vizyon</button>
+            <button class="tab-btn" onclick="switchTab('t-7-2', this)">7.2. İletişim E-posta & Telefon</button>
+            <button class="tab-btn" onclick="switchTab('t-7-3', this)">7.3. WhatsApp Canlı Destek</button>
+            <button class="tab-btn" onclick="switchTab('t-7-4', this)">7.4. Ofis Resmi Adresi</button>
+          </div>
+
+          <!-- Category 8: API Doğrulama & Paketler -->
+          <div class="menu-cat">
+            <div class="menu-cat-header">8. API & Güncellik</div>
+            <button class="tab-btn" onclick="switchTab('t-8-1', this)">8.1. API Lisans Ayarları</button>
+            <button class="tab-btn" onclick="switchTab('t-8-2', this)">8.2. Veri Doğrulama Modu</button>
+          </div>
+
+          <!-- Category 9: Güvenlik & Yetki -->
+          <div class="menu-cat">
+            <div class="menu-cat-header">9. Güvenlik & Giriş</div>
+            <button class="tab-btn" onclick="switchTab('t-9-1', this)">9.1. Yönetici Giriş Bilgileri</button>
+          </div>
+
+          <!-- Category 10: Blog & SEO Yönetimi -->
+          <div class="menu-cat">
+            <div class="menu-cat-header">10. Blog & SEO Yönetimi</div>
+            <button class="tab-btn" onclick="switchTab('t-10-1', this)">10.1. Blog Yazısı Ekle / Düzenle</button>
+            <button class="tab-btn" onclick="switchTab('t-10-2', this)">10.2. SEO Ayarları & Meta</button>
+            <button class="tab-btn" onclick="switchTab('t-10-3', this)">10.3. Blog Listesi & Yönetim</button>
+          </div>
+        </div>
+        
+        <button class="btn-logout" onclick="logout()">Güvenli Çıkış</button>
+      </div>
+      
+      <!-- Right Form Panel -->
+      <div class="form-panel">
+        
+        <!-- Messages -->
+        <div class="alert success" id="successMsg" style="display: none;"></div>
+        <div class="alert danger" id="errorMsg" style="display: none;"></div>
+
+        <!-- 1.1. Genel Site Ayarları -->
+        <div class="tab-content active" id="t-1-1">
+          <div class="panel-header">
+            <div class="panel-title">1.1. Genel Site Ayarları</div>
+            <div class="panel-desc">Sitenin genel tarayıcı başlığı, sloganı ve telif hakkı metinleri</div>
+          </div>
+          <div class="form-group">
+            <label for="siteTitle">Site Başlığı (Tarayıcı Sekmesi)</label>
+            <input type="text" id="siteTitle" placeholder="BorsaKaynak — Analiz · Veri · Güven"/>
+          </div>
+          <div class="form-group">
+            <label for="copyright">Footer Telif Hakkı (Copyright) Metni</label>
+            <input type="text" id="copyright" placeholder="© 2026 Borsakaynak. Tüm hakları saklıdır."/>
+          </div>
+        </div>
+
+        <!-- 1.2. Logo & Branding -->
+        <div class="tab-content" id="t-1-2">
+          <div class="panel-header">
+            <div class="panel-title">1.2. Logo & Branding</div>
+            <div class="panel-desc">Marka kimliği, logo yazısı ve logo görseli ayarları</div>
+          </div>
+          <div class="form-group">
+            <label for="logoText">Navbar Marka Logo Yazısı</label>
+            <input type="text" id="logoText" placeholder="BorsaKaynak"/>
+          </div>
+        </div>
+
+        <!-- 1.3. Sistem Teması -->
+        <div class="tab-content" id="t-1-3">
+          <div class="panel-header">
+            <div class="panel-title">1.3. Sistem Teması</div>
+            <div class="panel-desc">Sitenin varsayılan renk modu ve görsel tema biçimlendirmesi</div>
+          </div>
+          <div class="form-group">
+            <label for="defaultTheme">Varsayılan Başlangıç Teması</label>
+            <select id="defaultTheme">
+              <option value="dark">Koyu Tema (Dark Mode - Önerilen)</option>
+              <option value="light">Açık Tema (Light Mode)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 1.4. Canlı Veri Yenileme Hızı -->
+        <div class="tab-content" id="t-1-4">
+          <div class="panel-header">
+            <div class="panel-title">1.4. Canlı Veri Yenileme Hızı</div>
+            <div class="panel-desc">Fiyatların ve verilerin istemci tarafında yenilenme sıklığı</div>
+          </div>
+          <div class="form-group">
+            <label for="autoRefreshInterval">Canlı Veri Yenileme Sıklığı (Saniye)</label>
+            <select id="autoRefreshInterval">
+              <option value="5">Her 5 Saniyede Bir</option>
+              <option value="10">Her 10 Saniyede Bir</option>
+              <option value="30">Her 30 Saniyede Bir</option>
+              <option value="60">Her 60 Saniyede Bir</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 2.1. Slider Slide-1 Başlığı -->
+        <div class="tab-content" id="t-2-1">
+          <div class="panel-header">
+            <div class="panel-title">2.1. Slider Slide-1 Başlığı</div>
+            <div class="panel-desc">Ana sayfanın en üstündeki slider'ın ilk manşet başlığı</div>
+          </div>
+          <div class="form-group">
+            <label for="homeHeroTitle">Slider Slide-1 Başlığı</label>
+            <input type="text" id="homeHeroTitle" placeholder="Piyasalar Güne Yükselişle Başladı"/>
+          </div>
+        </div>
+
+        <!-- 2.2. Slider Slide-1 Metni -->
+        <div class="tab-content" id="t-2-2">
+          <div class="panel-header">
+            <div class="panel-title">2.2. Slider Slide-1 Açıklama Yazısı</div>
+            <div class="panel-desc">Manşet başlığının hemen altında yer alan açıklama paragrafı</div>
+          </div>
+          <div class="form-group">
+            <label for="homeHeroText">Slider Slide-1 Açıklama Metni</label>
+            <textarea id="homeHeroText" rows="4" placeholder="Açıklama girin..."></textarea>
+          </div>
+        </div>
+
+        <!-- 2.3. Slider Slide-1 Linki -->
+        <div class="tab-content" id="t-2-3">
+          <div class="panel-header">
+            <div class="panel-title">2.3. Slider Slide-1 Detay Linki</div>
+            <div class="panel-desc">"Detayları Oku" butonuna tıklandığında gidilecek sayfa adresi</div>
+          </div>
+          <div class="form-group">
+            <label for="homeHeroLink">Detay Butonu Yönlendirme Linki</label>
+            <input type="text" id="homeHeroLink" placeholder="piyasalar.html"/>
+          </div>
+        </div>
+
+        <!-- 2.4. Reklam Banner-1 -->
+        <div class="tab-content" id="t-2-4">
+          <div class="panel-header">
+            <div class="panel-title">2.4. Reklam Banner-1 Görseli & Linki</div>
+            <div class="panel-desc">Ana sayfa yan kolonundaki reklam görseli ve tıklama adresi</div>
+          </div>
+          <div class="form-group">
+            <label for="adBannerUrl">Reklam Görseli URL'si</label>
+            <input type="text" id="adBannerUrl" placeholder="Örn: logo.jpg"/>
+          </div>
+        </div>
+
+        <!-- 3.1. Tablo Satır Sayısı -->
+        <div class="tab-content" id="t-3-1">
+          <div class="panel-header">
+            <div class="panel-title">3.1. Tablo Sayfa Başına Satır Sayısı</div>
+            <div class="panel-desc">Piyasalar hisse tablosunda sayfa başına kaç hisse gösterileceği</div>
+          </div>
+          <div class="form-group">
+            <label for="tableRows">Hisse Tablosu Satır Limiti</label>
+            <select id="tableRows">
+              <option value="10">10 Satır</option>
+              <option value="15" selected>15 Satır</option>
+              <option value="20">20 Satır</option>
+              <option value="50">50 Satır</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 3.2. Para Giriş Limitleri -->
+        <div class="tab-content" id="t-3-2">
+          <div class="panel-header">
+            <div class="panel-title">3.2. Para Giriş/Çıkış Tablo Limiti</div>
+            <div class="panel-desc">Para akışı listelerindeki gösterilecek maksimum hisse sayısı</div>
+          </div>
+          <div class="form-group">
+            <label for="flowLimit">Para Akışı Gösterim Limiti</label>
+            <select id="flowLimit">
+              <option value="10">İlk 10 Hisse</option>
+              <option value="20">İlk 20 Hisse</option>
+              <option value="50">İlk 50 Hisse</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 3.3. Aracı Kurum Limiti -->
+        <div class="tab-content" id="t-3-3">
+          <div class="panel-header">
+            <div class="panel-title">3.3. Aracı Kurum Pasta Grafiği Limiti</div>
+            <div class="panel-desc">Aracı kurum endeks pastasında gösterilecek kurum sayısı</div>
+          </div>
+          <div class="form-group">
+            <label for="brokerLimit">Aracı Kurum Dağılım Limiti</label>
+            <input type="text" id="brokerLimit" value="5" readonly/>
+          </div>
+        </div>
+
+        <!-- 3.4. Yabancı Giriş Limiti -->
+        <div class="tab-content" id="t-3-4">
+          <div class="panel-header">
+            <div class="panel-title">3.4. Yabancı Giriş/Çıkış Liste Limiti</div>
+            <div class="panel-desc">Yabancı yatırımcı payı artan/azalan listesindeki hisse limiti</div>
+          </div>
+          <div class="form-group">
+            <label for="foreignLimit">Yabancı Değişimi Hisse Limiti</label>
+            <input type="text" id="foreignLimit" value="20" readonly/>
+          </div>
+        </div>
+
+        <!-- 4.1. Son Dakika Başlığı -->
+        <div class="tab-content" id="t-4-1">
+          <div class="panel-header">
+            <div class="panel-title">4.1. Son Dakika Haber Başlığı</div>
+            <div class="panel-desc">Haber bültenindeki ana manşet son dakika gelişmesi</div>
+          </div>
+          <div class="form-group">
+            <label for="breakingNews">Son Dakika Gelişmesi</label>
+            <input type="text" id="breakingNews" placeholder="Örn: Borsa İstanbul güne rekor tazeleyerek başladı!"/>
+          </div>
+        </div>
+
+        <!-- 4.2. Günlük Analiz Bülteni -->
+        <div class="tab-content" id="t-4-2">
+          <div class="panel-header">
+            <div class="panel-title">4.2. Günlük Analiz Bülteni</div>
+            <div class="panel-desc">Sitede yayınlanacak günlük teknik analiz yorum metni</div>
+          </div>
+          <div class="form-group">
+            <label for="dailyAnalysis">Günlük Bülten Yazısı</label>
+            <textarea id="dailyAnalysis" rows="6" placeholder="Bülten yazısı..."></textarea>
+          </div>
+        </div>
+
+        <!-- 4.3. Teknik Analiz Yorumu -->
+        <div class="tab-content" id="t-4-3">
+          <div class="panel-header">
+            <div class="panel-title">4.3. Teknik Destek / Direnç Yorumu</div>
+            <div class="panel-desc">BIST 100 endeksi için destek ve direnç analiz yorumu</div>
+          </div>
+          <div class="form-group">
+            <label for="technicalLevels">Destek/Direnç Seviyeleri</label>
+            <input type="text" id="technicalLevels" placeholder="Örn: Destek: 10100 - Direnç: 10450"/>
+          </div>
+        </div>
+
+        <!-- 5.1. Harita Varsayılan Periyodu -->
+        <div class="tab-content" id="t-5-1">
+          <div class="panel-header">
+            <div class="panel-title">5.1. Sektörel Harita Varsayılan Zaman Periyodu</div>
+            <div class="panel-desc">Sektörel treemap haritasının varsayılan açılış filtresi</div>
+          </div>
+          <div class="form-group">
+            <label for="mapDefaultPeriod">Treemap Varsayılan Zamanı</label>
+            <select id="mapDefaultPeriod">
+              <option value="1G">1 Günlük Değişim (Daily)</option>
+              <option value="1H" selected>1 Haftalık Değişim (Weekly)</option>
+              <option value="1A">1 Aylık Değişim (Monthly)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 5.2. Treemap Renk Skalası -->
+        <div class="tab-content" id="t-5-2">
+          <div class="panel-header">
+            <div class="panel-title">5.2. Treemap Renk Parlaklığı</div>
+            <div class="panel-desc">Isı haritası (Treemap) renk skalasının yoğunluk çarpanı</div>
+          </div>
+          <div class="form-group">
+            <label for="colorScale">Renk Parlaklığı Çarpanı</label>
+            <select id="colorScale">
+              <option value="1.0">Normal (Varsayılan)</option>
+              <option value="1.5">Canlı (Parlak)</option>
+              <option value="0.7">Mat (Soft)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 5.3. Sektör Gösterim Sayısı -->
+        <div class="tab-content" id="t-5-3">
+          <div class="panel-header">
+            <div class="panel-title">5.3. Haritada Gösterilecek Sektör Sayısı</div>
+            <div class="panel-desc">Treemap ısı haritasında listelenecek maksimum sektör sayısı</div>
+          </div>
+          <div class="form-group">
+            <label for="mapSectorsCount">Gösterilecek Sektör Sayısı</label>
+            <input type="number" id="mapSectorsCount" value="12" readonly/>
+          </div>
+        </div>
+
+        <!-- 6.1. BIST 100 Manuel Değeri -->
+        <div class="tab-content" id="t-6-1">
+          <div class="panel-header">
+            <div class="panel-title">6.1. BIST 100 Manuel Değeri (XU100)</div>
+            <div class="panel-desc">Canlı veriyi ezip BIST 100 endeksini bu fiyatla sabitler (Boşsa Canlı)</div>
+          </div>
+          <div class="form-group">
+            <label for="xu100Override">BIST 100 Manuel Değeri</label>
+            <input type="text" id="xu100Override" placeholder="Örn: 10245,32"/>
+          </div>
+        </div>
+
+        <!-- 6.2. BIST 30 Manuel Değeri -->
+        <div class="tab-content" id="t-6-2">
+          <div class="panel-header">
+            <div class="panel-title">6.2. BIST 30 Manuel Değeri (XU030)</div>
+            <div class="panel-desc">Canlı veriyi ezip BIST 30 endeksini bu fiyatla sabitler (Boşsa Canlı)</div>
+          </div>
+          <div class="form-group">
+            <label for="xu030Override">BIST 30 Manuel Değeri</label>
+            <input type="text" id="xu030Override" placeholder="Örn: 11840,50"/>
+          </div>
+        </div>
+
+        <!-- 6.3. BIST Bankacılık Değeri -->
+        <div class="tab-content" id="t-6-3">
+          <div class="panel-header">
+            <div class="panel-title">6.3. BIST Bankacılık Manuel Değeri (XBANK)</div>
+            <div class="panel-desc">Canlı veriyi ezip Bankacılık endeksini bu fiyatla sabitler (Boşsa Canlı)</div>
+          </div>
+          <div class="form-group">
+            <label for="xbankOverride">BIST Bankacılık Değeri</label>
+            <input type="text" id="xbankOverride" placeholder="Örn: 18240,60"/>
+          </div>
+        </div>
+
+        <!-- 6.4. BIST Sanayi Değeri -->
+        <div class="tab-content" id="t-6-4">
+          <div class="panel-header">
+            <div class="panel-title">6.4. BIST Sanayi Manuel Değeri (XUSIN)</div>
+            <div class="panel-desc">Canlı veriyi ezip Sanayi endeksini bu fiyatla sabitler (Boşsa Canlı)</div>
+          </div>
+          <div class="form-group">
+            <label for="xusinOverride">BIST Sanayi Değeri</label>
+            <input type="text" id="xusinOverride" placeholder="Örn: 9840,50"/>
+          </div>
+        </div>
+
+        <!-- 6.5. Dolar Kuru -->
+        <div class="tab-content" id="t-6-5">
+          <div class="panel-header">
+            <div class="panel-title">6.5. Dolar / TL Kuru (USD/TRY)</div>
+            <div class="panel-desc">Canlı veriyi ezip USD/TRY kurunu bu değerle sabitler (Boşsa Canlı)</div>
+          </div>
+          <div class="form-group">
+            <label for="usdOverride">Dolar / TL Manuel Kuru</label>
+            <input type="text" id="usdOverride" placeholder="Örn: 32,85"/>
+          </div>
+        </div>
+
+        <!-- 6.6. Euro Kuru -->
+        <div class="tab-content" id="t-6-6">
+          <div class="panel-header">
+            <div class="panel-title">6.6. Euro / TL Kuru (EUR/TRY)</div>
+            <div class="panel-desc">Canlı veriyi ezip EUR/TRY kurunu bu değerle sabitler (Boşsa Canlı)</div>
+          </div>
+          <div class="form-group">
+            <label for="eurOverride">Euro / TL Manuel Kuru</label>
+            <input type="text" id="eurOverride" placeholder="Örn: 35,40"/>
+          </div>
+        </div>
+
+        <!-- 6.7. Gram Altın Fiyatı -->
+        <div class="tab-content" id="t-6-7">
+          <div class="panel-header">
+            <div class="panel-title">6.7. Gram Altın Fiyatı (GOLDGR)</div>
+            <div class="panel-desc">Canlı veriyi ezip Gram Altın TL fiyatını bu değerle sabitler (Boşsa Canlı)</div>
+          </div>
+          <div class="form-group">
+            <label for="goldOverride">Gram Altın Fiyatı (₺)</label>
+            <input type="text" id="goldOverride" placeholder="Örn: 2450,80"/>
+          </div>
+        </div>
+
+        <!-- 6.8. Brent Petrol Fiyatı -->
+        <div class="tab-content" id="t-6-8">
+          <div class="panel-header">
+            <div class="panel-title">6.8. Brent Petrol Fiyatı (USD)</div>
+            <div class="panel-desc">Canlı veriyi ezip Brent Petrol varil fiyatını bu değerle sabitler (Boşsa Canlı)</div>
+          </div>
+          <div class="form-group">
+            <label for="brentOverride">Brent Petrol Fiyatı ($)</label>
+            <input type="text" id="brentOverride" placeholder="Örn: 85,20"/>
+          </div>
+        </div>
+
+        <!-- 6.9. Bitcoin Fiyatı -->
+        <div class="tab-content" id="t-6-9">
+          <div class="panel-header">
+            <div class="panel-title">6.9. Bitcoin Fiyatı (BTC/USD)</div>
+            <div class="panel-desc">Canlı veriyi ezip BTC/USD kurunu bu fiyatla sabitler (Boşsa Canlı)</div>
+          </div>
+          <div class="form-group">
+            <label for="btcOverride">Bitcoin Fiyatı ($)</label>
+            <input type="text" id="btcOverride" placeholder="Örn: 67450,00"/>
+          </div>
+        </div>
+
+        <!-- 7.1. Hakkımızda Misyon/Vizyon -->
+        <div class="tab-content" id="t-7-1">
+          <div class="panel-header">
+            <div class="panel-title">7.1. Hakkımızda Sayfası İçerik Yazısı</div>
+            <div class="panel-desc">Sitenin "Hakkımızda" bölümünde yer alan misyon ve vizyon metinleri</div>
+          </div>
+          <div class="form-group">
+            <label for="aboutTitle">Hakkımızda Sayfa Başlığı</label>
+            <input type="text" id="aboutTitle" placeholder="Hakkımızda"/>
+          </div>
+          <div class="form-group">
+            <label for="aboutText">Kurumsal Tanıtım Yazısı</label>
+            <textarea id="aboutText" rows="6" placeholder="Kurumsal açıklama yazısı..."></textarea>
+          </div>
+        </div>
+
+        <!-- 7.2. İletişim E-posta & Telefon -->
+        <div class="tab-content" id="t-7-2">
+          <div class="panel-header">
+            <div class="panel-title">7.2. İletişim E-posta & Telefon Ayarları</div>
+            <div class="panel-desc">İletişim sayfasındaki ve footer altındaki destek kanalları</div>
+          </div>
+          <div class="form-group">
+            <label for="email">Resmi İletişim E-postası</label>
+            <input type="email" id="email" placeholder="destek@borsakaynak.com"/>
+          </div>
+          <div class="form-group">
+            <label for="phone">Müşteri Destek Telefonu</label>
+            <input type="text" id="phone" placeholder="+90 (212) 123 45 67"/>
+          </div>
+        </div>
+
+        <!-- 7.3. WhatsApp Canlı Destek -->
+        <div class="tab-content" id="t-7-3">
+          <div class="panel-header">
+            <div class="panel-title">7.3. WhatsApp Canlı Destek Numarası</div>
+            <div class="panel-desc">Sitedeki WhatsApp canlı yardım butonunun yönleneceği numara</div>
+          </div>
+          <div class="form-group">
+            <label for="waContact">WhatsApp Destek Numarası (Ülke Koduyla)</label>
+            <input type="text" id="waContact" placeholder="905321234567"/>
+          </div>
+        </div>
+
+        <!-- 7.4. Ofis Resmi Adresi -->
+        <div class="tab-content" id="t-7-4">
+          <div class="panel-header">
+            <div class="panel-title">7.4. Şirket Resmi Ofis Adresi</div>
+            <div class="panel-desc">İletişim sayfasında yer alan şirket açık adresi</div>
+          </div>
+          <div class="form-group">
+            <label for="contactAddress">Ofis Adresi</label>
+            <input type="text" id="contactAddress" placeholder="Büyükdere Cad. No:123 Şişli / İstanbul"/>
+          </div>
+        </div>
+
+        <!-- 8.1. API Lisans Ayarları -->
+        <div class="tab-content" id="t-8-1">
+          <div class="panel-header">
+            <div class="panel-title">8.1. API Lisans & Kurum Ayarları</div>
+            <div class="panel-desc">BorsaKaynak veri akış yetkilendirme anahtarları</div>
+          </div>
+          <div class="form-group">
+            <label for="licenseOwner">Lisans Sahibi / Kurum Adı</label>
+            <input type="text" id="licenseOwner" placeholder="BorsaKaynak A.Ş."/>
+          </div>
+          <div class="form-group">
+            <label for="licenseKey">Veri Lisans Anahtarı</label>
+            <input type="text" id="licenseKey" placeholder="BK-PRO-XXXX-XXXX"/>
+          </div>
+          <div class="form-group">
+            <label for="packageType">Lisans Paketi Türü</label>
+            <select id="packageType">
+              <option value="standard">Standard Free Feed (15 Dk Gecikmeli)</option>
+              <option value="pro">Pro Real-Time Feed (Anlık Canlı Veri)</option>
+              <option value="institutional">Institutional VIP API Feed (Ultra Hızlı)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 8.2. Veri Doğrulama Modu -->
+        <div class="tab-content" id="t-8-2">
+          <div class="panel-header">
+            <div class="panel-title">8.2. Veri Doğrulama Modu (Güncellik & Güvenlik)</div>
+            <div class="panel-desc">Aktif edilirse, yanlış/bozuk veya 0 fiyatlı veriler otomatik filtrelenir and hata önlenir</div>
+          </div>
+          <div class="form-group">
+            <label for="verifyDataIntegrity">Otomatik Veri Doğrulama (Integrity Check)</label>
+            <select id="verifyDataIntegrity">
+              <option value="true">Aktif (Tavsiye Edilen - Yanlış Veri Engellenir)</option>
+              <option value="false">Devre Dışı (Filtreleme Yapılmaz)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 9.1. Yönetici Giriş Bilgileri -->
+        <div class="tab-content" id="t-9-1">
+          <div class="panel-header">
+            <div class="panel-title">9.1. Yönetici Giriş Bilgileri</div>
+            <div class="panel-desc">CMS yönetim paneline erişim için kullanıcı adı ve şifreyi değiştirin</div>
+          </div>
+          <div class="form-group">
+            <label for="adminUsername">Giriş Kullanıcı Adı</label>
+            <input type="text" id="adminUsername" placeholder="admin"/>
+          </div>
+          <div class="form-group">
+            <label for="adminPassword">Giriş Şifresi</label>
+            <input type="password" id="adminPassword" placeholder="Şifre..."/>
+          </div>
+        </div>
+
+        <!-- 10.1. Blog Yazısı Ekle / Düzenle -->
+        <div class="tab-content" id="t-10-1">
+          <div class="panel-header">
+            <div class="panel-title">10.1. Manuel Blog Yazısı Ekle / Düzenle</div>
+            <div class="panel-desc">Özgünleştirilmiş ve x2 uzunluğunda blog içerikleri oluşturun veya düzenleyin</div>
+          </div>
+          <div class="form-group">
+            <label for="blogId">Blog Kısaltması / URL Slug (Örn: bist-100-haftalik-analiz)</label>
+            <input type="text" id="blogId" placeholder="bist-100-haftalik-analiz"/>
+          </div>
+          <div class="form-group">
+            <label for="blogTitle">Blog Yazı Başlığı</label>
+            <input type="text" id="blogTitle" placeholder="Yazı başlığı girin..."/>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="blogCategory">Kategori</label>
+              <select id="blogCategory">
+                <option value="Borsa & Analiz">Borsa & Analiz</option>
+                <option value="Ekonomi">Ekonomi</option>
+                <option value="Halka Arz">Halka Arz</option>
+                <option value="Eğitim & Strateji">Eğitim & Strateji</option>
+                <option value="Teknik Yorum">Teknik Yorum</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="blogAuthor">Yazar Adı</label>
+              <input type="text" id="blogAuthor" value="BorsaKaynak Analiz Ekibi"/>
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="blogDate">Yayın / Geçmiş Tarih (YYYY-AA-GG)</label>
+              <input type="date" id="blogDate"/>
+            </div>
+            <div class="form-group">
+              <label for="blogScheduledDay">Zamanlanmış Gün (Otomatik Yayın)</label>
+              <select id="blogScheduledDay">
+                <option value="Pazartesi">Pazartesi</option>
+                <option value="Çarşamba">Çarşamba</option>
+                <option value="Cuma">Cuma</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="blogSummary">Özet Metni (Listeleme Ekranı İçin)</label>
+            <textarea id="blogSummary" rows="3" placeholder="Özet girin..."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="blogContent">Genişletilmiş Detaylı Makale İçeriği (x2 Uzunluğunda HTML)</label>
+            <textarea id="blogContent" rows="10" placeholder="<p>Detaylı özgün makale içeriği...</p>"></textarea>
+          </div>
+          <button class="btn" style="background:var(--green); color:#fff;" onclick="saveBlogAdmin()">Blog Yazısını Kaydet & Yayınla</button>
+        </div>
+
+        <!-- 10.2. SEO Ayarları & Meta -->
+        <div class="tab-content" id="t-10-2">
+          <div class="panel-header">
+            <div class="panel-title">10.2. Blog SEO Ayarları & Meta Etiketleri</div>
+            <div class="panel-desc">Google arama sonuçlarında üst sıralarda çıkmak için SEO optimizasyonu</div>
+          </div>
+          <div class="form-group">
+            <label for="seoTitle">SEO Başlığı (Meta Title)</label>
+            <input type="text" id="seoTitle" placeholder="Örn: BIST 100 Haftalık Analiz ve Teknik Seviyeler | BorsaKaynak"/>
+          </div>
+          <div class="form-group">
+            <label for="metaDescription">Meta Açıklaması (Meta Description - Max 160 Karakter)</label>
+            <textarea id="metaDescription" rows="3" placeholder="Arama sonuçlarında görünecek özgün meta açıklaması..."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="focusKeywords">Anahtar Kelimeler (Virgülle Ayırın)</label>
+            <input type="text" id="focusKeywords" placeholder="borsa, bist100, hisse analizi, ekonomi"/>
+          </div>
+          <div class="form-group">
+            <label for="seoTags">Etiketler (Tags - Virgülle Ayırın)</label>
+            <input type="text" id="seoTags" placeholder="bist100, teknikanaliz, borsayorum"/>
+          </div>
+        </div>
+
+        <!-- 10.3. Blog Listesi & Yönetim -->
+        <div class="tab-content" id="t-10-3">
+          <div class="panel-header">
+            <div class="panel-title">10.3. Mevcut Blog Listesi & Yönetim</div>
+            <div class="panel-desc">Tüm zamanlanmış ve yayınlanmış blog yazılarını listeleyin veya silin</div>
+          </div>
+          <div id="blogListAdmin">Yükleniyor...</div>
+        </div>
+
+        <button class="btn btn-save" onclick="saveAllConfig()">Tüm Değişiklikleri Kaydet</button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    const apiBase = window.location.protocol === 'file:' ? 'http://localhost:8080' : '';
+    let isLogged = false;
+    let adminToken = sessionStorage.getItem('bkAdminToken') || null;
+
+    // Oturum token'ini gerektiren tum admin isteklerinde kullanilacak ortak yardimci.
+    // (Sunucu artik bu ucnoktalarda Authorization: Bearer <token> zorunlu tutuyor.)
+    async function adminFetch(url, options) {
+      options = options || {};
+      const headers = Object.assign({}, options.headers || {}, adminToken ? { 'Authorization': 'Bearer ' + adminToken } : {});
+      const res = await fetch(url, Object.assign({}, options, { headers }));
+      if (res.status === 401) {
+        // Oturum suresi dolmus veya gecersiz -- guvenli sekilde giris ekranina don.
+        logout();
+        throw new Error('Oturum süresi doldu, lütfen tekrar giriş yapın.');
+      }
+      return res;
+    }
+
+    // Login Action
+    async function login() {
+      const u = document.getElementById('loginUser').value;
+      const p = document.getElementById('loginPass').value;
+      const error = document.getElementById('loginError');
+      error.style.display = 'none';
+
+      try {
+        const res = await fetch(apiBase + '/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: u, password: p })
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          isLogged = true;
+          adminToken = data.token;
+          sessionStorage.setItem('bkAdminToken', adminToken);
+          document.getElementById('loginCard').style.display = 'none';
+          document.getElementById('adminCard').style.display = 'grid';
+          loadConfig();
+        } else {
+          error.textContent = data.error || 'Kullanıcı adı veya şifre hatalı!';
+          error.style.display = 'block';
+        }
+      } catch(e) {
+        error.textContent = 'Sunucuyla bağlantı kurulamadı: ' + e.message;
+        error.style.display = 'block';
+      }
+    }
+
+    // Logout Action
+    function logout() {
+      isLogged = false;
+      adminToken = null;
+      sessionStorage.removeItem('bkAdminToken');
+      document.getElementById('adminCard').style.display = 'none';
+      document.getElementById('loginCard').style.display = 'block';
+      document.getElementById('loginPass').value = '';
+    }
+
+    // Switch Tabs inside Dashboard
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById(tabId).classList.add('active');
+      btn.classList.add('active');
+      
+      // Hide status messages
+      document.getElementById('successMsg').style.display = 'none';
+      document.getElementById('errorMsg').style.display = 'none';
+    }
+
+    // Load config values from Node Server
+    async function loadConfig() {
+      try {
+        const res = await adminFetch(apiBase + '/api/admin/config');
+        if (res.ok) {
+          const cfg = await res.json();
+          
+          // 1. Sistem
+          document.getElementById('siteTitle').value = cfg.siteTitle || '';
+          document.getElementById('logoText').value = cfg.logoText || '';
+          document.getElementById('announcement').value = cfg.announcement || '';
+          if (cfg.defaultTheme) document.getElementById('defaultTheme').value = cfg.defaultTheme;
+          if (cfg.autoRefreshInterval) document.getElementById('autoRefreshInterval').value = cfg.autoRefreshInterval;
+          document.getElementById('copyright').value = cfg.copyright || '';
+          
+          // 2. Ana Sayfa
+          document.getElementById('homeHeroTitle').value = cfg.homeHeroTitle || '';
+          document.getElementById('homeHeroLink').value = cfg.homeHeroLink || '';
+          document.getElementById('homeHeroText').value = cfg.homeHeroText || '';
+          document.getElementById('adBannerUrl').value = cfg.adBannerUrl || '';
+          
+          // 3. Piyasalar
+          if (cfg.tableRows) document.getElementById('tableRows').value = cfg.tableRows;
+          if (cfg.flowLimit) document.getElementById('flowLimit').value = cfg.flowLimit;
+          
+          // 4. Haberler
+          document.getElementById('breakingNews').value = cfg.breakingNews || '';
+          document.getElementById('dailyAnalysis').value = cfg.dailyAnalysis || '';
+          document.getElementById('technicalLevels').value = cfg.technicalLevels || '';
+          
+          // 5. Treemap
+          if (cfg.mapDefaultPeriod) document.getElementById('mapDefaultPeriod').value = cfg.mapDefaultPeriod;
+          if (cfg.colorScale) document.getElementById('colorScale').value = cfg.colorScale;
+          
+          // 6. Overrides
+          document.getElementById('xu100Override').value = cfg.xu100Override || '';
+          document.getElementById('xu030Override').value = cfg.xu030Override || '';
+          document.getElementById('xbankOverride').value = cfg.xbankOverride || '';
+          document.getElementById('xusinOverride').value = cfg.xusinOverride || '';
+          document.getElementById('usdOverride').value = cfg.usdOverride || '';
+          document.getElementById('eurOverride').value = cfg.eurOverride || '';
+          document.getElementById('goldOverride').value = cfg.goldOverride || '';
+          document.getElementById('brentOverride').value = cfg.brentOverride || '';
+          document.getElementById('btcOverride').value = cfg.btcOverride || '';
+          
+          // 7. Kurumsal
+          document.getElementById('aboutTitle').value = cfg.aboutTitle || '';
+          document.getElementById('email').value = cfg.email || '';
+          document.getElementById('phone').value = cfg.phone || '';
+          document.getElementById('waContact').value = cfg.waContact || '';
+          document.getElementById('aboutText').value = cfg.aboutText || '';
+          document.getElementById('contactAddress').value = cfg.contactAddress || '';
+          
+          // 8. API
+          document.getElementById('licenseOwner').value = cfg.licenseOwner || '';
+          document.getElementById('licenseKey').value = cfg.licenseKey || '';
+          if (cfg.packageType) document.getElementById('packageType').value = cfg.packageType;
+          if (cfg.verifyDataIntegrity) document.getElementById('verifyDataIntegrity').value = cfg.verifyDataIntegrity;
+
+          // 9. Güvenlik
+          document.getElementById('adminUsername').value = cfg.adminUsername || 'admin';
+          document.getElementById('adminPassword').value = cfg.adminPassword || 'admin365';
+          
+          loadBlogsAdmin();
+        }
+      } catch(e) {
+        console.error('Konfigürasyon yükleme hatası:', e);
+      }
+    }
+
+    // Save all fields via POST to server
+    async function saveAllConfig() {
+      const config = {
+        // 1. Sistem
+        siteTitle: document.getElementById('siteTitle').value,
+        logoText: document.getElementById('logoText').value,
+        announcement: document.getElementById('announcement').value,
+        defaultTheme: document.getElementById('defaultTheme').value,
+        autoRefreshInterval: document.getElementById('autoRefreshInterval').value,
+        copyright: document.getElementById('copyright').value,
+        
+        // 2. Ana Sayfa
+        homeHeroTitle: document.getElementById('homeHeroTitle').value,
+        homeHeroLink: document.getElementById('homeHeroLink').value,
+        homeHeroText: document.getElementById('homeHeroText').value,
+        adBannerUrl: document.getElementById('adBannerUrl').value,
+        
+        // 3. Piyasalar
+        tableRows: document.getElementById('tableRows').value,
+        flowLimit: document.getElementById('flowLimit').value,
+        
+        // 4. Haberler
+        breakingNews: document.getElementById('breakingNews').value,
+        dailyAnalysis: document.getElementById('dailyAnalysis').value,
+        technicalLevels: document.getElementById('technicalLevels').value,
+        
+        // 5. Treemap
+        mapDefaultPeriod: document.getElementById('mapDefaultPeriod').value,
+        colorScale: document.getElementById('colorScale').value,
+        
+        // 6. Overrides
+        xu100Override: document.getElementById('xu100Override').value,
+        xu030Override: document.getElementById('xu030Override').value,
+        xbankOverride: document.getElementById('xbankOverride').value,
+        xusinOverride: document.getElementById('xusinOverride').value,
+        usdOverride: document.getElementById('usdOverride').value,
+        eurOverride: document.getElementById('eurOverride').value,
+        goldOverride: document.getElementById('goldOverride').value,
+        brentOverride: document.getElementById('brentOverride').value,
+        btcOverride: document.getElementById('btcOverride').value,
+        
+        // 7. Kurumsal
+        aboutTitle: document.getElementById('aboutTitle').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        waContact: document.getElementById('waContact').value,
+        aboutText: document.getElementById('aboutText').value,
+        contactAddress: document.getElementById('contactAddress').value,
+        
+        // 8. API
+        licenseOwner: document.getElementById('licenseOwner').value,
+        licenseKey: document.getElementById('licenseKey').value,
+        packageType: document.getElementById('packageType').value,
+        verifyDataIntegrity: document.getElementById('verifyDataIntegrity').value,
+        
+        // 9. Güvenlik
+        adminUsername: document.getElementById('adminUsername').value,
+        adminPassword: document.getElementById('adminPassword').value
+      };
+
+      const success = document.getElementById('successMsg');
+      const error = document.getElementById('errorMsg');
+      success.style.display = 'none';
+      error.style.display = 'none';
+
+      try {
+        const res = await adminFetch(apiBase + '/api/admin/config', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(config)
+        });
+
+        if (res.ok) {
+          success.innerHTML = '<strong>Başarılı!</strong> Tüm site ayarları kaydedildi ve canlı sunucuda aktif edildi.';
+          success.style.display = 'block';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          const data = await res.json();
+          error.innerHTML = '<strong>Hata!</strong> Kayıt işlemi başarısız: ' + (data.error || 'Bilinmeyen sunucu hatası.');
+          error.style.display = 'block';
+        }
+      } catch(e) {
+        error.innerHTML = '<strong>Sunucu Hatası!</strong> Lütfen Node.js sunucunuzun cPanel üzerinde aktif ve çalışır durumda olduğundan emin olun.<br>Hata: ' + e.message;
+        error.style.display = 'block';
+      }
+    }
+
+    // 10. Blog & SEO Admin Handlers
+    async function loadBlogsAdmin() {
+      const container = document.getElementById('blogListAdmin');
+      if (!container) return;
+      try {
+        const res = await adminFetch(apiBase + '/api/blogs?all=true');
+        if (res.ok) {
+          const list = await res.json();
+          if (Array.isArray(list) && list.length > 0) {
+            container.innerHTML = `
+              <table style="width:100%; border-collapse:collapse; font-size:12px;">
+                <thead>
+                  <tr style="border-bottom:1px solid var(--border); text-align:left; color:var(--text-dim)">
+                    <th style="padding:8px">Başlık / Slug</th>
+                    <th style="padding:8px">Kategori</th>
+                    <th style="padding:8px">Tarih / Gün</th>
+                    <th style="padding:8px">Durum</th>
+                    <th style="padding:8px; text-align:right">İşlem</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${list.map(b => `
+                    <tr style="border-bottom:1px solid var(--border)">
+                      <td style="padding:8px"><strong>${b.title}</strong><br><small style="color:var(--text-muted)">${b.id}</small></td>
+                      <td style="padding:8px">${b.category}</td>
+                      <td style="padding:8px">${b.publishDate} (${b.scheduledDay || '—'})</td>
+                      <td style="padding:8px"><span style="color:${b.isPublished ? 'var(--green)' : 'var(--accent)'}">${b.isPublished ? 'Yayında' : 'Zamanlandı'}</span></td>
+                      <td style="padding:8px; text-align:right">
+                        <button onclick="editBlogAdmin('${b.id}')" style="background:var(--bg-input); color:var(--text); border:1px solid var(--border); padding:4px 8px; border-radius:4px; cursor:pointer; margin-right:4px;">Düzenle</button>
+                        <button onclick="deleteBlogAdmin('${b.id}')" style="background:rgba(224,79,95,0.1); color:var(--red); border:1px solid rgba(224,79,95,0.2); padding:4px 8px; border-radius:4px; cursor:pointer;">Sil</button>
+                      </td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            `;
+          } else {
+            container.innerHTML = '<div style="color:var(--text-muted);">Henüz eklenmiş blog yazısı yok.</div>';
+          }
+        }
+      } catch(e) {}
+    }
+
+    async function saveBlogAdmin() {
+      const blogData = {
+        id: document.getElementById('blogId').value || ('blog-' + Date.now()),
+        title: document.getElementById('blogTitle').value,
+        category: document.getElementById('blogCategory').value,
+        author: document.getElementById('blogAuthor').value,
+        publishDate: document.getElementById('blogDate').value || new Date().toISOString().split('T')[0],
+        scheduledDay: document.getElementById('blogScheduledDay').value,
+        summary: document.getElementById('blogSummary').value,
+        content: document.getElementById('blogContent').value,
+        seoTitle: document.getElementById('seoTitle').value,
+        metaDescription: document.getElementById('metaDescription').value,
+        keywords: document.getElementById('focusKeywords').value,
+        tags: document.getElementById('seoTags').value,
+        isPublished: true
+      };
+
+      const success = document.getElementById('successMsg');
+      const error = document.getElementById('errorMsg');
+      success.style.display = 'none'; error.style.display = 'none';
+
+      try {
+        const res = await adminFetch(apiBase + '/api/admin/blog', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(blogData)
+        });
+        if (res.ok) {
+          success.innerHTML = '<strong>Başarılı!</strong> Blog yazısı ve SEO ayarları kaydedildi ve yayınlandı.';
+          success.style.display = 'block';
+          loadBlogsAdmin();
+        } else {
+          error.innerHTML = '<strong>Hata!</strong> Kayıt başarısız.';
+          error.style.display = 'block';
+        }
+      } catch(e) {
+        error.innerHTML = 'Sunucu hatası: ' + e.message;
+        error.style.display = 'block';
+      }
+    }
+
+    async function deleteBlogAdmin(id) {
+      if (!confirm('Bu blog yazısını silmek istediğinize emin misiniz?')) return;
+      try {
+        const res = await adminFetch(apiBase + '/api/admin/blog?id=' + encodeURIComponent(id), { method: 'DELETE' });
+        if (res.ok) {
+          loadBlogsAdmin();
+        }
+      } catch(e) {}
+    }
+
+    // Support Enter Key to Submit Login
+    document.getElementById('loginPass').addEventListener('keyup', e => {
+      if (e.key === 'Enter') login();
+    });
+  </script>
+<script src=bk-live.js></script>
+  <footer style="background: #08121E; border-top: 1px solid rgba(255,255,255,0.08); padding: 40px 20px 25px 20px; width: 100%; margin-top: 50px;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 25px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 20px;">
+        <div>
+          <div style="font-size: 20px; font-weight: 800; color: #C8A96B; letter-spacing: 0.5px;">BORSA KAYNAK</div>
+          <div style="font-size: 13px; color: #D0DCEB; margin-top: 4px;">Türkiye Canlı BİST Borsa İstanbul Piyasa Verileri ve Analiz Portalı</div>
+        </div>
+        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+          <a href="index.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Anasayfa</a>
+          <a href="piyasalar.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Piyasalar</a>
+          <a href="bist-liderler.html" style="color: #C8A96B; text-decoration: none; font-size: 13px; font-weight: 700;">🔥 BİST Liderler</a>
+          <a href="radar.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Radar</a>
+          <a href="bist-tum-enstrumanlar.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Tüm Enstrümanlar</a>
+          <a href="veri-dogrulama.html" style="color: #00B56E; text-decoration: none; font-size: 13px; font-weight: 700;">🔍 Veri Doğrulama</a>
+          <a href="karsilastirma-kontrol.html" style="color: #C8A96B; text-decoration: none; font-size: 13px; font-weight: 700;">📊 TV Karşılaştırma</a>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 12px; color: #8B98A9;">
+        <div>© 2026 BorsaKaynak. Tüm hakları saklıdır. Veriler 0ms gecikmeli canlı seans akışıdır.</div>
+        <div>Yasal Uyarı: Burada yer alan yatırım bilgi, yorum ve tavsiyeleri yatırım danışmanlığı kapsamında değildir.</div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

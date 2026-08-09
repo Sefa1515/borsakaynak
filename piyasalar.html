@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Piyasalar — BİST Canlı Hisse Senedi Fiyatları & Piyasa Analizi | BorsaKaynak</title>
+  <meta name="description" content="Borsa İstanbul (BİST) canlı 587 hisse senedi fiyatları, tavan yükselenler, düşenler, hacimliler, anlık borsa takibi.">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <style>
+    :root {
+      --bg-main: #060B13;
+      --card-bg: #0D1624;
+      --card-header: #16243A;
+      --accent-gold: #C8A96B;
+      --green-up: #00B56E;
+      --red-dn: #E04F5F;
+      --text-primary: #F3F7FA;
+      --text-secondary: #D0DCEB;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg-main); color: var(--text-primary); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    
+    header { background: #08121E; border-bottom: 1px solid var(--border-subtle); padding: 15px 20px; sticky: top; z-index: 100; }
+    .header-container { max-width: 1240px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; }
+    .logo { font-size: 22px; font-weight: 800; color: var(--accent-gold); letter-spacing: 0.5px; }
+    .nav-links { display: flex; gap: 15px; flex-wrap: wrap; font-size: 13.5px; font-weight: 600; color: var(--text-secondary); }
+    .nav-links a.active, .nav-links a:hover { color: var(--accent-gold); }
+
+    .main-container { max-width: 1240px; margin: 0 auto; padding: 25px 15px; display: flex; flex-direction: column; gap: 25px; }
+
+    .card-panel { background: var(--card-bg); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 22px; box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+
+    /* Table Styling */
+    table { width: 100%; border-collapse: collapse; }
+    thead tr { background: var(--card-header); border-bottom: 1px solid var(--border-subtle); }
+    th { padding: 12px 14px; font-size: 11.5px; color: var(--text-secondary); text-transform: uppercase; font-weight: 700; text-align: left; }
+    td { padding: 12px 14px; font-size: 13.5px; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-primary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    .search-input { background: #16243A; border: 1px solid var(--border-subtle); color: #F3F7FA; padding: 10px 16px; border-radius: 8px; width: 100%; max-width: 320px; font-size: 13.5px; outline: none; }
+    .search-input:focus { border-color: var(--accent-gold); }
+
+    .cat-btn { background: #16243A; color: var(--text-secondary); font-weight: 700; border: 1px solid var(--border-subtle); padding: 8px 14px; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; }
+    .cat-btn.active, .cat-btn:hover { background: var(--accent-gold); color: #08121E; border-color: var(--accent-gold); font-weight: 800; }
+
+    .chg-up { color: var(--green-up); font-weight: 700; }
+    .chg-dn { color: var(--red-dn); font-weight: 700; }
+
+    footer { background: #08121E; border-top: 1px solid var(--border-subtle); padding: 40px 20px 25px 20px; margin-top: 50px; }
+    .footer-container { max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+  </style>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta property="og:image" content="https://borsakaynak.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://borsakaynak.com/og-image.png">
+<link rel="stylesheet" href="header-footer-shared.css">
+</head>
+<body>
+
+  <div class="bk-shared-chrome">
+<div class="ticker">
+<div class="ticker-track" id="ticker-track">
+<div class="tick" data-tsym="XU100"><span class="tick-dot"></span><span class="tick-name">BIST 100</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="USDTRY"><span class="tick-name">USD/TRY</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="EURTRY"><span class="tick-name">EUR/TRY</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="GBPTRY"><span class="tick-name">GBP/TRY</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="XAUGRAM"><span class="tick-name">ALTIN/GR</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="XAUUSD"><span class="tick-name">XAU/USD</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="BRENT"><span class="tick-name">BRENT</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="BTCUSDT"><span class="tick-name">BTC/USDT</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="ETHUSDT"><span class="tick-name">ETH/USDT</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="DAX"><span class="tick-name">DAX</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="SPX"><span class="tick-name">S&amp;P 500</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="IXIC"><span class="tick-name">NASDAQ</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+</div>
+</div>
+<!-- HEADER -->
+<header class="header">
+<div class="container">
+<nav class="nav">
+<a aria-label="Sayfa Bağlantısı" href="index.html" style="text-decoration:none;color:inherit;display:flex;align-items:center">
+<img src="logo-kaynak.png" alt="BorsaKaynak" style="height:32px;width:auto;flex-shrink:0">
+</a>
+<div class="nav-menu">
+<a aria-label="Sayfa Bağlantısı" href="index.html">Anasayfa</a>
+<a aria-label="Sayfa Bağlantısı" class="active" href="piyasalar.html">Piyasalar</a>
+<a aria-label="Sayfa Bağlantısı" href="piyasa-hareketleri.html">Piyasa Hareketleri</a>
+<a aria-label="Sayfa Bağlantısı" href="endeksler.html">Endeksler</a>
+<a aria-label="Sayfa Bağlantısı" href="sektorler.html">Sektörler</a>
+<a aria-label="Sayfa Bağlantısı" href="haberler.html">Haberler</a>
+<a aria-label="Sayfa Bağlantısı" href="analizler.html">Analizler</a>
+<a aria-label="Sayfa Bağlantısı" href="araci-kurum.html">Aracı Kurum</a>
+<a aria-label="Sayfa Bağlantısı" href="halka-arz.html">Halka Arz</a>
+<a aria-label="Sayfa Bağlantısı" href="viop.html">VİOP</a>
+<a aria-label="Sayfa Bağlantısı" href="kripto.html">Kripto</a>
+</div>
+<div class="nav-actions"><button class="ham-btn" aria-label="Menü" aria-expanded="false"><span></span><span></span><span></span></button>
+<button aria-label="BİST Veri Butonu" class="nav-btn"><svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg></button>
+<button aria-label="BİST Veri Butonu" class="nav-btn"><svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg></button>
+</div>
+</nav>
+</div>
+</header>
+<div class="mob-nav" id="mobNav">
+<button class="mob-nav-close" aria-label="Kapat">✕</button>
+
+<!-- Mini canlı ticker -->
+<div class="mob-ticker-grid">
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">BIST 100</span>
+    <span class="mob-tick-val" id="ham-bist">—</span>
+    <span class="mob-tick-chg" id="ham-bist-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">USD/TRY</span>
+    <span class="mob-tick-val" id="ham-usd">—</span>
+    <span class="mob-tick-chg" id="ham-usd-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">EUR/TRY</span>
+    <span class="mob-tick-val" id="ham-eur">—</span>
+    <span class="mob-tick-chg" id="ham-eur-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">ALTIN/GR</span>
+    <span class="mob-tick-val" id="ham-altin">—</span>
+    <span class="mob-tick-chg" id="ham-altin-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">BTC/USD</span>
+    <span class="mob-tick-val" id="ham-btc">—</span>
+    <span class="mob-tick-chg" id="ham-btc-chg">—</span>
+  </div>
+</div>
+<div class="mob-nav-divider"></div>
+
+<div class="mob-nav-section-title">ANA SAYFALAR</div>
+  <a aria-label="Sayfa Bağlantısı" href="index.html">🏠 Anasayfa</a>
+  <a aria-label="Sayfa Bağlantısı" class="active" href="piyasalar.html">📈 Piyasalar</a>
+  <a aria-label="Sayfa Bağlantısı" href="sektorler.html">🏭 Sektörler</a>
+  <a aria-label="Sayfa Bağlantısı" href="haberler.html">📰 Haberler</a>
+  <a aria-label="Sayfa Bağlantısı" href="analizler.html">📊 Analizler</a>
+  <a aria-label="Sayfa Bağlantısı" href="model-portfoy.html">💼 Model Portföy</a>
+<div class="mob-nav-divider"></div>
+<div class="mob-nav-section-title">ENDEKSİ</div>
+  <a aria-label="Sayfa Bağlantısı" href="endeksler.html">📊 Tüm Endeksler</a>
+  <a aria-label="Sayfa Bağlantısı" href="endeks-XU100.html">📈 BIST 100</a>
+  <a aria-label="Sayfa Bağlantısı" href="endeks-XU030.html">📉 BIST 30</a>
+<div class="mob-nav-divider"></div>
+<div class="mob-nav-section-title">YATIRIM</div>
+  <a aria-label="Sayfa Bağlantısı" href="araci-kurum.html">🏦 Aracı Kurum</a>
+  <a aria-label="Sayfa Bağlantısı" href="halka-arz.html">📋 Halka Arz</a>
+  <a aria-label="Sayfa Bağlantısı" href="viop.html">📉 VİOP</a>
+  <a aria-label="Sayfa Bağlantısı" href="kripto.html">₿ Kripto</a>
+<div class="mob-nav-divider"></div>
+  <a aria-label="Sayfa Bağlantısı" href="hakkimizda.html">ℹ️ Hakkımızda</a>
+</div>
+<div class="premium-command"><div class="premium-command__inner"><label class="premium-search">⌕ <input data-premium-search="" placeholder="Site içinde hisse, haber, analiz veya halka arz ara..."/></label><div class="premium-actions"><button aria-label="BİST Veri Butonu" class="premium-btn" data-theme-toggle="">🌗 Tema</button><button aria-label="BİST Veri Butonu" class="premium-btn" data-export=".premium-table">⬇ Excel/CSV</button><button aria-label="BİST Veri Butonu" class="premium-btn" data-open-modal="#notifyModal">🔔 Bildirim</button><a aria-label="Sayfa Bağlantısı" class="premium-btn gold" href="model-portfoy.html">PRO Model Portföy</a></div></div></div>
+<script>
+  // Tema (aydınlık/koyu) değiştirici
+  (function () {
+    const STORAGE_KEY = 'bk-theme-light';
+    function applyTheme(isLight) {
+      document.body.classList.toggle('premium-light', isLight);
+    }
+    const saved = localStorage.getItem(STORAGE_KEY) === '1';
+    applyTheme(saved);
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.querySelector('[data-theme-toggle]');
+      if (!btn) return;
+      btn.addEventListener('click', () => {
+        const nowLight = !document.body.classList.contains('premium-light');
+        applyTheme(nowLight);
+        localStorage.setItem(STORAGE_KEY, nowLight ? '1' : '0');
+      });
+    });
+  })();
+</script>
+
+<script>
+// Site geneli arama kutusu: Enter'a basilinca piyasalar.html'e yonlendirir.
+(function(){
+  document.querySelectorAll('[data-premium-search]').forEach(function(inp){
+    inp.addEventListener('keydown', function(e){
+      if (e.key === 'Enter') {
+        var q = inp.value.trim();
+        if (q) window.location.href = 'piyasalar.html?q=' + encodeURIComponent(q);
+      }
+    });
+  });
+})();
+</script>
+</div>
+
+
+  <div class="main-container">
+
+    <!-- 🟢 PİYASALAR CANLI — 4 canlı kart + BIST100 grafiği + endeks listesi + en çok değişenler -->
+    <div class="card-panel">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:6px;">
+        <div>
+          <h2 style="font-size:20px; font-weight:800; color:#F3F7FA;">🟢 Piyasalar Canlı</h2>
+          <p style="font-size:13px; color:#D0DCEB; margin-top:4px;">Borsa İstanbul anlık hisse fiyatları, fark, alış-satış ve hacim verileri tek ekranda.</p>
+        </div>
+        <div style="text-align:right; font-size:11.5px; color:#8B98A9;">
+          <div id="plCanliDurum" style="color:#C8A96B; font-weight:700;">Veriler güncelleniyor…</div>
+          <div id="plSonGuncelleme">Son güncelleme: —</div>
+        </div>
+      </div>
+
+      <!-- 4 canlı kart -->
+      <div id="plKartlar" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:16px;"></div>
+
+      <!-- Grafik + Endeks listesi -->
+      <div style="display:grid; grid-template-columns:2fr 1fr; gap:16px; margin-top:20px;" id="plGrafikGrid">
+        <div style="background:#0A121D; border:1px solid var(--border-subtle); border-radius:12px; padding:14px; min-height:420px;">
+          <div style="font-size:13px; font-weight:700; color:#D0DCEB; margin-bottom:10px;">📈 BIST 100 — Canlı Grafik</div>
+          <div id="plTvChart" style="height:400px;"></div>
+        </div>
+        <div style="background:#0A121D; border:1px solid var(--border-subtle); border-radius:12px; padding:14px;">
+          <div style="font-size:13px; font-weight:700; color:#D0DCEB; margin-bottom:10px;">🏛️ BİST Endeksleri</div>
+          <div id="plEndeksListe" style="display:flex; flex-direction:column; gap:2px; max-height:400px; overflow-y:auto;">
+            <div style="padding:16px; text-align:center; color:#6B7A8D; font-size:12.5px;">Yükleniyor…</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- En Çok Yükselen / Düşen -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px;" id="plMoversGrid">
+        <div style="background:#0A121D; border:1px solid rgba(0,181,110,.25); border-radius:12px; padding:14px;">
+          <div style="font-size:13px; font-weight:700; color:#00B56E; margin-bottom:10px;">▲ En Çok Yükselen <span style="float:right; color:#8B98A9; font-weight:400;">Günlük %</span></div>
+          <div id="plYukselenler"><div style="padding:16px; text-align:center; color:#6B7A8D; font-size:12.5px;">Yükleniyor…</div></div>
+        </div>
+        <div style="background:#0A121D; border:1px solid rgba(224,79,95,.25); border-radius:12px; padding:14px;">
+          <div style="font-size:13px; font-weight:700; color:#E04F5F; margin-bottom:10px;">▼ En Çok Düşen <span style="float:right; color:#8B98A9; font-weight:400;">Günlük %</span></div>
+          <div id="plDusenler"><div style="padding:16px; text-align:center; color:#6B7A8D; font-size:12.5px;">Yükleniyor…</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ⚡ BİST CANLI 10 KATEGORİ PİYASA TARAYICISI -->
+    <div class="card-panel">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:15px;">
+        <div>
+          <h2 style="font-size:20px; font-weight:800; color:#F3F7FA;">⚡ BİST CANLI 10 KATEGORİ PİYASA TARAYICISI</h2>
+          <p style="font-size:13px; color:#D0DCEB; margin-top:4px;">Borsa İstanbul'da anlık en çok yükselen, düşen, hacimli ve öne çıkan hisselerin canlı fiyat listesi.</p>
+        </div>
+        <span style="font-size:12px; color:#00B56E; font-weight:700;">⚡ Anlık Canlı Veri Akışı</span>
+        <a href="piyasa-hareketleri.html" style="font-size:12px; color:#C8A96B; font-weight:700; text-decoration:none; white-space:nowrap;">Tüm 25 kategoriyi gör →</a>
+      </div>
+
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:15px;">
+        <a href="en-cok-kazananlar.html" style="font-size:12.5px; font-weight:700; color:#08121E; background:#00B56E; padding:8px 14px; border-radius:20px; text-decoration:none; white-space:nowrap;">📈 En Çok Kazananlar (özel sayfa)</a>
+                <a href="en-aktif-hisseler.html" style="font-size:12.5px; font-weight:700; color:#F3F7FA; background:#16243A; border:1px solid rgba(255,255,255,.1); padding:8px 14px; border-radius:20px; text-decoration:none; white-space:nowrap;">⚡ En Aktifler / Hacim (özel sayfa)</a>
+      </div>
+
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:15px;">
+        <button class="cat-btn active" onclick="switchNativeBistTab('gainers', this)">📈 En Çok Yükselenler</button>
+        <button class="cat-btn" onclick="switchNativeBistTab('losers', this)">📉 En Çok Düşenler</button>
+        <button class="cat-btn" onclick="switchNativeBistTab('most_active', this)">⚡ En Çok İşlem Görenler</button>
+        <button class="cat-btn" onclick="switchNativeBistTab('most_volatile', this)">🌊 En Volatil Hisseler</button>
+        <button class="cat-btn" onclick="switchNativeBistTab('large_cap', this)">🏛️ En Büyük Piyasa Değerliler</button>
+        <button class="cat-btn" onclick="switchNativeBistTab('high_dividend', this)">💎 En Yüksek Temettülüler</button>
+        <button class="cat-btn" onclick="switchNativeBistTab('52wk_high', this)">🚀 52 Haftalık Zirvedekiler</button>
+        <button class="cat-btn" onclick="switchNativeBistTab('52wk_low', this)">🔻 52 Haftalık Diptekiler</button>
+        <button class="cat-btn" onclick="switchNativeBistTab('overbought', this)">📊 Aşırı Alımdakiler (RSI)</button>
+        <button class="cat-btn" onclick="switchNativeBistTab('oversold', this)">📉 Aşırı Satımdakiler (RSI)</button>
+      </div>
+
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>HİSSE KODU</th>
+              <th>ŞİRKET UNVANI</th>
+              <th style="text-align:right;">CANLI FİYAT</th>
+              <th style="text-align:right;">GÜNLÜK DEĞİŞİM</th>
+              <th style="text-align:right;">HACİM (TL)</th>
+              <th style="text-align:center;">DETAY</th>
+            </tr>
+          </thead>
+          <tbody id="nativeBistTableBody">
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+              <td style="padding:12px 14px; font-weight:700; color:#8B98A9;">1</td>
+              <td style="padding:12px 14px;">
+                <a href="hisse-isvea.html" style="text-decoration:none; color:#F3F7FA; font-weight:800; display:flex; align-items:center; gap:8px;">
+                  <img src="https://storage.fintables.com/media/uploads/company-logos/isvea_icon.png" alt="ISVEA" style="width:20px; height:20px; border-radius:50%;" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}">
+                  <span>ISVEA</span>
+                </a>
+              </td>
+              <td style="padding:12px 14px; color:#8B98A9;">İsvea Yapı Sanayi</td>
+              <td style="padding:12px 14px; text-align:right; font-weight:700;">47,74 TL</td>
+              <td style="padding:12px 14px; text-align:right;" class="chg-up-txt">+10,00%</td>
+              <td style="padding:12px 14px; text-align:right; color:#8B98A9; font-family:monospace;">145.8 M ₺</td>
+              <td style="padding:12px 14px; text-align:center;"><a class="btn-detay-link" href="hisse-isvea.html">İncele</a></td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+              <td style="padding:12px 14px; font-weight:700; color:#8B98A9;">2</td>
+              <td style="padding:12px 14px;">
+                <a href="hisse-karcl.html" style="text-decoration:none; color:#F3F7FA; font-weight:800; display:flex; align-items:center; gap:8px;">
+                  <img src="https://storage.fintables.com/media/uploads/company-logos/karcl_icon.png" alt="KARCL" style="width:20px; height:20px; border-radius:50%;" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}">
+                  <span>KARCL</span>
+                </a>
+              </td>
+              <td style="padding:12px 14px; color:#8B98A9;">Kardemir Çelik Sanayi</td>
+              <td style="padding:12px 14px; text-align:right; font-weight:700;">38,50 TL</td>
+              <td style="padding:12px 14px; text-align:right;" class="chg-up-txt">+10,00%</td>
+              <td style="padding:12px 14px; text-align:right; color:#8B98A9; font-family:monospace;">258.7 M ₺</td>
+              <td style="padding:12px 14px; text-align:center;"><a class="btn-detay-link" href="hisse-karcl.html">İncele</a></td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+              <td style="padding:12px 14px; font-weight:700; color:#8B98A9;">3</td>
+              <td style="padding:12px 14px;">
+                <a href="hisse-psdtc.html" style="text-decoration:none; color:#F3F7FA; font-weight:800; display:flex; align-items:center; gap:8px;">
+                  <img src="https://storage.fintables.com/media/uploads/company-logos/psdtc_icon.png" alt="PSDTC" style="width:20px; height:20px; border-radius:50%;" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}">
+                  <span>PSDTC</span>
+                </a>
+              </td>
+              <td style="padding:12px 14px; color:#8B98A9;">Miras Dış Ticaret</td>
+              <td style="padding:12px 14px; text-align:right; font-weight:700;">154,00 TL</td>
+              <td style="padding:12px 14px; text-align:right;" class="chg-up-txt">+10,00%</td>
+              <td style="padding:12px 14px; text-align:right; color:#8B98A9; font-family:monospace;">98.4 M ₺</td>
+              <td style="padding:12px 14px; text-align:center;"><a class="btn-detay-link" href="hisse-psdtc.html">İncele</a></td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+              <td style="padding:12px 14px; font-weight:700; color:#8B98A9;">4</td>
+              <td style="padding:12px 14px;">
+                <a href="hisse-ecogr.html" style="text-decoration:none; color:#F3F7FA; font-weight:800; display:flex; align-items:center; gap:8px;">
+                  <img src="https://storage.fintables.com/media/uploads/company-logos/ecogr_icon.png" alt="ECOGR" style="width:20px; height:20px; border-radius:50%;" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}">
+                  <span>ECOGR</span>
+                </a>
+              </td>
+              <td style="padding:12px 14px; color:#8B98A9;">Ecogreen Enerji</td>
+              <td style="padding:12px 14px; text-align:right; font-weight:700;">36,32 TL</td>
+              <td style="padding:12px 14px; text-align:right;" class="chg-up-txt">+9,99%</td>
+              <td style="padding:12px 14px; text-align:right; color:#8B98A9; font-family:monospace;">112.5 M ₺</td>
+              <td style="padding:12px 14px; text-align:center;"><a class="btn-detay-link" href="hisse-ecogr.html">İncele</a></td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+              <td style="padding:12px 14px; font-weight:700; color:#8B98A9;">5</td>
+              <td style="padding:12px 14px;">
+                <a href="hisse-dunyh.html" style="text-decoration:none; color:#F3F7FA; font-weight:800; display:flex; align-items:center; gap:8px;">
+                  <img src="https://storage.fintables.com/media/uploads/company-logos/dunyh_icon.png" alt="DUNYH" style="width:20px; height:20px; border-radius:50%;" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}">
+                  <span>DUNYH</span>
+                </a>
+              </td>
+              <td style="padding:12px 14px; color:#8B98A9;">Dünya Holding</td>
+              <td style="padding:12px 14px; text-align:right; font-weight:700;">155,30 TL</td>
+              <td style="padding:12px 14px; text-align:right;" class="chg-up-txt">+9,99%</td>
+              <td style="padding:12px 14px; text-align:right; color:#8B98A9; font-family:monospace;">87.9 M ₺</td>
+              <td style="padding:12px 14px; text-align:center;"><a class="btn-detay-link" href="hisse-dunyh.html">İncele</a></td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+              <td style="padding:12px 14px; font-weight:700; color:#8B98A9;">6</td>
+              <td style="padding:12px 14px;">
+                <a href="hisse-akhan.html" style="text-decoration:none; color:#F3F7FA; font-weight:800; display:flex; align-items:center; gap:8px;">
+                  <img src="https://storage.fintables.com/media/uploads/company-logos/akhan_icon.png" alt="AKHAN" style="width:20px; height:20px; border-radius:50%;" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}">
+                  <span>AKHAN</span>
+                </a>
+              </td>
+              <td style="padding:12px 14px; color:#8B98A9;">Akhan Un Sanayi</td>
+              <td style="padding:12px 14px; text-align:right; font-weight:700;">48,06 TL</td>
+              <td style="padding:12px 14px; text-align:right;" class="chg-up-txt">+9,98%</td>
+              <td style="padding:12px 14px; text-align:right; color:#8B98A9; font-family:monospace;">64.2 M ₺</td>
+              <td style="padding:12px 14px; text-align:center;"><a class="btn-detay-link" href="hisse-akhan.html">İncele</a></td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+              <td style="padding:12px 14px; font-weight:700; color:#8B98A9;">7</td>
+              <td style="padding:12px 14px;">
+                <a href="hisse-qnbfk.html" style="text-decoration:none; color:#F3F7FA; font-weight:800; display:flex; align-items:center; gap:8px;">
+                  <img src="https://storage.fintables.com/media/uploads/company-logos/qnbfk_icon.png" alt="QNBFK" style="width:20px; height:20px; border-radius:50%;" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}">
+                  <span>QNBFK</span>
+                </a>
+              </td>
+              <td style="padding:12px 14px; color:#8B98A9;">QNB Finansbank</td>
+              <td style="padding:12px 14px; text-align:right; font-weight:700;">49,20 TL</td>
+              <td style="padding:12px 14px; text-align:right;" class="chg-up-txt">+9,97%</td>
+              <td style="padding:12px 14px; text-align:right; color:#8B98A9; font-family:monospace;">210.6 M ₺</td>
+              <td style="padding:12px 14px; text-align:center;"><a class="btn-detay-link" href="hisse-qnbfk.html">İncele</a></td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+              <td style="padding:12px 14px; font-weight:700; color:#8B98A9;">8</td>
+              <td style="padding:12px 14px;">
+                <a href="hisse-atatp.html" style="text-decoration:none; color:#F3F7FA; font-weight:800; display:flex; align-items:center; gap:8px;">
+                  <img src="https://storage.fintables.com/media/uploads/company-logos/atatp_icon.png" alt="ATATP" style="width:20px; height:20px; border-radius:50%;" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}">
+                  <span>ATATP</span>
+                </a>
+              </td>
+              <td style="padding:12px 14px; color:#8B98A9;">ATP Yazılım Teknoloji</td>
+              <td style="padding:12px 14px; text-align:right; font-weight:700;">251,00 TL</td>
+              <td style="padding:12px 14px; text-align:right;" class="chg-up-txt">+9,94%</td>
+              <td style="padding:12px 14px; text-align:right; color:#8B98A9; font-family:monospace;">345.0 M ₺</td>
+              <td style="padding:12px 14px; text-align:center;"><a class="btn-detay-link" href="hisse-atatp.html">İncele</a></td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+              <td style="padding:12px 14px; font-weight:700; color:#8B98A9;">9</td>
+              <td style="padding:12px 14px;">
+                <a href="hisse-karel.html" style="text-decoration:none; color:#F3F7FA; font-weight:800; display:flex; align-items:center; gap:8px;">
+                  <img src="https://storage.fintables.com/media/uploads/company-logos/karel_icon.png" alt="KAREL" style="width:20px; height:20px; border-radius:50%;" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}">
+                  <span>KAREL</span>
+                </a>
+              </td>
+              <td style="padding:12px 14px; color:#8B98A9;">Karel Elektronik</td>
+              <td style="padding:12px 14px; text-align:right; font-weight:700;">9,77 TL</td>
+              <td style="padding:12px 14px; text-align:right;" class="chg-up-txt">+9,78%</td>
+              <td style="padding:12px 14px; text-align:right; color:#8B98A9; font-family:monospace;">189.2 M ₺</td>
+              <td style="padding:12px 14px; text-align:center;"><a class="btn-detay-link" href="hisse-karel.html">İncele</a></td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+              <td style="padding:12px 14px; font-weight:700; color:#8B98A9;">10</td>
+              <td style="padding:12px 14px;">
+                <a href="hisse-bjkas.html" style="text-decoration:none; color:#F3F7FA; font-weight:800; display:flex; align-items:center; gap:8px;">
+                  <img src="https://storage.fintables.com/media/uploads/company-logos/bjkas_icon.png" alt="BJKAS" style="width:20px; height:20px; border-radius:50%;" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}">
+                  <span>BJKAS</span>
+                </a>
+              </td>
+              <td style="padding:12px 14px; color:#8B98A9;">Beşiktaş Futbol Yat.</td>
+              <td style="padding:12px 14px; text-align:right; font-weight:700;">1,91 TL</td>
+              <td style="padding:12px 14px; text-align:right;" class="chg-up-txt">+8,52%</td>
+              <td style="padding:12px 14px; text-align:right; color:#8B98A9; font-family:monospace;">425.0 M ₺</td>
+              <td style="padding:12px 14px; text-align:center;"><a class="btn-detay-link" href="hisse-bjkas.html">İncele</a></td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+              <td style="padding:12px 14px; font-weight:700; color:#8B98A9;">11</td>
+              <td style="padding:12px 14px;">
+                <a href="hisse-tgsas.html" style="text-decoration:none; color:#F3F7FA; font-weight:800; display:flex; align-items:center; gap:8px;">
+                  <img src="https://storage.fintables.com/media/uploads/company-logos/tgsas_icon.png" alt="TGSAS" style="width:20px; height:20px; border-radius:50%;" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}">
+                  <span>TGSAS</span>
+                </a>
+              </td>
+              <td style="padding:12px 14px; color:#8B98A9;">TGS Dış Ticaret</td>
+              <td style="padding:12px 14px; text-align:right; font-weight:700;">187,30 TL</td>
+              <td style="padding:12px 14px; text-align:right;" class="chg-up-txt">+8,45%</td>
+              <td style="padding:12px 14px; text-align:right; color:#8B98A9; font-family:monospace;">76.4 M ₺</td>
+              <td style="padding:12px 14px; text-align:center;"><a class="btn-detay-link" href="hisse-tgsas.html">İncele</a></td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+              <td style="padding:12px 14px; font-weight:700; color:#8B98A9;">12</td>
+              <td style="padding:12px 14px;">
+                <a href="hisse-avtur.html" style="text-decoration:none; color:#F3F7FA; font-weight:800; display:flex; align-items:center; gap:8px;">
+                  <img src="https://storage.fintables.com/media/uploads/company-logos/avtur_icon.png" alt="AVTUR" style="width:20px; height:20px; border-radius:50%;" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}">
+                  <span>AVTUR</span>
+                </a>
+              </td>
+              <td style="padding:12px 14px; color:#8B98A9;">Avrasya Petrol Turizm</td>
+              <td style="padding:12px 14px; text-align:right; font-weight:700;">15,86 TL</td>
+              <td style="padding:12px 14px; text-align:right;" class="chg-up-txt">+8,41%</td>
+              <td style="padding:12px 14px; text-align:right; color:#8B98A9; font-family:monospace;">54.1 M ₺</td>
+              <td style="padding:12px 14px; text-align:center;"><a class="btn-detay-link" href="hisse-avtur.html">İncele</a></td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+              <td style="padding:12px 14px; font-weight:700; color:#8B98A9;">13</td>
+              <td style="padding:12px 14px;">
+                <a href="hisse-ozsub.html" style="text-decoration:none; color:#F3F7FA; font-weight:800; display:flex; align-items:center; gap:8px;">
+                  <img src="https://storage.fintables.com/media/uploads/company-logos/ozsub_icon.png" alt="OZSUB" style="width:20px; height:20px; border-radius:50%;" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}">
+                  <span>OZSUB</span>
+                </a>
+              </td>
+              <td style="padding:12px 14px; color:#8B98A9;">Özsu Balık Üretim</td>
+              <td style="padding:12px 14px; text-align:right; font-weight:700;">35,00 TL</td>
+              <td style="padding:12px 14px; text-align:right;" class="chg-up-txt">+8,02%</td>
+              <td style="padding:12px 14px; text-align:right; color:#8B98A9; font-family:monospace;">82.9 M ₺</td>
+              <td style="padding:12px 14px; text-align:center;"><a class="btn-detay-link" href="hisse-ozsub.html">İncele</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- MAIN 586 STOCKS SEARCH TABLE -->
+    <div class="card-panel">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px; margin-bottom:18px;">
+        <div>
+          <h2 style="font-size:20px; font-weight:800; color:#F3F7FA;">📊 BİST CANLI HİSSE PİYASASI (587 HİSSE)</h2>
+          <p style="font-size:13px; color:#D0DCEB; margin-top:4px;">Tüm BİST hisse senetlerinin anlık canlı seans fiyatları, yüksek/düşük değerleri ve hacimleri.</p>
+        </div>
+        <input type="text" class="search-input" id="stockSearchInput" placeholder="🔍 Sembol veya Şirket Ara..." oninput="filterStocksTable(this.value)">
+      </div>
+
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>SEMBOL</th>
+              <th>ŞİRKET UNVANI</th>
+              <th style="text-align:right;">SON</th>
+              <th style="text-align:right;">FARK %</th>
+              <th style="text-align:right;">FARK</th>
+              <th style="text-align:right;">HACİM</th>
+              <th style="text-align:right;">PİYASA DEĞERİ</th>
+              <th style="text-align:center;">DETAY</th>
+            </tr>
+          </thead>
+          <tbody id="stocksTableBody">
+            <!-- Dynamically populated via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+    <footer style="background: #08121E; border-top: 1px solid rgba(255,255,255,0.08); padding: 40px 20px 25px 20px; width: 100%; margin-top: 50px;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 25px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 20px;">
+        <div>
+          <div style="font-size: 20px; font-weight: 800; color: #C8A96B; letter-spacing: 0.5px;">BORSA KAYNAK</div>
+          <div style="font-size: 13px; color: #D0DCEB; margin-top: 4px;">Türkiye Canlı BİST Borsa İstanbul Piyasa Verileri ve Analiz Portalı</div>
+        </div>
+        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+          <a href="index.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Anasayfa</a>
+          <a href="piyasalar.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Piyasalar</a>
+          <a href="bist-liderler.html" style="color: #C8A96B; text-decoration: none; font-size: 13px; font-weight: 700;">🔥 BİST Liderler</a>
+          <a href="radar.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Radar</a>
+          <a href="bist-tum-enstrumanlar.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Tüm Enstrümanlar</a>
+          <a href="veri-dogrulama.html" style="color: #00B56E; text-decoration: none; font-size: 13px; font-weight: 700;">🔍 Veri Doğrulama</a>
+          <a href="karsilastirma-kontrol.html" style="color: #C8A96B; text-decoration: none; font-size: 13px; font-weight: 700;">📊 TV Karşılaştırma</a>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 12px; color: #8B98A9;">
+        <div>© 2026 BorsaKaynak. Tüm hakları saklıdır. Veriler 0ms gecikmeli canlı seans akışıdır.</div>
+        <div>Yasal Uyarı: Burada yer alan yatırım bilgi, yorum ve tavsiyeleri yatırım danışmanlığı kapsamında değildir.</div>
+      </div>
+    </div>
+  </footer>
+
+
+
+  <script>
+    window.STOCKS = []; // /api/tradingview/tum-enstrumanlar'dan canli doldurulur (asagida)
+
+    // Kategori -> /api/tradingview/movers slug eslemesi
+    const NATIVE_TAB_SLUG_MAP = {
+      gainers: 'artanlar',
+      losers: 'kaybedenler',
+      most_active: 'en-aktif',
+      most_volatile: 'en-volatil',
+      large_cap: 'buyuk-sermaye',
+      high_dividend: 'yuksek-temettu',
+      '52wk_high': 'hafta52-zirve',
+      '52wk_low': 'hafta52-dip',
+      overbought: 'fazla-alinmis',
+      oversold: 'fazla-satilmis'
+    };
+
+    let currentNativeTab = 'gainers';
+    let nativeTabLoadToken = 0;
+
+    function switchNativeBistTab(tabKey, btn) {
+      currentNativeTab = tabKey;
+      if (btn) {
+        btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      }
+      renderNativeBistTable();
+    }
+
+    async function renderNativeBistTable() {
+      const tbody = document.getElementById('nativeBistTableBody');
+      if (!tbody) return;
+      const myToken = ++nativeTabLoadToken;
+      tbody.innerHTML = '<tr><td colspan="7" style="padding:20px;text-align:center;color:#6B7A8D;">Yükleniyor…</td></tr>';
+
+      const slug = NATIVE_TAB_SLUG_MAP[currentNativeTab] || 'artanlar';
+      let items = [];
+      try {
+        const res = await fetch('/api/tradingview/movers?kategori=' + encodeURIComponent(slug) + '&limit=10', { cache: 'no-store' });
+        const json = await res.json();
+        if (myToken !== nativeTabLoadToken) return; // eski istek, kullanicI baska sekmeye gecti
+        if (json.success) items = json.veri || [];
+      } catch (e) {
+        if (myToken !== nativeTabLoadToken) return;
+      }
+
+      if (!items.length) {
+        tbody.innerHTML = '<tr><td colspan="7" style="padding:20px;text-align:center;color:#6B7A8D;">Şu anda canlı veri alınamadı. <a href="piyasa-hareketleri.html" style="color:#C8A96B;">Tüm piyasa hareketleri sayfasında deneyin →</a></td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = items.map((item, idx) => {
+        const chg = item.change || 0;
+        const isUp = chg >= 0;
+        const chgClass = isUp ? 'chg-up' : 'chg-dn';
+        const sembol = item.code;
+        const symLower = sembol.toLowerCase();
+        const logoUrl = `https://storage.fintables.com/media/uploads/company-logos/${sembol.toLowerCase()}_icon.png`;
+        const price = item.close != null ? item.close.toLocaleString('tr-TR', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' TL' : '—';
+        const vol = item.volume != null ? (item.volume > 1e6 ? (item.volume/1e6).toFixed(2) + ' M ₺' : item.volume.toLocaleString('tr-TR') + ' ₺') : '—';
+        const ad = item.name || sembol;
+
+        return `
+          <tr onclick="window.location.href='hisse-${symLower}.html'" style="cursor:pointer;">
+            <td>${idx + 1}</td>
+            <td style="font-weight:800;">
+              <a href="hisse-${symLower}.html" onclick="event.stopPropagation();" style="display:flex; align-items:center; gap:8px;">
+                <img src="${logoUrl}" alt="${sembol}" width="20" height="20" style="border-radius:50%;" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}">
+                <span>${sembol}</span>
+              </a>
+            </td>
+            <td style="color:#D0DCEB;">${ad}</td>
+            <td style="text-align:right; font-weight:800;">${price}</td>
+            <td style="text-align:right;" class="${chgClass}">${isUp ? '+' : ''}${chg.toFixed(2).replace('.', ',')}%</td>
+            <td style="text-align:right; font-family:monospace;">${vol}</td>
+            <td style="text-align:center;"><a href="hisse-${symLower}.html" style="background:rgba(200,169,107,0.15); color:#C8A96B; padding:5px 12px; border-radius:6px; font-weight:700; font-size:12px;">İncele</a></td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+
+    function renderMainBistTable(filteredList) {
+      const tbody = document.getElementById('stocksTableBody');
+      if (!tbody) return;
+      const list = filteredList || window.STOCKS || [];
+
+      if (!list.length) {
+        tbody.innerHTML = '<tr><td colspan="8" style="padding:24px;text-align:center;color:#6B7A8D;">Şu anda gösterilecek veri yok.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = list.map(s => {
+        const p = s.son;
+        const chgP = s.farkP;
+        const chgAbs = s.fark;
+        const isUp = (chgP || 0) >= 0;
+        const chgClass = isUp ? 'chg-up' : 'chg-dn';
+        const symUpper = (s.sembol || '').toUpperCase();
+        const symLower = symUpper.toLowerCase();
+        const logoUrl = `https://web-api.forinvestcdn.com/definitions/icon?code=${symUpper}`;
+
+        const priceStr = p == null ? '<span style="color:#6B7A8D">veri yok</span>' : p.toLocaleString('tr-TR', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' TL';
+        const chgPStr = chgP == null ? '<span style="color:#6B7A8D">—</span>' : (isUp ? '+' : '') + chgP.toFixed(2).replace('.', ',') + '%';
+        const chgAbsStr = chgAbs == null ? '—' : (isUp ? '+' : '') + chgAbs.toFixed(2).replace('.', ',');
+        const hacimStr = s.hacim == null ? '—' : (s.hacim > 1e6 ? (s.hacim/1e6).toFixed(2) + ' M ₺' : s.hacim.toLocaleString('tr-TR') + ' ₺');
+        const pdStr = s.piyasaDegeri == null ? '—' : (s.piyasaDegeri > 1e9 ? (s.piyasaDegeri/1e9).toFixed(2) + ' Mr ₺' : (s.piyasaDegeri/1e6).toFixed(2) + ' M ₺');
+
+        return `
+          <tr onclick="window.location.href='hisse-${symLower}.html'" style="cursor:pointer;">
+            <td>
+              <a href="hisse-${symLower}.html" onclick="event.stopPropagation();" style="display:flex; align-items:center; gap:8px; font-weight:800;">
+                <img src="${logoUrl}" alt="${symUpper}" width="20" height="20" style="border-radius:50%;" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://storage.fintables.com/media/uploads/company-logos/'+this.alt.toLowerCase()+'_icon.png'}else{this.style.display='none'}">
+                <span>${symUpper}</span>
+              </a>
+            </td>
+            <td style="color:#D0DCEB;">${s.ad || symUpper}</td>
+            <td style="text-align:right; font-weight:800;">${priceStr}</td>
+            <td style="text-align:right;" class="${chgClass}">${chgPStr}</td>
+            <td style="text-align:right;" class="${chgClass}">${chgAbsStr}</td>
+            <td style="text-align:right; font-family:monospace;">${hacimStr}</td>
+            <td style="text-align:right; font-family:monospace; color:#D0DCEB;">${pdStr}</td>
+            <td style="text-align:center;"><a href="hisse-${symLower}.html" style="background:rgba(200,169,107,0.15); color:#C8A96B; padding:5px 12px; border-radius:6px; font-weight:700; font-size:12px;">İncele</a></td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    async function loadMainBistTable() {
+      const tbody = document.getElementById('stocksTableBody');
+      if (tbody) tbody.innerHTML = '<tr><td colspan="8" style="padding:24px;text-align:center;color:#6B7A8D;">Canlı veri yükleniyor…</td></tr>';
+      try {
+        const res = await fetch('/api/tradingview/tum-enstrumanlar', { cache: 'no-store' });
+        const json = await res.json();
+        if (!json.success || !json.veri || !json.veri.length) {
+          window.STOCKS = [];
+          if (tbody) tbody.innerHTML = `<tr><td colspan="8" style="padding:24px;text-align:center;color:#6B7A8D;">Canlı veri şu anda alınamadı (${(json.error || 'bilinmeyen hata').replace(/</g,'&lt;')}). Sahte veri gösterilmez.</td></tr>`;
+          return;
+        }
+        // Gercek TradingView alanlarini bu sayfanin Turkce alan adlarina esle
+        window.STOCKS = json.veri.map(item => ({
+          sembol: item.code,
+          ad: item.name || item.code,
+          son: item.close,
+          farkP: item.change,
+          fark: item.change_abs != null ? item.change_abs : null,
+          hacim: item.volume,
+          piyasaDegeri: item.market_cap != null ? item.market_cap : null
+        }));
+        renderMainBistTable();
+      } catch (e) {
+        window.STOCKS = [];
+        if (tbody) tbody.innerHTML = '<tr><td colspan="8" style="padding:24px;text-align:center;color:#6B7A8D;">Bağlantı hatası: ' + e.message.replace(/</g,'&lt;') + '</td></tr>';
+      }
+    }
+
+    function filterStocksTable(q) {
+      const query = (q || '').toLowerCase().trim();
+      if (!query) {
+        renderMainBistTable();
+        return;
+      }
+      const filtered = (window.STOCKS || []).filter(s => 
+        (s.sembol || '').toLowerCase().includes(query) || 
+        (s.ad || '').toLowerCase().includes(query)
+      );
+      renderMainBistTable(filtered);
+    }
+
+    // ==========================================================
+    // 🟢 PİYASALAR CANLI paneli -- 4 kart, TV grafik widget'i,
+    // endeks listesi, en çok yükselen/düşen. Hepsi gerçek, zaten
+    // bu sitede doğrulanmış kaynaklardan (/api/fx, /api/live,
+    // /api/tradingview/endeksler, /api/tradingview/movers).
+    // ==========================================================
+    function plFmt(n, d) {
+      if (n === null || n === undefined || Number.isNaN(n)) return null;
+      return n.toLocaleString('tr-TR', { minimumFractionDigits: d != null ? d : 2, maximumFractionDigits: d != null ? d : 2 });
+    }
+
+    function plCardHtml(baslik, deger, birim, degisimP, oncekiKapanis, zamanMs) {
+      const varData = deger != null;
+      const hasChg = typeof degisimP === 'number' && !Number.isNaN(degisimP);
+      const isUp = hasChg && degisimP >= 0;
+      const chgStr = !hasChg ? 'veri yok' : (isUp ? '▲ +' : '▼ ') + Math.abs(degisimP).toFixed(2).replace('.', ',') + '%';
+      const chgColor = !hasChg ? '#6B7A8D' : (isUp ? '#00B56E' : '#E04F5F');
+      const zamanStr = zamanMs ? new Date(zamanMs).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }) : null;
+      return `
+        <div style="background:#0A121D; border:1px solid var(--border-subtle); border-radius:12px; padding:14px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:11.5px; font-weight:700; color:#8B98A9; letter-spacing:.03em;">${baslik}</span>
+            <span style="font-size:9.5px; font-weight:700; padding:2px 7px; border-radius:5px; background:rgba(0,181,110,.12); color:#00B56E;">CANLI</span>
+          </div>
+          <div style="font-size:22px; font-weight:800; margin-top:8px;">${varData ? plFmt(deger) + ' ' + birim : '<span style="color:#6B7A8D;font-size:14px;">veri yok</span>'}</div>
+          <div style="font-size:12.5px; font-weight:700; color:${chgColor}; margin-top:4px;">${chgStr}</div>
+          ${zamanStr ? `<div style="font-size:10.5px; color:#6B7A8D; margin-top:6px;">Son kapanış: ${zamanStr}</div>` : (oncekiKapanis != null ? `<div style="font-size:10.5px; color:#6B7A8D; margin-top:6px;">Önceki Kapanış: ${plFmt(oncekiKapanis)} ${birim}</div>` : '')}
+        </div>`;
+    }
+
+    async function loadPlCanli() {
+      const kartlarEl = document.getElementById('plKartlar');
+      const durumEl = document.getElementById('plCanliDurum');
+      const zamanEl = document.getElementById('plSonGuncelleme');
+      try {
+        const [fxRes, liveRes] = await Promise.all([
+          fetch('/api/fx', { cache: 'no-store' }),
+          fetch('/api/live?symbols=XU100', { cache: 'no-store' })
+        ]);
+        const fx = await fxRes.json();
+        const liveArr = await liveRes.json();
+        const xu100 = Array.isArray(liveArr) ? liveArr.find(x => x.code === 'XU100') : null;
+
+        if (fx && fx.success === false) {
+          kartlarEl.innerHTML = `<div style="grid-column:1/-1; padding:20px; text-align:center; color:#E04F5F;">${fx.error || 'Döviz/emtia verisi alınamadı.'}</div>`;
+        } else {
+          kartlarEl.innerHTML =
+            plCardHtml('BIST 100', xu100 ? xu100.son : null, '', xu100 ? xu100.farkP : null, xu100 ? xu100.onceki : null, null) +
+            plCardHtml('USD/TRY', fx.USDTRY, '₺', fx.USDPCT, null, fx.USDTIME) +
+            plCardHtml('ALTIN/GR', fx.GOLDGR, '₺', fx.GOLDGRPCT, null, fx.XAUTIME) +
+            plCardHtml('BRENT PETROL', fx.BRENT, '$', fx.BRENTPCT, null, fx.BRENTTIME);
+        }
+
+        durumEl.textContent = '✓ Canlı';
+        durumEl.style.color = '#00B56E';
+        zamanEl.textContent = 'Son güncelleme: ' + new Date().toLocaleTimeString('tr-TR');
+      } catch (e) {
+        kartlarEl.innerHTML = `<div style="grid-column:1/-1; padding:20px; text-align:center; color:#E04F5F;">Bağlantı hatası: ${e.message}</div>`;
+        durumEl.textContent = '⚠ Bağlantı hatası';
+        durumEl.style.color = '#E04F5F';
+      }
+    }
+
+    async function loadPlEndeksler() {
+      const el = document.getElementById('plEndeksListe');
+      try {
+        const res = await fetch('/api/tradingview/endeksler', { cache: 'no-store' });
+        const json = await res.json();
+        if (!json.success || !json.veri || !json.veri.length) {
+          el.innerHTML = `<div style="padding:16px; text-align:center; color:#6B7A8D; font-size:12px;">Endeks verisi şu anda alınamadı${json.error ? ' (' + json.error.replace(/</g,'&lt;') + ')' : ''}.</div>`;
+          return;
+        }
+        el.innerHTML = json.veri.map(row => {
+          const isUp = (row.change || 0) >= 0;
+          const chgStr = row.change == null ? '—' : (isUp ? '+' : '') + row.change.toFixed(2).replace('.', ',') + '%';
+          return `
+            <a href="endeks-${row.code}.html" style="display:flex; justify-content:space-between; align-items:center; padding:9px 6px; border-radius:6px; text-decoration:none; color:inherit;" onmouseover="this.style.background='rgba(255,255,255,.03)'" onmouseout="this.style.background='transparent'">
+              <div>
+                <div style="font-size:12.5px; font-weight:700; color:#F3F7FA;">${row.name || row.code}</div>
+                <div style="font-size:10px; color:#6B7A8D; font-family:monospace;">${row.code}</div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-size:12.5px; font-weight:700;">${row.close != null ? plFmt(row.close) : '—'}</div>
+                <div style="font-size:11px; font-weight:700; color:${isUp ? '#00B56E' : '#E04F5F'};">${chgStr}</div>
+              </div>
+            </a>`;
+        }).join('');
+      } catch (e) {
+        el.innerHTML = `<div style="padding:16px; text-align:center; color:#E04F5F; font-size:12px;">Bağlantı hatası.</div>`;
+      }
+    }
+
+    async function loadPlMovers() {
+      const upEl = document.getElementById('plYukselenler');
+      const dnEl = document.getElementById('plDusenler');
+      function rowHtml(item) {
+        const isUp = (item.change || 0) >= 0;
+        const chgStr = item.change == null ? '—' : (isUp ? '+' : '') + item.change.toFixed(2).replace('.', ',') + '%';
+        return `
+          <a href="hisse-${item.code.toLowerCase()}.html" style="display:flex; justify-content:space-between; align-items:center; padding:8px 4px; text-decoration:none; color:inherit; border-bottom:1px solid rgba(255,255,255,.04);">
+            <span style="font-size:12.5px; font-weight:700;">${item.code}</span>
+            <span style="font-size:12px; color:#D0DCEB;">${item.close != null ? plFmt(item.close) + ' ₺' : '—'}</span>
+            <span style="font-size:12px; font-weight:700; color:${isUp ? '#00B56E' : '#E04F5F'};">${chgStr}</span>
+          </a>`;
+      }
+      try {
+        const [upRes, dnRes] = await Promise.all([
+          fetch('/api/tradingview/movers?kategori=artanlar&limit=8', { cache: 'no-store' }),
+          fetch('/api/tradingview/movers?kategori=kaybedenler&limit=8', { cache: 'no-store' })
+        ]);
+        const up = await upRes.json();
+        const dn = await dnRes.json();
+        upEl.innerHTML = (up.success && up.veri && up.veri.length) ? up.veri.map(rowHtml).join('') : `<div style="padding:16px; text-align:center; color:#6B7A8D; font-size:12px;">${(up && up.error) || 'Veri yok'}</div>`;
+        dnEl.innerHTML = (dn.success && dn.veri && dn.veri.length) ? dn.veri.map(rowHtml).join('') : `<div style="padding:16px; text-align:center; color:#6B7A8D; font-size:12px;">${(dn && dn.error) || 'Veri yok'}</div>`;
+      } catch (e) {
+        upEl.innerHTML = dnEl.innerHTML = `<div style="padding:16px; text-align:center; color:#E04F5F; font-size:12px;">Bağlantı hatası.</div>`;
+      }
+    }
+
+    function loadPlChart() {
+      const el = document.getElementById('plTvChart');
+      el.innerHTML = `
+        <div class="tradingview-widget-container" style="height:100%;width:100%">
+          <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
+        </div>`;
+      const script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
+      script.async = true;
+      script.text = JSON.stringify({
+        autosize: true, symbol: 'BIST:XU100', interval: 'D', timezone: 'Europe/Istanbul',
+        theme: 'dark', style: '1', locale: 'tr', backgroundColor: 'rgba(10,18,29,1)',
+        gridColor: 'rgba(255,255,255,0.06)', hide_top_toolbar: false, hide_legend: false,
+        allow_symbol_change: false, support_host: 'https://www.tradingview.com'
+      });
+      el.querySelector('.tradingview-widget-container').appendChild(script);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      renderNativeBistTable();
+      loadMainBistTable();
+      loadPlCanli();
+      loadPlEndeksler();
+      loadPlMovers();
+      loadPlChart();
+      setInterval(loadPlCanli, 30000);
+
+      // Site genelindeki üst arama kutusundan (?q=...) buraya yönlendirilen
+      // aramaları otomatik uygula -- bkz. site geneli "premium-search"
+      // kutularının artık buraya yönlendirmesi.
+      var urlParams = new URLSearchParams(window.location.search);
+      var q = urlParams.get('q');
+      if (q) {
+        var input = document.getElementById('stockSearchInput');
+        if (input) {
+          input.value = q;
+          // Tablo canlı veriyle dolduktan sonra filtre uygulanabilsin diye kısa bir gecikme
+          setTimeout(function() { filterStocksTable(q); }, 1200);
+        }
+      }
+    });
+  </script>
+  <script src="bk-live.js?v=2.5.0" defer></script>
+</body>
+</html>

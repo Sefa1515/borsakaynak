@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta name="description" content="Borsa İstanbul (BİST) canlı hisse senedi fiyatları, tavan yükselenler, düşenler, hacimliler, sektör ısı haritası ve anlık borsa analiz platformu.">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="theme-color" content="#070D16">
+  <meta property="og:title" content="BorsaKaynak — Canlı BİST Piyasa Takibi & Borsa Analiz Portalı">
+  <meta property="og:description" content="Borsa İstanbul (BİST) 586 canlı hisse senedi verisi, piyasa liderleri ve teknik analizler.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://borsakaynak.com">
+  <link rel="author" href="https://borsakaynak.com">
+  <link rel="canonical" href="https://borsakaynak.com">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://s3.tradingview.com" />
+  <link rel="dns-prefetch" href="https://scanner.tradingview.com" />
+  <link rel="dns-prefetch" href="https://web-api.forinvestcdn.com" />
+
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0"/>
+  <meta http-equiv="Pragma" content="no-cache"/>
+  <meta http-equiv="Expires" content="0"/>
+  <title>BİST Tüm Enstrümanlar & Sertifikalar Listesi (Canlı) — BorsaKaynak</title>
+  <meta name="description" content="Borsa İstanbul'da işlem gören tüm enstrümanlar: Şirket hisseleri, sertifikalar ve Borsa Yatırım Fonları (ETF) canlı fiyatları — TradingView'dan anlık çekilir."/>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #08121E;
+      --panel: #111C2B;
+      --panel2: #16243A;
+      --text: #F3F7FA;
+      --text-mute: #8B98A9;
+      --accent: #C8A96B;
+      --border: rgba(255, 255, 255, 0.08);
+      --green: #00B56E;
+      --red: #E04F5F;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding-bottom: 60px;
+    }
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    /* Hero Header */
+    .hero {
+      padding: 25px 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 25px;
+    }
+    .hero-title {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+    .hero-title span { color: var(--accent); }
+    .hero-desc {
+      font-size: 14px;
+      color: var(--text-mute);
+      line-height: 1.5;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+    .stat-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+    }
+    .stat-val { font-size: 26px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+    .stat-label { font-size: 12.5px; color: var(--text-mute); font-weight: 500; }
+
+    /* Controls Bar */
+    .controls-bar {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 15px 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .pills-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .tab-pill {
+      background: var(--panel2);
+      border: 1px solid var(--border);
+      color: var(--text-mute);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-pill.active {
+      background: var(--accent);
+      color: #08121E;
+      border-color: transparent;
+    }
+    .search-input {
+      background: var(--panel2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 9px 15px;
+      border-radius: 8px;
+      font-size: 13.5px;
+      outline: none;
+      min-width: 250px;
+    }
+    .search-input:focus { border-color: var(--accent); }
+
+    /* Main Table */
+    .table-container {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+    th, td {
+      padding: 12px 18px;
+      font-size: 13.5px;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--panel2);
+      color: var(--text-mute);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255, 255, 255, 0.02); }
+
+    .badge-type {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11.5px;
+      font-weight: 700;
+    }
+    .type-hisse { background: rgba(200, 169, 107, 0.12); color: var(--accent); }
+    .type-sertifika { background: rgba(0, 181, 110, 0.12); color: var(--green); }
+    .type-fon { background: rgba(56, 189, 248, 0.12); color: #38bdf8; }
+
+    .chg-up { color: var(--green); font-weight: 700; }
+    .chg-dn { color: var(--red); font-weight: 700; }
+    .chg-flat { color: var(--text-mute); font-weight: 700; }
+
+    .btn-view {
+      background: var(--panel2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .btn-view:hover { background: var(--accent); color: #08121E; }
+  /* High Contrast Accessibility Fixes (100/100 Accessibility) */
+  :root {
+    --text-dim: #D0DCEB !important;
+  }
+  body, p, span, td, div {
+    color: #F3F7FA;
+  }
+  .sym-name, th, .m-lbl, .diag-lbl, .subtitle, td.dim-txt {
+    color: #D0DCEB !important;
+  }
+  button, input, select, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+/* PREMIUM BORSAKAYNAK MASTER DESIGN SYSTEM */
+  :root {
+    --bg-main: #060B13;
+    --card-bg: #0D1624;
+    --card-header: #16243A;
+    --accent-gold: #C8A96B;
+    --green-up: #00B56E;
+    --red-dn: #E04F5F;
+    --text-primary: #F3F7FA;
+    --text-secondary: #D0DCEB;
+    --border-subtle: rgba(255, 255, 255, 0.08);
+  }
+
+  body {
+    background: var(--bg-main) !important;
+    color: var(--text-primary) !important;
+    font-family: 'Inter', sans-serif !important;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .main-wrapper {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 25px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .card-panel {
+    background: var(--card-bg) !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-radius: 14px !important;
+    padding: 22px !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .card-panel:hover {
+    border-color: rgba(200, 169, 107, 0.25) !important;
+  }
+
+  /* Table Design Harmonization */
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+  }
+
+  thead tr {
+    background: var(--card-header) !important;
+    border-bottom: 1px solid var(--border-subtle) !important;
+  }
+
+  th {
+    padding: 12px 14px !important;
+    font-size: 11.5px !important;
+    color: var(--text-secondary) !important;
+    text-transform: uppercase !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  td {
+    padding: 12px 14px !important;
+    font-size: 13.5px !important;
+    border-bottom: 1px solid rgba(255,255,255,0.04) !important;
+  }
+
+  tr:hover td {
+    background: rgba(255,255,255,0.02) !important;
+  }
+
+  /* Button Styling */
+  .btn-gold {
+    background: var(--accent-gold) !important;
+    color: #08121E !important;
+    font-weight: 800 !important;
+    padding: 8px 16px !important;
+    border-radius: 8px !important;
+    border: none !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .btn-gold:hover {
+    opacity: 0.9 !important;
+    transform: translateY(-1px) !important;
+  }
+
+  .btn-outline {
+    background: rgba(255,255,255,0.05) !important;
+    color: var(--text-secondary) !important;
+    font-weight: 700 !important;
+    padding: 8px 14px !important;
+    border-radius: 8px !important;
+    border: 1px solid var(--border-subtle) !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .btn-outline:hover {
+    background: rgba(255,255,255,0.1) !important;
+    color: var(--text-primary) !important;
+  }
+
+  .btn-outline.active {
+    background: var(--accent-gold) !important;
+    color: #08121E !important;
+    border-color: var(--accent-gold) !important;
+    font-weight: 800 !important;
+  }
+
+  .chg-up-txt { color: var(--green-up) !important; font-weight: 700 !important; }
+  .chg-dn-txt { color: var(--red-dn) !important; font-weight: 700 !important; }
+</style>
+
+  <!-- Schema.org Structured Data for AI Agents & Search Engines -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FinancialService",
+    "name": "BorsaKaynak",
+    "url": "https://borsakaynak.com/",
+    "logo": "https://borsakaynak.com/logo.jpg",
+    "description": "Borsa İstanbul (BIST) şirket hisseleri, sertifikalar, ETF'ler, canlı borsa fiyatları, para giriş/çıkış analizleri ve TradingView entegrasyonu.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://borsakaynak.com/piyasalar.html?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta property="og:image" content="https://borsakaynak.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://borsakaynak.com/og-image.png">
+<link rel="stylesheet" href="header-footer-shared.css">
+</head>
+<body>
+
+  <!-- Dynamic Header loaded via bk-live.js -->
+  <div class="bk-shared-chrome">
+<div class="ticker">
+<div class="ticker-track" id="ticker-track">
+<div class="tick" data-tsym="XU100"><span class="tick-dot"></span><span class="tick-name">BIST 100</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="USDTRY"><span class="tick-name">USD/TRY</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="EURTRY"><span class="tick-name">EUR/TRY</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="GBPTRY"><span class="tick-name">GBP/TRY</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="XAUGRAM"><span class="tick-name">ALTIN/GR</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="XAUUSD"><span class="tick-name">XAU/USD</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="BRENT"><span class="tick-name">BRENT</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="BTCUSDT"><span class="tick-name">BTC/USDT</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="ETHUSDT"><span class="tick-name">ETH/USDT</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="DAX"><span class="tick-name">DAX</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="SPX"><span class="tick-name">S&amp;P 500</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="IXIC"><span class="tick-name">NASDAQ</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+</div>
+</div>
+<!-- HEADER -->
+<header class="header">
+<div class="container">
+<nav class="nav">
+<a aria-label="Sayfa Bağlantısı" href="index.html" style="text-decoration:none;color:inherit;display:flex;align-items:center">
+<img src="logo-kaynak.png" alt="BorsaKaynak" style="height:32px;width:auto;flex-shrink:0">
+</a>
+<div class="nav-menu">
+<a aria-label="Sayfa Bağlantısı" href="index.html">Anasayfa</a>
+<a aria-label="Sayfa Bağlantısı" href="piyasalar.html">Piyasalar</a>
+<a aria-label="Sayfa Bağlantısı" href="piyasa-hareketleri.html">Piyasa Hareketleri</a>
+<a aria-label="Sayfa Bağlantısı" href="endeksler.html">Endeksler</a>
+<a aria-label="Sayfa Bağlantısı" href="sektorler.html">Sektörler</a>
+<a aria-label="Sayfa Bağlantısı" href="haberler.html">Haberler</a>
+<a aria-label="Sayfa Bağlantısı" href="analizler.html">Analizler</a>
+<a aria-label="Sayfa Bağlantısı" href="araci-kurum.html">Aracı Kurum</a>
+<a aria-label="Sayfa Bağlantısı" href="halka-arz.html">Halka Arz</a>
+<a aria-label="Sayfa Bağlantısı" href="viop.html">VİOP</a>
+<a aria-label="Sayfa Bağlantısı" href="kripto.html">Kripto</a>
+</div>
+<div class="nav-actions"><button class="ham-btn" aria-label="Menü" aria-expanded="false"><span></span><span></span><span></span></button>
+<button aria-label="BİST Veri Butonu" class="nav-btn"><svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg></button>
+<button aria-label="BİST Veri Butonu" class="nav-btn"><svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg></button>
+</div>
+</nav>
+</div>
+</header>
+<div class="mob-nav" id="mobNav">
+<button class="mob-nav-close" aria-label="Kapat">✕</button>
+
+<!-- Mini canlı ticker -->
+<div class="mob-ticker-grid">
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">BIST 100</span>
+    <span class="mob-tick-val" id="ham-bist">—</span>
+    <span class="mob-tick-chg" id="ham-bist-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">USD/TRY</span>
+    <span class="mob-tick-val" id="ham-usd">—</span>
+    <span class="mob-tick-chg" id="ham-usd-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">EUR/TRY</span>
+    <span class="mob-tick-val" id="ham-eur">—</span>
+    <span class="mob-tick-chg" id="ham-eur-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">ALTIN/GR</span>
+    <span class="mob-tick-val" id="ham-altin">—</span>
+    <span class="mob-tick-chg" id="ham-altin-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">BTC/USD</span>
+    <span class="mob-tick-val" id="ham-btc">—</span>
+    <span class="mob-tick-chg" id="ham-btc-chg">—</span>
+  </div>
+</div>
+<div class="mob-nav-divider"></div>
+
+<div class="mob-nav-section-title">ANA SAYFALAR</div>
+  <a aria-label="Sayfa Bağlantısı" href="index.html">🏠 Anasayfa</a>
+  <a aria-label="Sayfa Bağlantısı" href="piyasalar.html">📈 Piyasalar</a>
+  <a aria-label="Sayfa Bağlantısı" href="sektorler.html">🏭 Sektörler</a>
+  <a aria-label="Sayfa Bağlantısı" href="haberler.html">📰 Haberler</a>
+  <a aria-label="Sayfa Bağlantısı" href="analizler.html">📊 Analizler</a>
+  <a aria-label="Sayfa Bağlantısı" href="model-portfoy.html">💼 Model Portföy</a>
+<div class="mob-nav-divider"></div>
+<div class="mob-nav-section-title">ENDEKSİ</div>
+  <a aria-label="Sayfa Bağlantısı" href="endeksler.html">📊 Tüm Endeksler</a>
+  <a aria-label="Sayfa Bağlantısı" href="endeks-XU100.html">📈 BIST 100</a>
+  <a aria-label="Sayfa Bağlantısı" href="endeks-XU030.html">📉 BIST 30</a>
+<div class="mob-nav-divider"></div>
+<div class="mob-nav-section-title">YATIRIM</div>
+  <a aria-label="Sayfa Bağlantısı" href="araci-kurum.html">🏦 Aracı Kurum</a>
+  <a aria-label="Sayfa Bağlantısı" href="halka-arz.html">📋 Halka Arz</a>
+  <a aria-label="Sayfa Bağlantısı" href="viop.html">📉 VİOP</a>
+  <a aria-label="Sayfa Bağlantısı" href="kripto.html">₿ Kripto</a>
+<div class="mob-nav-divider"></div>
+  <a aria-label="Sayfa Bağlantısı" href="hakkimizda.html">ℹ️ Hakkımızda</a>
+</div>
+<div class="premium-command"><div class="premium-command__inner"><label class="premium-search">⌕ <input data-premium-search="" placeholder="Site içinde hisse, haber, analiz veya halka arz ara..."/></label><div class="premium-actions"><button aria-label="BİST Veri Butonu" class="premium-btn" data-theme-toggle="">🌗 Tema</button><button aria-label="BİST Veri Butonu" class="premium-btn" data-export=".premium-table">⬇ Excel/CSV</button><button aria-label="BİST Veri Butonu" class="premium-btn" data-open-modal="#notifyModal">🔔 Bildirim</button><a aria-label="Sayfa Bağlantısı" class="premium-btn gold" href="model-portfoy.html">PRO Model Portföy</a></div></div></div>
+<script>
+  // Tema (aydınlık/koyu) değiştirici
+  (function () {
+    const STORAGE_KEY = 'bk-theme-light';
+    function applyTheme(isLight) {
+      document.body.classList.toggle('premium-light', isLight);
+    }
+    const saved = localStorage.getItem(STORAGE_KEY) === '1';
+    applyTheme(saved);
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.querySelector('[data-theme-toggle]');
+      if (!btn) return;
+      btn.addEventListener('click', () => {
+        const nowLight = !document.body.classList.contains('premium-light');
+        applyTheme(nowLight);
+        localStorage.setItem(STORAGE_KEY, nowLight ? '1' : '0');
+      });
+    });
+  })();
+</script>
+
+<script>
+// Site geneli arama kutusu: Enter'a basilinca piyasalar.html'e yonlendirir.
+(function(){
+  document.querySelectorAll('[data-premium-search]').forEach(function(inp){
+    inp.addEventListener('keydown', function(e){
+      if (e.key === 'Enter') {
+        var q = inp.value.trim();
+        if (q) window.location.href = 'piyasalar.html?q=' + encodeURIComponent(q);
+      }
+    });
+  });
+})();
+</script>
+</div>
+
+
+  <div class="container">
+    <div class="hero">
+      <div class="hero-title">🏛️ BİST TÜM ENSTRÜMANLAR & SERTİFİKALAR <span id="heroCount">(CANLI)</span></div>
+      <div class="hero-desc">
+        Borsa İstanbul'da işlem gören tüm hisse, sertifika ve borsa yatırım fonlarının (ETF) canlı fiyat listesi — TradingView'ın gerçek zamanlı tarama motorundan çekilir.
+      </div>
+    </div>
+
+    <!-- Stats Grid (canlı doldurulur) -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-val" id="statTotal" style="color:var(--accent);">—</div>
+        <div class="stat-label">Toplam BİST Enstrümanı</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="statHisse">—</div>
+        <div class="stat-label">Şirket Hissesi</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="statSertifika" style="color:var(--green);">—</div>
+        <div class="stat-label">Sertifika & DR</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="statFon" style="color:#38bdf8;">—</div>
+        <div class="stat-label">Borsa Yatırım Fonu (ETF)</div>
+      </div>
+    </div>
+    <div id="loadStatus" style="font-size:11.5px;color:var(--mute);margin:-8px 0 14px;">Canlı veri çekiliyor…</div>
+
+    <!-- Controls Bar -->
+    <div class="controls-bar">
+      <div class="pills-tabs">
+        <button class="tab-pill active" aria-label="Piyasa Sekmesi" onclick="filterCategory('all', this)">Tüm Enstrümanlar</button>
+        <button class="tab-pill" aria-label="Piyasa Sekmesi" onclick="filterCategory('hisse', this)">Hisseler</button>
+        <button class="tab-pill" aria-label="Piyasa Sekmesi" onclick="filterCategory('sertifika', this)">Sertifika & DR</button>
+        <button class="tab-pill" aria-label="Piyasa Sekmesi" onclick="filterCategory('fon', this)">Fonlar (ETF)</button>
+      </div>
+      <input type="text" id="searchInput" class="search-input" placeholder="🔍 Enstrüman ara (THYAO, GARAN...)" onkeyup="searchInstruments()"/>
+    </div>
+
+    <!-- Table Container -->
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>KOD</th>
+            <th>TÜRÜ</th>
+            <th>ENSTRÜMAN ADI / AÇIKLAMASI</th>
+            <th>CANLI FİYAT</th>
+            <th>GÜNLÜK DEĞİŞİM</th>
+            <th>İŞLEM</th>
+          </tr>
+        </thead>
+        <tbody id="instrumentTableBody">
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="bk-live.js" defer></script>
+  <script>
+    // Veri /api/tradingview/tum-enstrumanlar uzerinden canli cekilir.
+    // "TÜRÜ" sekmeleri TradingView siniflandirmasina (stock/dr/fund) dayanir.
+    const TYPE_LABELS = { stock: { cat: 'hisse', badge: 'type-hisse', label: 'Hisse Senedi' },
+      dr: { cat: 'sertifika', badge: 'type-sertifika', label: 'Sertifika / DR' },
+      fund: { cat: 'fon', badge: 'type-fon', label: 'Borsa Yatırım Fonu (ETF)' } };
+
+    async function loadInstruments() {
+      const statusEl = document.getElementById('loadStatus');
+      const tbody = document.getElementById('instrumentTableBody');
+      statusEl.textContent = 'Canlı veri çekiliyor…';
+      try {
+        const res = await fetch('/api/tradingview/tum-enstrumanlar', { cache: 'no-store' });
+        const json = await res.json();
+        if (!json.success || !json.veri || !json.veri.length) {
+          statusEl.textContent = '⚠ Canlı veri şu anda alınamadı (' + (json.error || 'bilinmeyen hata') + '). Sahte veri gösterilmez, tablo boş kalır.';
+          tbody.innerHTML = '<tr><td colspan="6" style="padding:24px;text-align:center;color:var(--mute)">Veri alınamadı.</td></tr>';
+          return;
+        }
+
+        document.getElementById('statTotal').textContent = json.adet.toLocaleString('tr-TR');
+        const heroCountEl = document.getElementById('heroCount'); if (heroCountEl) heroCountEl.textContent = '(' + json.adet.toLocaleString('tr-TR') + ' ENSTRÜMAN)';
+        document.getElementById('statHisse').textContent = (json.sayimlar.hisse || 0).toLocaleString('tr-TR');
+        document.getElementById('statSertifika').textContent = (json.sayimlar.sertifika || 0).toLocaleString('tr-TR');
+        document.getElementById('statFon').textContent = (json.sayimlar.fon || 0).toLocaleString('tr-TR');
+
+        tbody.innerHTML = json.veri.map(item => {
+          const meta = TYPE_LABELS[item.type] || { cat: 'diger', badge: 'type-hisse', label: item.type || 'Diğer' };
+          const symLower = item.code.toLowerCase();
+          const price = item.close != null ? item.close.toLocaleString('tr-TR', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' TL' : '—';
+          const chg = item.change;
+          const chgClass = chg == null ? '' : (chg >= 0 ? 'chg-up' : 'chg-dn');
+          const chgStr = chg == null ? '—' : (chg >= 0 ? '+' : '') + chg.toFixed(2).replace('.', ',') + '%';
+          const searchText = (item.code + ' ' + (item.name || '')).toLowerCase();
+          return `<tr data-cat="${meta.cat}" data-search="${searchText.replace(/"/g,'')}">
+            <td><b style="color:var(--text); font-family:monospace; font-size:14px;">${item.code}</b></td>
+            <td><span class="badge-type ${meta.badge}">${meta.label}</span></td>
+            <td>${(item.name || item.code)}</td>
+            <td style="font-weight:700;">${price}</td>
+            <td class="${chgClass}">${chgStr}</td>
+            <td><a aria-label="Sayfa Bağlantısı" class="btn-view" href="hisse-${symLower}.html">Detay</a></td>
+          </tr>`;
+        }).join('');
+
+        statusEl.textContent = json.adet.toLocaleString('tr-TR') + ' enstrüman · Kaynak: TradingView Scanner · Güncelleme: ' + new Date(json.guncellemeZamani).toLocaleTimeString('tr-TR');
+        applyFilters();
+      } catch (e) {
+        statusEl.textContent = '⚠ Bağlantı hatası: ' + e.message;
+        tbody.innerHTML = '<tr><td colspan="6" style="padding:24px;text-align:center;color:var(--mute)">Bağlantı hatası.</td></tr>';
+      }
+    }
+
+    let currentCat = 'all';
+
+    function filterCategory(cat, btn) {
+      currentCat = cat;
+      document.querySelectorAll('.tab-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyFilters();
+    }
+
+    function searchInstruments() {
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const q = document.getElementById('searchInput').value.toLowerCase().trim();
+      const rows = document.querySelectorAll('#instrumentTableBody tr');
+
+      rows.forEach(row => {
+        const cat = row.getAttribute('data-cat');
+        const text = row.getAttribute('data-search').toLowerCase();
+
+        const matchCat = (currentCat === 'all' || cat === currentCat);
+        const matchSearch = (!q || text.includes(q));
+
+        if (matchCat && matchSearch) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    }
+
+    loadInstruments();
+    setInterval(loadInstruments, 60000); // her 1 dakikada bir otomatik yenile
+  </script>
+  <footer style="background: #08121E; border-top: 1px solid rgba(255,255,255,0.08); padding: 40px 20px 25px 20px; width: 100%; margin-top: 50px;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 25px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 20px;">
+        <div>
+          <div style="font-size: 20px; font-weight: 800; color: #C8A96B; letter-spacing: 0.5px;">BORSA KAYNAK</div>
+          <div style="font-size: 13px; color: #D0DCEB; margin-top: 4px;">Türkiye Canlı BİST Borsa İstanbul Piyasa Verileri ve Analiz Portalı</div>
+        </div>
+        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+          <a href="index.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Anasayfa</a>
+          <a href="piyasalar.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Piyasalar</a>
+          <a href="bist-liderler.html" style="color: #C8A96B; text-decoration: none; font-size: 13px; font-weight: 700;">🔥 BİST Liderler</a>
+          <a href="radar.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Radar</a>
+          <a href="bist-tum-enstrumanlar.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Tüm Enstrümanlar</a>
+          <a href="veri-dogrulama.html" style="color: #00B56E; text-decoration: none; font-size: 13px; font-weight: 700;">🔍 Veri Doğrulama</a>
+          <a href="karsilastirma-kontrol.html" style="color: #C8A96B; text-decoration: none; font-size: 13px; font-weight: 700;">📊 TV Karşılaştırma</a>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 12px; color: #8B98A9;">
+        <div>© 2026 BorsaKaynak. Tüm hakları saklıdır. Veriler 0ms gecikmeli canlı seans akışıdır.</div>
+        <div>Yasal Uyarı: Burada yer alan yatırım bilgi, yorum ve tavsiyeleri yatırım danışmanlığı kapsamında değildir.</div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

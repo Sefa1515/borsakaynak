@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <link rel="dns-prefetch" href="https://s3.tradingview.com" />
+  <link rel="dns-prefetch" href="https://scanner.tradingview.com" />
+  <link rel="dns-prefetch" href="https://web-api.forinvestcdn.com" />
+
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0"/>
+  <meta http-equiv="Pragma" content="no-cache"/>
+  <meta http-equiv="Expires" content="0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Borsa Kaynak Preloader</title>
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #060b14; /* Logodaki koyu lacivert/siyah arka plan */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .preloader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* SVG Animasyonları */
+  .network-svg {
+    width: 250px;
+    height: 250px;
+    animation: rotateSlow 20s linear infinite;
+  }
+
+  @keyframes rotateSlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .line {
+    stroke: rgba(255, 255, 255, 0.4);
+    stroke-width: 1.5;
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: drawLines 2s ease-in-out infinite alternate;
+  }
+
+  .node {
+    fill: #3b82f6; /* Mavi noktalar */
+    opacity: 0;
+    animation: pulseNode 2s ease-in-out infinite alternate;
+  }
+  
+  .node.white {
+    fill: #ffffff; /* Beyaz noktalar */
+  }
+
+  .node.light-blue {
+    fill: #93c5fd; /* Açık mavi noktalar */
+  }
+
+  @keyframes drawLines {
+    0% { stroke-dashoffset: 100; opacity: 0; }
+    50% { opacity: 1; }
+    100% { stroke-dashoffset: 0; opacity: 1; }
+  }
+
+  @keyframes pulseNode {
+    0% { opacity: 0; transform: scale(0.5); }
+    100% { opacity: 1; transform: scale(1.2); }
+  }
+
+  /* Merkez Logo Animasyonu */
+  .center-circle {
+    fill: none;
+    stroke: #3b82f6;
+    stroke-width: 4;
+    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.8));
+    animation: pulseCircle 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulseCircle {
+    0% { filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.5)); stroke-width: 3;}
+    100% { filter: drop-shadow(0 0 15px rgba(59, 130, 246, 1)); stroke-width: 5;}
+  }
+
+  .center-text {
+    fill: white;
+    font-size: 28px;
+    font-weight: bold;
+    font-family: 'Arial', sans-serif;
+    letter-spacing: -1px;
+    /* Geri dönüş animasyonunu dengelemek için ters döndür */
+    animation: rotateBack 20s linear infinite; 
+    transform-origin: 125px 125px;
+  }
+
+  @keyframes rotateBack {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-360deg); }
+  }
+
+  /* Alt Metin Stilleri ve Animasyonları */
+  .brand-text-container {
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .brand-name {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out 0.5s forwards;
+  }
+
+  .brand-name .white { color: #ffffff; }
+  .brand-name .blue { color: #3b82f6; }
+  .brand-name .dotcom { color: #ffffff; font-size: 24px; font-weight: normal; }
+
+  .slogan-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out 1s forwards;
+  }
+
+  .slogan-line {
+    width: 40px;
+    height: 1px;
+    background-color: #3b82f6;
+  }
+
+  .slogan {
+    color: #a1a1aa;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  @keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+</style>
+
+  <!-- Schema.org Structured Data for AI Agents & Search Engines -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FinancialService",
+    "name": "BorsaKaynak",
+    "url": "https://borsakaynak.com/",
+    "logo": "https://borsakaynak.com/logo.jpg",
+    "description": "Borsa İstanbul (BIST) 586 şirket hissesi, 674 enstrüman, canlı borsa fiyatları, para giriş/çıkış analizleri ve TradingView entegrasyonu.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://borsakaynak.com/piyasalar.html?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta property="og:image" content="https://borsakaynak.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://borsakaynak.com/og-image.png">
+<link rel="stylesheet" href="header-footer-shared.css">
+</head>
+<body><div class="bk-shared-chrome">
+<div class="ticker">
+<div class="ticker-track" id="ticker-track">
+<div class="tick" data-tsym="XU100"><span class="tick-dot"></span><span class="tick-name">BIST 100</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="USDTRY"><span class="tick-name">USD/TRY</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="EURTRY"><span class="tick-name">EUR/TRY</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="GBPTRY"><span class="tick-name">GBP/TRY</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="XAUGRAM"><span class="tick-name">ALTIN/GR</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="XAUUSD"><span class="tick-name">XAU/USD</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="BRENT"><span class="tick-name">BRENT</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="BTCUSDT"><span class="tick-name">BTC/USDT</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="ETHUSDT"><span class="tick-name">ETH/USDT</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="DAX"><span class="tick-name">DAX</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="SPX"><span class="tick-name">S&amp;P 500</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="IXIC"><span class="tick-name">NASDAQ</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+</div>
+</div>
+<!-- HEADER -->
+<header class="header">
+<div class="container">
+<nav class="nav">
+<a aria-label="Sayfa Bağlantısı" href="index.html" style="text-decoration:none;color:inherit;display:flex;align-items:center">
+<img src="logo-kaynak.png" alt="BorsaKaynak" style="height:32px;width:auto;flex-shrink:0">
+</a>
+<div class="nav-menu">
+<a aria-label="Sayfa Bağlantısı" href="index.html">Anasayfa</a>
+<a aria-label="Sayfa Bağlantısı" href="piyasalar.html">Piyasalar</a>
+<a aria-label="Sayfa Bağlantısı" href="piyasa-hareketleri.html">Piyasa Hareketleri</a>
+<a aria-label="Sayfa Bağlantısı" href="endeksler.html">Endeksler</a>
+<a aria-label="Sayfa Bağlantısı" href="sektorler.html">Sektörler</a>
+<a aria-label="Sayfa Bağlantısı" href="haberler.html">Haberler</a>
+<a aria-label="Sayfa Bağlantısı" href="analizler.html">Analizler</a>
+<a aria-label="Sayfa Bağlantısı" href="araci-kurum.html">Aracı Kurum</a>
+<a aria-label="Sayfa Bağlantısı" href="halka-arz.html">Halka Arz</a>
+<a aria-label="Sayfa Bağlantısı" href="viop.html">VİOP</a>
+<a aria-label="Sayfa Bağlantısı" href="kripto.html">Kripto</a>
+</div>
+<div class="nav-actions"><button class="ham-btn" aria-label="Menü" aria-expanded="false"><span></span><span></span><span></span></button>
+<button aria-label="BİST Veri Butonu" class="nav-btn"><svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg></button>
+<button aria-label="BİST Veri Butonu" class="nav-btn"><svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg></button>
+</div>
+</nav>
+</div>
+</header>
+<div class="mob-nav" id="mobNav">
+<button class="mob-nav-close" aria-label="Kapat">✕</button>
+
+<!-- Mini canlı ticker -->
+<div class="mob-ticker-grid">
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">BIST 100</span>
+    <span class="mob-tick-val" id="ham-bist">—</span>
+    <span class="mob-tick-chg" id="ham-bist-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">USD/TRY</span>
+    <span class="mob-tick-val" id="ham-usd">—</span>
+    <span class="mob-tick-chg" id="ham-usd-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">EUR/TRY</span>
+    <span class="mob-tick-val" id="ham-eur">—</span>
+    <span class="mob-tick-chg" id="ham-eur-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">ALTIN/GR</span>
+    <span class="mob-tick-val" id="ham-altin">—</span>
+    <span class="mob-tick-chg" id="ham-altin-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">BTC/USD</span>
+    <span class="mob-tick-val" id="ham-btc">—</span>
+    <span class="mob-tick-chg" id="ham-btc-chg">—</span>
+  </div>
+</div>
+<div class="mob-nav-divider"></div>
+
+<div class="mob-nav-section-title">ANA SAYFALAR</div>
+  <a aria-label="Sayfa Bağlantısı" href="index.html">🏠 Anasayfa</a>
+  <a aria-label="Sayfa Bağlantısı" href="piyasalar.html">📈 Piyasalar</a>
+  <a aria-label="Sayfa Bağlantısı" href="sektorler.html">🏭 Sektörler</a>
+  <a aria-label="Sayfa Bağlantısı" href="haberler.html">📰 Haberler</a>
+  <a aria-label="Sayfa Bağlantısı" href="analizler.html">📊 Analizler</a>
+  <a aria-label="Sayfa Bağlantısı" href="model-portfoy.html">💼 Model Portföy</a>
+<div class="mob-nav-divider"></div>
+<div class="mob-nav-section-title">ENDEKSİ</div>
+  <a aria-label="Sayfa Bağlantısı" href="endeksler.html">📊 Tüm Endeksler</a>
+  <a aria-label="Sayfa Bağlantısı" href="endeks-XU100.html">📈 BIST 100</a>
+  <a aria-label="Sayfa Bağlantısı" href="endeks-XU030.html">📉 BIST 30</a>
+<div class="mob-nav-divider"></div>
+<div class="mob-nav-section-title">YATIRIM</div>
+  <a aria-label="Sayfa Bağlantısı" href="araci-kurum.html">🏦 Aracı Kurum</a>
+  <a aria-label="Sayfa Bağlantısı" href="halka-arz.html">📋 Halka Arz</a>
+  <a aria-label="Sayfa Bağlantısı" href="viop.html">📉 VİOP</a>
+  <a aria-label="Sayfa Bağlantısı" href="kripto.html">₿ Kripto</a>
+<div class="mob-nav-divider"></div>
+  <a aria-label="Sayfa Bağlantısı" href="hakkimizda.html">ℹ️ Hakkımızda</a>
+</div>
+<div class="premium-command"><div class="premium-command__inner"><label class="premium-search">⌕ <input data-premium-search="" placeholder="Site içinde hisse, haber, analiz veya halka arz ara..."/></label><div class="premium-actions"><button aria-label="BİST Veri Butonu" class="premium-btn" data-theme-toggle="">🌗 Tema</button><button aria-label="BİST Veri Butonu" class="premium-btn" data-export=".premium-table">⬇ Excel/CSV</button><button aria-label="BİST Veri Butonu" class="premium-btn" data-open-modal="#notifyModal">🔔 Bildirim</button><a aria-label="Sayfa Bağlantısı" class="premium-btn gold" href="model-portfoy.html">PRO Model Portföy</a></div></div></div>
+<script>
+  // Tema (aydınlık/koyu) değiştirici
+  (function () {
+    const STORAGE_KEY = 'bk-theme-light';
+    function applyTheme(isLight) {
+      document.body.classList.toggle('premium-light', isLight);
+    }
+    const saved = localStorage.getItem(STORAGE_KEY) === '1';
+    applyTheme(saved);
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.querySelector('[data-theme-toggle]');
+      if (!btn) return;
+      btn.addEventListener('click', () => {
+        const nowLight = !document.body.classList.contains('premium-light');
+        applyTheme(nowLight);
+        localStorage.setItem(STORAGE_KEY, nowLight ? '1' : '0');
+      });
+    });
+  })();
+</script>
+
+<script>
+// Site geneli arama kutusu: Enter'a basilinca piyasalar.html'e yonlendirir.
+(function(){
+  document.querySelectorAll('[data-premium-search]').forEach(function(inp){
+    inp.addEventListener('keydown', function(e){
+      if (e.key === 'Enter') {
+        var q = inp.value.trim();
+        if (q) window.location.href = 'piyasalar.html?q=' + encodeURIComponent(q);
+      }
+    });
+  });
+})();
+</script>
+</div>
+
+
+<div class="preloader-container">
+  
+  <!-- Dinamik Ağ Animasyonu -->
+  <svg class="network-svg" viewBox="0 0 250 250">
+    <!-- Lines -->
+    <!-- Yukarı ve Çapraz -->
+    <line x1="125" y1="125" x2="125" y2="20" class="line" style="animation-delay: 0.1s" />
+    <line x1="125" y1="125" x2="160" y2="35" class="line" style="animation-delay: 0.3s" />
+    <line x1="125" y1="125" x2="200" y2="50" class="line" style="animation-delay: 0.5s" />
+    <line x1="125" y1="125" x2="225" y2="90" class="line" style="animation-delay: 0.2s" />
+    
+    <!-- Sağ ve Çapraz Alt -->
+    <line x1="125" y1="125" x2="235" y2="125" class="line" style="animation-delay: 0.4s" />
+    <line x1="125" y1="125" x2="220" y2="170" class="line" style="animation-delay: 0.6s" />
+    <line x1="125" y1="125" x2="190" y2="210" class="line" style="animation-delay: 0.1s" />
+    
+    <!-- Alt ve Çapraz Sol Alt -->
+    <line x1="125" y1="125" x2="150" y2="230" class="line" style="animation-delay: 0.5s" />
+    <line x1="125" y1="125" x2="125" y2="240" class="line" style="animation-delay: 0.3s" />
+    <line x1="125" y1="125" x2="90" y2="220" class="line" style="animation-delay: 0.7s" />
+    <line x1="125" y1="125" x2="50" y2="190" class="line" style="animation-delay: 0.2s" />
+    
+    <!-- Sol ve Çapraz Sol Üst -->
+    <line x1="125" y1="125" x2="25" y2="150" class="line" style="animation-delay: 0.6s" />
+    <line x1="125" y1="125" x2="15" y2="125" class="line" style="animation-delay: 0.4s" />
+    <line x1="125" y1="125" x2="35" y2="85" class="line" style="animation-delay: 0.1s" />
+    <line x1="125" y1="125" x2="60" y2="45" class="line" style="animation-delay: 0.5s" />
+    <line x1="125" y1="125" x2="95" y2="25" class="line" style="animation-delay: 0.3s" />
+
+    <!-- Nodes (Noktalar) -->
+    <!-- Stillerine göre ve animasyon gecikmelerine göre (transform-origin ile) -->
+    <circle cx="125" cy="20" r="4" class="node" style="animation-delay: 0.1s; transform-origin: 125px 20px;" />
+    <circle cx="160" cy="35" r="3" class="node white" style="animation-delay: 0.3s; transform-origin: 160px 35px;" />
+    <circle cx="200" cy="50" r="5" class="node light-blue" style="animation-delay: 0.5s; transform-origin: 200px 50px;" />
+    <circle cx="225" cy="90" r="3" class="node" style="animation-delay: 0.2s; transform-origin: 225px 90px;" />
+    
+    <circle cx="235" cy="125" r="5" class="node light-blue" style="animation-delay: 0.4s; transform-origin: 235px 125px;" />
+    <circle cx="220" cy="170" r="4" class="node white" style="animation-delay: 0.6s; transform-origin: 220px 170px;" />
+    <circle cx="190" cy="210" r="6" class="node" style="animation-delay: 0.1s; transform-origin: 190px 210px;" />
+    
+    <circle cx="150" cy="230" r="3" class="node light-blue" style="animation-delay: 0.5s; transform-origin: 150px 230px;" />
+    <circle cx="125" cy="240" r="5" class="node white" style="animation-delay: 0.3s; transform-origin: 125px 240px;" />
+    <circle cx="90" cy="220" r="4" class="node" style="animation-delay: 0.7s; transform-origin: 90px 220px;" />
+    <circle cx="50" cy="190" r="5" class="node light-blue" style="animation-delay: 0.2s; transform-origin: 50px 190px;" />
+    
+    <circle cx="25" cy="150" r="3" class="node white" style="animation-delay: 0.6s; transform-origin: 25px 150px;" />
+    <circle cx="15" cy="125" r="5" class="node" style="animation-delay: 0.4s; transform-origin: 15px 125px;" />
+    <circle cx="35" cy="85" r="4" class="node light-blue" style="animation-delay: 0.1s; transform-origin: 35px 85px;" />
+    <circle cx="60" cy="45" r="3" class="node white" style="animation-delay: 0.5s; transform-origin: 60px 45px;" />
+    <circle cx="95" cy="25" r="6" class="node" style="animation-delay: 0.3s; transform-origin: 95px 25px;" />
+
+    <!-- Merkez Logo (Sürekli Ortada Kalacak) -->
+    <circle cx="125" cy="125" r="28" fill="#060b14" class="center-circle" />
+    <text x="125" y="135" text-anchor="middle" class="center-text">BK</text>
+  </svg>
+
+  <!-- Marka Metinleri -->
+  <div class="brand-text-container">
+    <div class="brand-name">
+      <span class="white">BORSA</span><span class="blue">KAYNAK</span><span class="dotcom">.com</span>
+    </div>
+    <div class="slogan-container">
+      <div class="slogan-line"></div>
+      <div class="slogan">DOĞRU KAYNAK, GÜÇLÜ YATIRIM</div>
+      <div class="slogan-line"></div>
+    </div>
+  </div>
+
+</div>
+
+<script src=bk-live.js></script>
+  <footer style="background: #08121E; border-top: 1px solid rgba(255,255,255,0.08); padding: 40px 20px 25px 20px; width: 100%; margin-top: 50px;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 25px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 20px;">
+        <div>
+          <div style="font-size: 20px; font-weight: 800; color: #C8A96B; letter-spacing: 0.5px;">BORSA KAYNAK</div>
+          <div style="font-size: 13px; color: #D0DCEB; margin-top: 4px;">Türkiye Canlı BİST Borsa İstanbul Piyasa Verileri ve Analiz Portalı</div>
+        </div>
+        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+          <a href="index.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Anasayfa</a>
+          <a href="piyasalar.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Piyasalar</a>
+          <a href="bist-liderler.html" style="color: #C8A96B; text-decoration: none; font-size: 13px; font-weight: 700;">🔥 BİST Liderler</a>
+          <a href="radar.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Radar</a>
+          <a href="bist-tum-enstrumanlar.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Tüm Enstrümanlar</a>
+          <a href="veri-dogrulama.html" style="color: #00B56E; text-decoration: none; font-size: 13px; font-weight: 700;">🔍 Veri Doğrulama</a>
+          <a href="karsilastirma-kontrol.html" style="color: #C8A96B; text-decoration: none; font-size: 13px; font-weight: 700;">📊 TV Karşılaştırma</a>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 12px; color: #8B98A9;">
+        <div>© 2026 BorsaKaynak. Tüm hakları saklıdır. Veriler 0ms gecikmeli canlı seans akışıdır.</div>
+        <div>Yasal Uyarı: Burada yer alan yatırım bilgi, yorum ve tavsiyeleri yatırım danışmanlığı kapsamında değildir.</div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

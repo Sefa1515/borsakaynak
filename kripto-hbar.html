@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://s3.tradingview.com" />
+  <link rel="dns-prefetch" href="https://scanner.tradingview.com" />
+  <link rel="dns-prefetch" href="https://web-api.forinvestcdn.com" />
+
+  <!-- Çerez/Önbellek engeli -->
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hedera (HBAR) Fiyatı &mdash; BorsaKaynak Kripto</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&amp;family=Geist+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{overflow-x:hidden;max-width:100%}
+:root{--bg:#08121E;--bg2:#0B1623;--panel:#111C2B;--p2:#16243A;--line:rgba(255,255,255,.06);--l2:rgba(255,255,255,.1);--text:#F3F7FA;--dim:#B0B9C5;--mute:#6B7A8D;--accent:#C8A96B;--G:#00B56E;--R:#E04F5F;--Gbg:rgba(0,181,110,.1);--Rbg:rgba(224,79,95,.1);--f:"Geist",-apple-system,sans-serif;--m:"Geist Mono",monospace}
+html[data-theme=light]{--bg:#F0F4F8;--bg2:#E8EDF5;--panel:#FFF;--p2:#F4F7FB;--line:rgba(0,0,0,.07);--l2:rgba(0,0,0,.12);--text:#0D1B2E;--dim:#3D5068;--mute:#8B98A9;--Gbg:rgba(0,181,110,.08);--Rbg:rgba(224,79,95,.08);--panel-hi:#EFF3F8}
+body{font-family:var(--f);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+.ticker{background:var(--bg2);border-bottom:1px solid var(--line);height:40px;overflow:hidden;position:relative}
+.ticker::before,.ticker::after{content:"";position:absolute;top:0;bottom:0;width:70px;z-index:2;pointer-events:none}
+.ticker::before{left:0;background:linear-gradient(90deg,var(--bg2),transparent)}
+.ticker::after{right:0;background:linear-gradient(270deg,var(--bg2),transparent)}
+.tt{display:flex;gap:36px;align-items:center;height:100%;width:max-content;animation:sc 55s linear infinite;padding-left:20px}
+.ticker:hover .tt{animation-play-state:paused}
+@keyframes sc{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.tk{display:flex;align-items:center;gap:7px;white-space:nowrap;font-size:12px}
+.tk-n{color:var(--dim);font-weight:500}.tk-v{color:var(--text);font-weight:600;font-family:var(--m)}.tk-c{font-family:var(--m);font-size:11px;font-weight:600}
+.tk-c.up{color:var(--G)}.tk-c.dn{color:var(--R)}.td{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.hdr{background:rgba(8,18,30,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50}
+.nav{max-width:1320px;margin:0 auto;padding:13px 28px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+.bm{width:34px;height:34px;border-radius:7px;background:linear-gradient(135deg,#C8A96B,#9d8350);display:grid;place-items:center;font-weight:800;color:#08121E;font-size:16px;flex-shrink:0}
+.bt h1{font-size:14px;font-weight:700;letter-spacing:-.02em;line-height:1;margin:0}.bt small{font-size:9px;color:var(--mute);letter-spacing:.25em;margin-top:2px;display:block}
+.nl{display:flex;align-items:center;gap:2px}
+.nl a{padding:6px 10px;font-size:12.5px;font-weight:500;color:var(--dim);border-radius:6px;transition:all .18s;text-decoration:none}
+.nl a:hover,.nl a.active{color:var(--text);background:var(--p2)}
+.nact{display:flex;gap:6px}
+.nb{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--panel);cursor:pointer;color:var(--dim);font-size:14px;display:grid;place-items:center;transition:all .18s}
+.nb:hover{border-color:var(--accent);color:var(--accent)}
+@media(max-width:768px){.nl{display:flex;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none;gap:2px}.nl::-webkit-scrollbar{display:none}.nl a{flex-shrink:0}.nav{padding:11px 16px}}
+.hero{background:var(--bg2);border-bottom:1px solid var(--line);padding:24px 0 0}
+.hw{max-width:1320px;margin:0 auto;padding:0 28px}
+@media(max-width:600px){.hw,.cw{padding:0 16px}}
+.bc{font-size:12px;color:var(--mute);margin-bottom:10px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.bc a{color:var(--mute);text-decoration:none}.bc a:hover{color:var(--accent)}
+.htop{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-bottom:20px}
+.hleft{display:flex;align-items:center;gap:14px}
+.kbadge{width:58px;height:58px;border-radius:13px;background:linear-gradient(135deg,var(--p2),var(--panel));border:2px solid var(--l2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--accent);text-align:center;line-height:1.2;padding:6px;flex-shrink:0;letter-spacing:-.02em}
+.hname{font-size:24px;font-weight:700;letter-spacing:-.02em}
+.hsub{font-size:13px;color:var(--mute);margin-top:4px}
+.hkat{display:inline-flex;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:rgba(200,169,107,.12);color:var(--accent);border:1px solid rgba(200,169,107,.2);margin-top:6px}
+.pblock{text-align:right}
+.bigp{font-family:var(--m);font-size:34px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.pchg{font-family:var(--m);font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:flex-end;gap:8px;margin-top:5px}
+.pchg.up{color:var(--G)}.pchg.dn{color:var(--R)}
+.ptime{font-size:11px;color:var(--mute);margin-top:4px}
+.mrow{display:flex;border-top:1px solid var(--line);flex-wrap:wrap}
+.mi{flex:1;min-width:110px;padding:13px 18px;border-right:1px solid var(--line)}
+.mi:last-child{border-right:none}
+.mil{font-size:10px;color:var(--mute);letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px}
+.miv{font-family:var(--m);font-size:14px;font-weight:600}
+html[data-theme=light] .miv{color:#0D1B2E}
+.stat-row{display:flex;gap:16px;padding:10px 18px;border-top:1px solid var(--line);flex-wrap:wrap}
+.stat{display:flex;align-items:center;gap:6px;font-size:12px}
+.sd{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.sd.up{background:var(--G)}.sd.dn{background:var(--R)}.sd.neu{background:var(--mute)}
+@media(max-width:600px){.mi{min-width:50%;border-bottom:1px solid var(--line)}}
+.ctabs{max-width:1320px;margin:0 auto;padding:12px 28px;display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid var(--line)}
+@media(max-width:600px){.ctabs{padding:10px 16px}}
+.ctab{padding:7px 16px;border-radius:7px;font-size:12px;font-weight:600;color:var(--dim);cursor:pointer;border:none;background:transparent;font-family:var(--f);transition:all .15s;white-space:nowrap}
+.ctab:hover{background:var(--p2);color:var(--text)}.ctab.active{background:var(--accent);color:#08121E}
+.cw{max-width:1320px;margin:0 auto;padding:20px 28px 40px}
+.tvc{background:var(--panel);border:1px solid var(--line);border-radius:13px;overflow:hidden;height:460px;margin-bottom:22px}
+.mg{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:24px}
+@media(max-width:960px){.mg{grid-template-columns:1fr}}
+.tc{background:var(--panel);border:1px solid var(--line);border-radius:13px;overflow:hidden}
+.tc-h{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap;gap:8px}
+.tc-t{font-size:13px;font-weight:700}.tc-cnt{font-size:11px;color:var(--mute)}
+.srch{padding:7px 12px;border-radius:7px;border:1px solid var(--line);background:var(--bg2);color:var(--text);font-size:12.5px;outline:none;font-family:var(--f);width:155px;transition:border-color .18s}
+.srch:focus{border-color:var(--accent)}.srch::placeholder{color:var(--mute)}
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{padding:9px 14px;font-family:var(--m);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);border-bottom:1px solid var(--l2);text-align:left;background:rgba(255,255,255,.02);cursor:pointer;white-space:nowrap;user-select:none}
+.tbl th:hover{color:var(--accent)}
+.tbl td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.03);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}.tbl tr:hover td{background:rgba(255,255,255,.02)}
+.n{font-family:var(--m);font-size:11px;color:var(--mute);width:30px}
+.sym{display:flex;align-items:center;gap:9px}
+.logo{width:32px;height:32px;border-radius:50%;background:#fff;border:1px solid rgba(0,0,0,.08);overflow:hidden;flex-shrink:0;display:grid;place-items:center}
+.logo img{width:100%;height:100%;object-fit:cover;display:block}
+.info{display:flex;flex-direction:column;gap:1px}.info b{font-size:13px;font-weight:600}.info small{font-size:10px;color:var(--mute);white-space:nowrap}
+.r{text-align:right}.fw{font-family:var(--m);font-size:13px;font-weight:600}.muted{font-family:var(--m);font-size:11.5px;color:var(--mute)}
+.badge{display:inline-flex;padding:3px 8px;border-radius:5px;font-family:var(--m);font-size:11.5px;font-weight:600}
+.badge.up{background:var(--Gbg);color:var(--G)}.badge.dn{background:var(--Rbg);color:var(--R)}
+.ekc{background:var(--panel);border:1px solid var(--line);border-radius:13px;overflow:hidden}
+.ekh{padding:14px 18px;border-bottom:1px solid var(--line);font-size:12px;font-weight:700;color:var(--mute);letter-spacing:.1em;text-transform:uppercase}
+.er{display:flex;align-items:center;gap:9px;padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.03);transition:background .12s}
+.er:last-child{border-bottom:none}.er:hover{background:var(--p2)}
+.elogo{width:26px;height:26px;border-radius:50%;background:#fff;border:1px solid rgba(0,0,0,.08);overflow:hidden;flex-shrink:0;display:grid;place-items:center}
+.elogo img{width:100%;height:100%;object-fit:cover;display:block}
+.ecode{font-size:12px;font-weight:600;min-width:48px}
+.ebar-wrap{flex:1;height:12px;background:var(--bg2);border-radius:6px;overflow:hidden;position:relative}
+.ebar{position:absolute;top:0;height:100%;border-radius:6px;left:0}
+.ebar.up{background:var(--G)}.ebar.dn{background:var(--R)}
+.epct{font-family:var(--m);font-size:11px;font-weight:600;min-width:44px;text-align:right}
+.epct.up{color:var(--G)}.epct.dn{color:var(--R)}.ew{font-size:10px;color:var(--mute);min-width:32px;text-align:right}
+.sec{font-size:12px;font-weight:600;color:var(--mute);letter-spacing:.12em;text-transform:uppercase;padding:4px 0 12px;display:flex;align-items:center;gap:10px}
+.sec::after{content:"";flex:1;height:1px;background:var(--line)}
+.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin-bottom:32px}
+.sc{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;text-decoration:none;color:inherit;transition:all .2s;display:flex;flex-direction:column;gap:5px}
+.sc:hover{transform:translateY(-2px)}.sc.up:hover{border-color:rgba(0,181,110,.4)}.sc.dn:hover{border-color:rgba(224,79,95,.4)}
+.sc-name{font-size:13px;font-weight:600}.sc-code{font-size:10px;color:var(--mute);letter-spacing:.08em}
+.sc-price{font-family:var(--m);font-size:16px;font-weight:700;margin-top:3px}
+.sc-chg{font-family:var(--m);font-size:12px;font-weight:600}.sc-chg.up{color:var(--G)}.sc-chg.dn{color:var(--R)}
+.ft{border-top:1px solid var(--line);padding:22px 28px;background:var(--bg2);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.ft-c{font-size:12px;color:var(--mute)}
+html[data-theme=light] .hdr{background:rgba(240,244,248,.95)}
+html[data-theme=light] .tc,html[data-theme=light] .ekc,html[data-theme=light] .tvc,html[data-theme=light] .sc{background:#fff}
+html[data-theme=light] .srch{background:#f4f7fb}
+html[data-theme=light] .tbl th{background:rgba(0,0,0,.02)}
+html[data-theme=light] .tbl tr:hover td{background:rgba(0,0,0,.015)}
+html[data-theme=light] .hero{background:#e8edf5}
+
+/* ===== TREEMAP HEATMAP (uniform grid) ===== */
+.hm-section{margin-bottom:24px}
+.hm-card{background:var(--panel);border:1px solid var(--line);border-radius:13px;overflow:hidden}
+.hm-head{display:flex;align-items:center;justify-content:space-between;padding:13px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap;gap:8px}
+.hm-htitle{font-size:13px;font-weight:700}
+.hm-stats{display:flex;gap:14px;font-size:12px}
+.hm-st{display:flex;align-items:center;gap:5px}
+.hm-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.hm-dot.up{background:#00B56E;box-shadow:0 0 6px #00B56E}.hm-dot.dn{background:#E04F5F;box-shadow:0 0 6px #E04F5F}.hm-dot.neu{background:#6B7A8D}
+.hm-legend{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--mute)}
+.hm-lbar{display:flex;gap:2px}
+.hm-lb{width:11px;height:11px;border-radius:2px}
+.hm-tree{padding:12px;display:flex;flex-wrap:wrap;gap:4px;align-content:flex-start;min-height:170px}
+.hmc{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  border-radius:7px;cursor:pointer;overflow:hidden;position:relative;
+  transition:filter .15s,transform .13s;
+  border:1px solid rgba(255,255,255,.06);
+}
+.hmc:hover{filter:brightness(1.22);transform:scale(1.06);z-index:8;border-color:rgba(255,255,255,.2)}
+.hmc-logo{position:absolute;top:4px;left:4px;width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,.18);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.hmc-logo img{width:100%;height:100%;object-fit:cover}
+.hmc-code{font-size:11px;font-weight:700;color:#fff;letter-spacing:.04em;text-shadow:0 1px 3px rgba(0,0,0,.6);line-height:1;z-index:1}
+.hmc-chg{font-size:9.5px;font-weight:600;color:rgba(255,255,255,.85);margin-top:2px;font-family:var(--m);text-shadow:0 1px 2px rgba(0,0,0,.5);z-index:1}
+.hm-footer{padding:9px 18px;border-top:1px solid var(--line);font-size:11px;color:var(--mute);display:flex;gap:16px;flex-wrap:wrap}
+
+
+/* ======== MOBİL UYUM ======== */
+@media(max-width:768px){
+  .nav{padding:10px 14px}
+  .nl{display:flex;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none;gap:2px}.nl::-webkit-scrollbar{display:none}.nl a{flex-shrink:0}
+  .nact .nb{width:30px;height:30px;font-size:13px}
+}
+@media(max-width:600px){
+  .hw,.cw{padding:0 14px!important}
+  .hero,.ahero{padding:20px 0 0!important}
+  .hero-title,.htitle,.a-title,.hname,.hero-title{font-size:22px!important}
+  .mrow{overflow-x:auto}
+  .mi{min-width:40%;font-size:12px}
+  .mgrid,.agrid,.main-grid{grid-template-columns:1fr!important}
+  .summary-strip{grid-template-columns:1fr 1fr!important}
+  .sum-value{font-size:26px!important}
+  .twin-panels{grid-template-columns:1fr!important}
+  .chart-grid{grid-template-columns:1fr!important}
+  .tvc-mid{grid-template-columns:1fr 1fr!important}
+  .sg{grid-template-columns:1fr 1fr!important}
+  .eg{grid-template-columns:1fr 1fr!important}
+  .hm-tree{padding:8px}
+  .hmc{min-width:48px!important;min-height:44px!important}
+  .hmc-code{font-size:9px!important}
+  .hmc-chg{font-size:8px!important}
+  .tbl th,.tbl td{padding:7px 8px;font-size:11.5px}
+  .tv-wrap,.tvc{height:320px!important}
+  .ctabs{gap:2px}
+  .ctab{padding:5px 10px;font-size:11px}
+  .fb,.fbar{gap:6px;padding:10px 14px}
+  .flt{padding:5px 12px;font-size:11px}
+  .breaking{flex-direction:column;height:auto}
+  .br-all{display:none}
+  .bc{font-size:11px}
+  .ft{padding:16px 14px;flex-direction:column;gap:8px;align-items:flex-start}
+}
+@media(max-width:380px){
+  .summary-strip{grid-template-columns:1fr!important}
+  .eg{grid-template-columns:1fr!important}
+  .sg{grid-template-columns:1fr!important}
+}
+
+
+/* ===== INLINE STYLE LIGHT THEME OVERRIDE ===== */
+html[data-theme=light] [style*="background:#111C2B"],
+html[data-theme=light] [style*="background: #111C2B"],
+html[data-theme="light"] body [style*="background:#111C2B"],
+html[data-theme="light"] body [style*="background: #111C2B"] {
+  background: #FFFFFF !important;
+  border-color: rgba(13,27,46,.1) !important;
+}
+
+html[data-theme=light] [style*="background:#0B1623"],
+html[data-theme=light] [style*="background: #0B1623"],
+html[data-theme="light"] body [style*="background:#0B1623"],
+html[data-theme="light"] body [style*="background: #0B1623"] {
+  background: #E8EDF5 !important;
+}
+
+html[data-theme=light] [style*="background:#08121E"],
+html[data-theme=light] [style*="background: #08121E"],
+html[data-theme="light"] body [style*="background:#08121E"],
+html[data-theme="light"] body [style*="background: #08121E"] {
+  background: #F0F4F8 !important;
+}
+
+html[data-theme=light] [style*="background:#16243A"],
+html[data-theme=light] [style*="background: #16243A"],
+html[data-theme="light"] body [style*="background:#16243A"],
+html[data-theme="light"] body [style*="background: #16243A"] {
+  background: #F4F7FB !important;
+}
+
+/* Dark gradient backgrounds → light gradient */
+html[data-theme=light] [style*="linear-gradient(135deg,#111C2B"],
+html[data-theme="light"] body [style*="linear-gradient(135deg,#111C2B"] {
+  background: linear-gradient(135deg,#FFFFFF,#F4F7FB) !important;
+}
+html[data-theme=light] [style*="linear-gradient(135deg,#0B1623"],
+html[data-theme="light"] body [style*="linear-gradient(135deg,#0B1623"] {
+  background: linear-gradient(135deg,#E8EDF5,#F4F7FB) !important;
+}
+
+/* Light text colors on dark inline backgrounds → dark text */
+html[data-theme=light] [style*="color:#F3F7FA"],
+html[data-theme=light] [style*="color: #F3F7FA"],
+html[data-theme="light"] body [style*="color:#F3F7FA"],
+html[data-theme="light"] body [style*="color: #F3F7FA"] {
+  color: #0D1B2E !important;
+}
+
+html[data-theme=light] [style*="color:#94a3b8"],
+html[data-theme=light] [style*="color: #94a3b8"],
+html[data-theme="light"] body [style*="color:#94a3b8"],
+html[data-theme="light"] body [style*="color: #94a3b8"] {
+  color: #6b7e94 !important;
+}
+
+html[data-theme=light] [style*="color:#B0B9C5"],
+html[data-theme=light] [style*="color: #B0B9C5"],
+html[data-theme="light"] body [style*="color:#B0B9C5"],
+html[data-theme="light"] body [style*="color: #B0B9C5"] {
+  color: #3D5068 !important;
+}
+
+html[data-theme=light] [style*="color:#8B98A9"],
+html[data-theme=light] [style*="color: #8B98A9"],
+html[data-theme="light"] body [style*="color:#8B98A9"],
+html[data-theme="light"] body [style*="color: #8B98A9"] {
+  color: #6b7e94 !important;
+}
+
+html[data-theme=light] [style*="color:#6B7A8D"],
+html[data-theme=light] [style*="color: #6B7A8D"],
+html[data-theme="light"] body [style*="color:#6B7A8D"],
+html[data-theme="light"] body [style*="color: #6B7A8D"] {
+  color: #6b7e94 !important;
+}
+
+/* Border lines */
+html[data-theme=light] [style*="border:1px solid rgba(255,255,255,.06)"],
+html[data-theme=light] [style*="border:1px solid rgba(255,255,255,.07)"],
+html[data-theme=light] [style*="border:1px solid rgba(255,255,255,.08)"],
+html[data-theme=light] [style*="border:1px solid rgba(255,255,255,.1)"],
+html[data-theme="light"] body [style*="border:1px solid rgba(255,255,255,.06)"],
+html[data-theme="light"] body [style*="border:1px solid rgba(255,255,255,.07)"],
+html[data-theme="light"] body [style*="border:1px solid rgba(255,255,255,.08)"],
+html[data-theme="light"] body [style*="border:1px solid rgba(255,255,255,.1)"] {
+  border-color: rgba(13,27,46,.1) !important;
+}
+
+html[data-theme=light] [style*="border-bottom:1px solid rgba(255,255,255,"],
+html[data-theme=light] [style*="border-top:1px solid rgba(255,255,255,"],
+html[data-theme="light"] body [style*="border-bottom:1px solid rgba(255,255,255,"],
+html[data-theme="light"] body [style*="border-top:1px solid rgba(255,255,255,"] {
+  border-color: rgba(13,27,46,.08) !important;
+}
+
+/* Background overlays */
+html[data-theme=light] [style*="background:rgba(255,255,255,.02)"],
+html[data-theme=light] [style*="background:rgba(255,255,255,.025)"],
+html[data-theme=light] [style*="background:rgba(255,255,255,.03)"],
+html[data-theme=light] [style*="background:rgba(255,255,255,.04)"],
+html[data-theme=light] [style*="background:rgba(255,255,255,.05)"],
+html[data-theme=light] [style*="background:rgba(255,255,255,.06)"],
+html[data-theme="light"] body [style*="background:rgba(255,255,255,.02)"],
+html[data-theme="light"] body [style*="background:rgba(255,255,255,.025)"],
+html[data-theme="light"] body [style*="background:rgba(255,255,255,.03)"],
+html[data-theme="light"] body [style*="background:rgba(255,255,255,.04)"],
+html[data-theme="light"] body [style*="background:rgba(255,255,255,.05)"],
+html[data-theme="light"] body [style*="background:rgba(255,255,255,.06)"] {
+  background: rgba(13,27,46,.03) !important;
+}
+
+/* Dark backgrounds with rgba */
+html[data-theme=light] [style*="background:rgba(255,255,255,.0"],
+html[data-theme="light"] body [style*="background:rgba(255,255,255,.0"] {
+  background: rgba(13,27,46,.03) !important;
+}
+
+/* Big numeric values without explicit color → use --text */
+html[data-theme=light] #sc-bist-val,
+html[data-theme=light] #sc-usd-val,
+html[data-theme=light] #sc-altin-val,
+html[data-theme=light] #sc-brent-val,
+html[data-theme="light"] body #sc-bist-val,
+html[data-theme="light"] body #sc-usd-val,
+html[data-theme="light"] body #sc-altin-val,
+html[data-theme="light"] body #sc-brent-val {
+  color: #0D1B2E !important;
+}
+
+/* Hover states for cards with white-ish backgrounds */
+html[data-theme=light] [style*="borderColor='rgba(255,255,255,"],
+html[data-theme="light"] body [style*="borderColor='rgba(255,255,255,"] {
+  border-color: rgba(13,27,46,.1) !important;
+}
+
+/* Section / hero text */
+html[data-theme=light] h1,
+html[data-theme=light] h2,
+html[data-theme=light] h3,
+html[data-theme=light] h4,
+html[data-theme="light"] body h1,
+html[data-theme="light"] body h2,
+html[data-theme="light"] body h3,
+html[data-theme="light"] body h4 {
+  color: #0D1B2E !important;
+}
+
+/* Common text elements inside dark containers */
+html[data-theme=light] .container *:not([style*="color"]):not(.b-g):not(.b-r):not(.b-b):not(.b-a):not(.tk-c):not(.badge):not(.hc-kat),
+html[data-theme="light"] body .container *:not([style*="color"]):not(.b-g):not(.b-r):not(.b-b):not(.b-a):not(.tk-c):not(.badge):not(.hc-kat) {
+  /* Allow color inheritance */
+}
+
+/* Specific summary card values that have no explicit color */
+html[data-theme=light] [id^="sc-"][id$="-val"],
+html[data-theme="light"] body [id^="sc-"][id$="-val"] {
+  color: #0D1B2E !important;
+}
+
+/* Hero card text without explicit color */
+html[data-theme=light] .hero-stat-val:not([style*="color"]),
+html[data-theme="light"] body .hero-stat-val:not([style*="color"]) {
+  color: #0D1B2E !important;
+}
+
+/* SVG sparkline gradients stay visible — adjust opacity in light */
+html[data-theme=light] svg polyline[stroke="#5eead4"],
+html[data-theme="light"] body svg polyline[stroke="#5eead4"] {
+  stroke: #0d9488 !important;
+}
+html[data-theme=light] svg polyline[stroke="#fca5a5"],
+html[data-theme="light"] body svg polyline[stroke="#fca5a5"] {
+  stroke: #dc2626 !important;
+}
+
+/* Premium card / shell elements */
+html[data-theme=light] .premium-card,
+html[data-theme=light] .premium-section,
+html[data-theme="light"] body .premium-card,
+html[data-theme="light"] body .premium-section {
+  background: #FFFFFF !important;
+  color: #0D1B2E !important;
+  border-color: rgba(13,27,46,.08) !important;
+}
+
+/* Page-stats / stat cards */
+html[data-theme=light] .stat-pill,
+html[data-theme="light"] body .stat-pill {
+  background: #FFFFFF !important;
+  border-color: rgba(13,27,46,.08) !important;
+}
+html[data-theme=light] .sp-lbl,
+html[data-theme="light"] body .sp-lbl {
+  color: #6b7e94 !important;
+}
+
+
+/* ===== HOVER FIX — CSS-only, theme-aware ===== */
+
+/* Cards with inline backgrounds need transition setup */
+.psum-card, .arz-card, .bs-card, .info-card, .bil-stats .bs-card, .karne-section {
+  transition: border-color .2s, transform .2s, box-shadow .2s, background .2s !important;
+}
+
+/* DARK MODE HOVER (default) */
+html[data-theme=dark] .psum-card:hover,
+.psum-card:hover {
+  border-color: rgba(200,169,107,.45) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 18px 44px rgba(0,0,0,.4) !important;
+}
+
+/* LIGHT MODE HOVER OVERRIDE — keep light background */
+html[data-theme=light] .psum-card,
+html[data-theme="light"] body .psum-card {
+  background: #FFFFFF !important;
+  border-color: rgba(13,27,46,.08) !important;
+}
+html[data-theme=light] .psum-card:hover,
+html[data-theme="light"] body .psum-card:hover {
+  background: #FFFFFF !important;
+  border-color: rgba(200,169,107,.55) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 18px 44px rgba(13,27,46,.12) !important;
+}
+
+/* Hisse/index cards in light mode */
+html[data-theme=light] .arz-card,
+html[data-theme=light] .bs-card,
+html[data-theme=light] .info-card,
+html[data-theme="light"] body .arz-card,
+html[data-theme="light"] body .bs-card,
+html[data-theme="light"] body .info-card {
+  background: #FFFFFF !important;
+  border-color: rgba(13,27,46,.08) !important;
+}
+html[data-theme=light] .arz-card:hover,
+html[data-theme=light] .bs-card:hover,
+html[data-theme=light] .info-card:hover,
+html[data-theme="light"] body .arz-card:hover,
+html[data-theme="light"] body .bs-card:hover,
+html[data-theme="light"] body .info-card:hover {
+  background: #FFFFFF !important;
+  border-color: rgba(200,169,107,.55) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 18px 44px rgba(13,27,46,.12) !important;
+}
+
+/* Inline onmouseenter handlers set this.style which has highest specificity
+   Override that with element.style protection via data attribute */
+html[data-theme=light] [style*="background:#111C2B"]:hover,
+html[data-theme=light] [style*="background: #111C2B"]:hover,
+html[data-theme="light"] body [style*="background:#111C2B"]:hover,
+html[data-theme="light"] body [style*="background: #111C2B"]:hover {
+  background: #FFFFFF !important;
+}
+
+/* Strong override for any element with background-color inline */
+html[data-theme=light] [style*="background:#111C2B"],
+html[data-theme="light"] body [style*="background:#111C2B"] {
+  background-color: #FFFFFF !important;
+}
+
+/* Hero cards with linear-gradient backgrounds */
+html[data-theme=light] [style*="linear-gradient(135deg,#111C2B"]:hover,
+html[data-theme="light"] body [style*="linear-gradient(135deg,#111C2B"]:hover {
+  background: linear-gradient(135deg,#FFFFFF,#F4F7FB) !important;
+}
+
+
+/* ===== LIGHT THEME — DARK GRADIENT SECTIONS FIX ===== */
+
+/* Hero sections with various dark gradients */
+html[data-theme=light] section[style*="linear-gradient(135deg,#0a1f3a"],
+html[data-theme=light] section[style*="linear-gradient(135deg,#111C2B"],
+html[data-theme=light] section[style*="linear-gradient(135deg,#16243A"],
+html[data-theme=light] section[style*="linear-gradient(135deg,#08121E"],
+html[data-theme="light"] body section[style*="linear-gradient(135deg,#0a1f3a"],
+html[data-theme="light"] body section[style*="linear-gradient(135deg,#111C2B"],
+html[data-theme="light"] body section[style*="linear-gradient(135deg,#16243A"],
+html[data-theme="light"] body section[style*="linear-gradient(135deg,#08121E"] {
+  background: linear-gradient(135deg, #FFFFFF 0%, #F4F7FB 50%, #E8EDF5 100%) !important;
+  border-bottom-color: rgba(13,27,46,.1) !important;
+}
+
+/* Stat cards with various tinted dark gradients (bs-card variants) */
+html[data-theme=light] .bs-card[style*="linear-gradient(135deg,#0a1f3a"],
+html[data-theme=light] .bs-card[style*="linear-gradient(135deg,#082a1c"],
+html[data-theme=light] .bs-card[style*="linear-gradient(135deg,#2a0d14"],
+html[data-theme=light] .bs-card[style*="linear-gradient(135deg,#2a2410"],
+html[data-theme="light"] body .bs-card[style*="linear-gradient(135deg,#0a1f3a"],
+html[data-theme="light"] body .bs-card[style*="linear-gradient(135deg,#082a1c"],
+html[data-theme="light"] body .bs-card[style*="linear-gradient(135deg,#2a0d14"],
+html[data-theme="light"] body .bs-card[style*="linear-gradient(135deg,#2a2410"] {
+  background: #FFFFFF !important;
+  border-color: rgba(13,27,46,.08) !important;
+}
+
+/* Light mode: bs-card colors get tinted backgrounds based on card type */
+html[data-theme=light] .bs-card[style*="rgba(91,157,217"],
+html[data-theme="light"] body .bs-card[style*="rgba(91,157,217"] {
+  background: linear-gradient(135deg, #fff, #f0f6fc) !important;
+  border-color: rgba(91,157,217,.3) !important;
+}
+html[data-theme=light] .bs-card[style*="rgba(0,181,110"],
+html[data-theme="light"] body .bs-card[style*="rgba(0,181,110"] {
+  background: linear-gradient(135deg, #fff, #f0fcf5) !important;
+  border-color: rgba(0,181,110,.3) !important;
+}
+html[data-theme=light] .bs-card[style*="rgba(224,79,95"],
+html[data-theme="light"] body .bs-card[style*="rgba(224,79,95"] {
+  background: linear-gradient(135deg, #fff, #fef0f1) !important;
+  border-color: rgba(224,79,95,.3) !important;
+}
+html[data-theme=light] .bs-card[style*="rgba(251,191,36"],
+html[data-theme="light"] body .bs-card[style*="rgba(251,191,36"] {
+  background: linear-gradient(135deg, #fff, #fef9e8) !important;
+  border-color: rgba(251,191,36,.4) !important;
+}
+
+/* Hero text inside dark sections */
+html[data-theme=light] section[style*="linear-gradient"] h1,
+html[data-theme=light] section[style*="linear-gradient"] h2,
+html[data-theme=light] section[style*="linear-gradient"] p,
+html[data-theme="light"] body section[style*="linear-gradient"] h1,
+html[data-theme="light"] body section[style*="linear-gradient"] h2,
+html[data-theme="light"] body section[style*="linear-gradient"] p {
+  color: #0D1B2E !important;
+}
+html[data-theme=light] section[style*="linear-gradient"] p,
+html[data-theme="light"] body section[style*="linear-gradient"] p {
+  color: #3D5068 !important;
+}
+
+/* Color variant text — large numbers retain their accent color */
+html[data-theme=light] .bs-num,
+html[data-theme="light"] body .bs-num {
+  /* keep color from inline style */
+}
+
+/* Header big H1 like "Bilançolar" / "Finans Haberleri" */
+html[data-theme=light] .htitle,
+html[data-theme="light"] body .htitle {
+  color: #0D1B2E !important;
+}
+
+/* Card descriptions / body text on light bg */
+html[data-theme=light] [style*="color:#94a3b8"],
+html[data-theme=light] [style*="color: #94a3b8"],
+html[data-theme="light"] body [style*="color:#94a3b8"],
+html[data-theme="light"] body [style*="color: #94a3b8"] {
+  color: #5b6b80 !important;
+}
+
+/* News card image backgrounds — KEEP THEM COLORFUL */
+/* These have inline rgb colors not dark hex — they're fine */
+html[data-theme=light] .hc-img-big,
+html[data-theme=light] .hc-img-sm,
+html[data-theme="light"] body .hc-img-big,
+html[data-theme="light"] body .hc-img-sm {
+  /* Don't override - colorful gradients should remain */
+}
+
+/* But news card text in light bg */
+html[data-theme=light] .hc,
+html[data-theme="light"] body .hc {
+  background: transparent !important;
+}
+html[data-theme=light] .hc:hover,
+html[data-theme="light"] body .hc:hover {
+  background: rgba(13,27,46,.025) !important;
+}
+
+/* Tabular data on light bg - filter chips, hover effects */
+html[data-theme=light] .fbar,
+html[data-theme="light"] body .fbar {
+  border-bottom-color: rgba(13,27,46,.08) !important;
+}
+
+/* All h1 / h2 with dark fill SVG text in light mode */
+html[data-theme=light] svg text[fill="var(--text)"],
+html[data-theme="light"] body svg text[fill="var(--text)"] {
+  fill: #0D1B2E !important;
+}
+html[data-theme=light] svg tspan[fill="var(--text)"],
+html[data-theme="light"] body svg tspan[fill="var(--text)"] {
+  fill: #0D1B2E !important;
+}
+
+/* Eyebrow text on light hero */
+html[data-theme=light] .hero-eyebrow,
+html[data-theme="light"] body .hero-eyebrow {
+  /* accent color stays gold - looks good on light too */
+}
+
+/* Karne / stat numbers stay vivid even in light */
+html[data-theme=light] .kg-val,
+html[data-theme="light"] body .kg-val {
+  /* Keep their color from inline */
+}
+
+/* Stat cells inside hero on light */
+html[data-theme=light] .hero-stat,
+html[data-theme="light"] body .hero-stat {
+  background: rgba(13,27,46,.04) !important;
+  border-color: rgba(13,27,46,.08) !important;
+}
+
+
+/* ===== PARA AKIŞI LIGHT MODE FIX ===== */
+html[data-theme=light] .akis-row,
+html[data-theme="light"] body .akis-row {
+  background: transparent !important;
+}
+html[data-theme=light] .akis-row:hover,
+html[data-theme="light"] body .akis-row:hover {
+  background: rgba(13,27,46,.025) !important;
+}
+html[data-theme=light] .akis-code,
+html[data-theme=light] .akis-sym,
+html[data-theme="light"] body .akis-code,
+html[data-theme="light"] body .akis-sym { color: #0D1B2E !important; }
+html[data-theme=light] .akis-name,
+html[data-theme="light"] body .akis-name { color: #6b7e94 !important; }
+html[data-theme=light] .akis-tutar.in,
+html[data-theme=light] .akis-val.up,
+html[data-theme="light"] body .akis-tutar.in,
+html[data-theme="light"] body .akis-val.up { color: #00B56E !important; }
+html[data-theme=light] .akis-tutar.out,
+html[data-theme=light] .akis-val.down,
+html[data-theme="light"] body .akis-tutar.out,
+html[data-theme="light"] body .akis-val.down { color: #E04F5F !important; }
+html[data-theme=light] .akis-pay,
+html[data-theme="light"] body .akis-pay { color: #3D5068 !important; }
+html[data-theme=light] .akis-col-lbl,
+html[data-theme="light"] body .akis-col-lbl { color: #6b7e94 !important; }
+html[data-theme=light] .akis-foot,
+html[data-theme="light"] body .akis-foot { border-top-color: rgba(13,27,46,.06) !important; }
+html[data-theme=light] .akis-foot-count,
+html[data-theme="light"] body .akis-foot-count { color: #6b7e94 !important; }
+html[data-theme=light] .akis-foot-total.in,
+html[data-theme="light"] body .akis-foot-total.in { color: #00B56E !important; }
+html[data-theme=light] .akis-foot-total.out,
+html[data-theme="light"] body .akis-foot-total.out { color: #E04F5F !important; }
+
+/* Panel containers in light mode */
+html[data-theme=light] .panel,
+html[data-theme="light"] body .panel {
+  background: #FFFFFF !important;
+  border-color: rgba(13,27,46,.08) !important;
+}
+html[data-theme=light] .panel-title,
+html[data-theme="light"] body .panel-title { color: #0D1B2E !important; }
+html[data-theme=light] .panel-head,
+html[data-theme="light"] body .panel-head { border-bottom-color: rgba(13,27,46,.06) !important; }
+html[data-theme=light] .data-grid,
+html[data-theme="light"] body .data-grid { background: transparent !important; }
+
+/* ===== ANALIZ ALT SAYFALARI ICIN PREMIUM-SHELL FIX (light) ===== */
+html[data-theme=light] body,
+html[data-theme="light"] body {
+  background: #F0F4F8 !important;
+  color: #0D1B2E !important;
+}
+html[data-theme=light] .header,
+html[data-theme=light] .footer,
+html[data-theme="light"] body .header,
+html[data-theme="light"] body .footer { background: #fff !important; border-color: rgba(13,27,46,.1) !important; }
+html[data-theme=light] .header,
+html[data-theme="light"] body .header { background: rgba(255,255,255,.95) !important; }
+html[data-theme=light] .nav-menu a,
+html[data-theme="light"] body .nav-menu a { color: #3D5068 !important; }
+html[data-theme=light] .nav-menu a:hover,
+html[data-theme=light] .nav-menu a.active,
+html[data-theme="light"] body .nav-menu a:hover,
+html[data-theme="light"] body .nav-menu a.active { color: #0D1B2E !important; }
+html[data-theme=light] .brand-text h1,
+html[data-theme="light"] body .brand-text h1 { color: #C8A96B !important; }
+html[data-theme=light] .brand-text small,
+html[data-theme="light"] body .brand-text small { color: #6b7e94 !important; }
+html[data-theme=light] .brand-mark,
+html[data-theme="light"] body .brand-mark { background: linear-gradient(135deg,#C8A96B,#9d7a40) !important; color: #08121E !important; }
+
+/* Ticker */
+html[data-theme=light] .ticker,
+html[data-theme="light"] body .ticker { background: #E8EDF5 !important; border-bottom-color: rgba(13,27,46,.08) !important; }
+html[data-theme=light] .tick-name,
+html[data-theme="light"] body .tick-name { color: #3D5068 !important; }
+html[data-theme=light] .tick-val,
+html[data-theme="light"] body .tick-val { color: #0D1B2E !important; }
+
+/* Premium command bar */
+html[data-theme=light] .premium-command,
+html[data-theme="light"] body .premium-command { background: #fff !important; border-color: rgba(13,27,46,.08) !important; }
+html[data-theme=light] .premium-search,
+html[data-theme="light"] body .premium-search { background: #F4F7FB !important; border-color: rgba(13,27,46,.1) !important; }
+html[data-theme=light] .premium-search input,
+html[data-theme="light"] body .premium-search input { color: #0D1B2E !important; }
+html[data-theme=light] .premium-search input::placeholder,
+html[data-theme="light"] body .premium-search input::placeholder { color: #6b7e94 !important; }
+
+/* Premium-shell */
+html[data-theme=light] .premium-shell,
+html[data-theme="light"] body .premium-shell {
+  background: transparent !important;
+}
+html[data-theme=light] .premium-section,
+html[data-theme="light"] body .premium-section {
+  background: #fff !important;
+  border: 1px solid rgba(13,27,46,.08) !important;
+  border-radius: 14px !important;
+  padding: 24px !important;
+  margin-bottom: 20px !important;
+  color: #0D1B2E !important;
+}
+html[data-theme=light] .premium-section .premium-kicker,
+html[data-theme="light"] body .premium-section .premium-kicker { color: #C8A96B !important; }
+html[data-theme=light] .premium-title,
+html[data-theme="light"] body .premium-title { color: #0D1B2E !important; font-size: 22px !important; font-weight: 700 !important; }
+html[data-theme=light] .premium-desc,
+html[data-theme="light"] body .premium-desc { color: #3D5068 !important; }
+html[data-theme=light] .premium-head,
+html[data-theme="light"] body .premium-head { display: flex !important; align-items: flex-start !important; justify-content: space-between !important; margin-bottom: 16px !important; }
+
+html[data-theme=light] .premium-grid,
+html[data-theme="light"] body .premium-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3,1fr) !important;
+  gap: 14px !important;
+  margin-bottom: 16px !important;
+}
+@media (max-width: 700px) {
+  html[data-theme=light] .premium-grid,
+  html[data-theme="light"] body .premium-grid { grid-template-columns: 1fr !important; }
+}
+html[data-theme=light] .premium-card,
+html[data-theme="light"] body .premium-card {
+  background: #F4F7FB !important;
+  border: 1px solid rgba(13,27,46,.06) !important;
+  border-radius: 10px !important;
+  padding: 16px !important;
+  color: #0D1B2E !important;
+}
+html[data-theme=light] .premium-card h3,
+html[data-theme="light"] body .premium-card h3 {
+  color: #0D1B2E !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  margin-bottom: 6px !important;
+}
+html[data-theme=light] .premium-card p,
+html[data-theme="light"] body .premium-card p {
+  color: #6b7e94 !important;
+  font-size: 12px !important;
+}
+html[data-theme=light] .premium-stat,
+html[data-theme="light"] body .premium-stat {
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  color: #C8A96B !important;
+}
+
+html[data-theme=light] .bar-track,
+html[data-theme="light"] body .bar-track {
+  height: 6px !important;
+  background: rgba(13,27,46,.08) !important;
+  border-radius: 3px !important;
+  overflow: hidden !important;
+  margin: 10px 0 !important;
+}
+html[data-theme=light] .bar-fill,
+html[data-theme="light"] body .bar-fill {
+  height: 100% !important;
+  background: linear-gradient(90deg, #C8A96B, #00B56E) !important;
+  border-radius: 3px !important;
+}
+
+html[data-theme=light] .premium-table-wrap,
+html[data-theme="light"] body .premium-table-wrap {
+  background: #fff !important;
+  border: 1px solid rgba(13,27,46,.08) !important;
+  border-radius: 10px !important;
+  overflow: hidden !important;
+  margin-top: 16px !important;
+}
+html[data-theme=light] .premium-table,
+html[data-theme="light"] body .premium-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  font-size: 13px !important;
+}
+html[data-theme=light] .premium-table th,
+html[data-theme="light"] body .premium-table th {
+  background: #F4F7FB !important;
+  color: #6b7e94 !important;
+  padding: 11px 14px !important;
+  text-align: left !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: .1em !important;
+  text-transform: uppercase !important;
+  border-bottom: 1px solid rgba(13,27,46,.08) !important;
+}
+html[data-theme=light] .premium-table td,
+html[data-theme="light"] body .premium-table td {
+  padding: 11px 14px !important;
+  color: #0D1B2E !important;
+  border-bottom: 1px solid rgba(13,27,46,.04) !important;
+}
+
+html[data-theme=light] .premium-btn,
+html[data-theme="light"] body .premium-btn {
+  background: #fff !important;
+  border: 1px solid rgba(13,27,46,.1) !important;
+  color: #3D5068 !important;
+  padding: 8px 14px !important;
+  border-radius: 8px !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+}
+html[data-theme=light] .premium-btn:hover,
+html[data-theme="light"] body .premium-btn:hover {
+  background: #F4F7FB !important;
+  color: #0D1B2E !important;
+}
+html[data-theme=light] .premium-btn.gold,
+html[data-theme="light"] body .premium-btn.gold {
+  background: #C8A96B !important;
+  color: #08121E !important;
+  border-color: transparent !important;
+}
+
+html[data-theme=light] .premium-badge,
+html[data-theme="light"] body .premium-badge {
+  display: inline-flex !important;
+  padding: 4px 10px !important;
+  border-radius: 6px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+}
+html[data-theme=light] .premium-badge.green,
+html[data-theme="light"] body .premium-badge.green {
+  background: rgba(0,181,110,.13) !important;
+  color: #00B56E !important;
+}
+html[data-theme=light] .premium-badge.red,
+html[data-theme="light"] body .premium-badge.red {
+  background: rgba(224,79,95,.13) !important;
+  color: #E04F5F !important;
+}
+html[data-theme=light] .premium-badge.pro,
+html[data-theme="light"] body .premium-badge.pro {
+  background: rgba(200,169,107,.13) !important;
+  color: #C8A96B !important;
+}
+
+html[data-theme=light] .premium-actions,
+html[data-theme="light"] body .premium-actions { display: flex !important; gap: 8px !important; flex-wrap: wrap !important; }
+
+
+/* ===== HAM METİN BLOK GİZLEME (any leftover content blocks) ===== */
+/* Hide standalone premium-shell/section content that appears as raw text */
+.premium-shell:empty,
+.premium-section:empty { display: none !important; }
+
+/* Hide any block with these specific Turkish texts when shown as raw */
+body > div:not([class]):not([id]):not([style]) { display: none !important; }
+
+/* If light mode + premium-shell content shows as raw paragraphs, force container styling */
+html[data-theme=light] .premium-shell > *,
+html[data-theme="light"] body .premium-shell > * {
+  background: transparent !important;
+}
+
+/* Bottom info boxes that user is seeing — give them basic styling */
+.premium-shell {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+.premium-section {
+  background: var(--panel, #111C2B) !important;
+  border: 1px solid var(--line, rgba(255,255,255,.07)) !important;
+  border-radius: 14px !important;
+  padding: 24px !important;
+  margin: 16px 0 !important;
+  color: var(--text, #F3F7FA);
+}
+html[data-theme=light] .premium-section,
+html[data-theme="light"] body .premium-section {
+  background: #fff !important;
+  border-color: rgba(13,27,46,.08) !important;
+  color: #0D1B2E !important;
+}
+.premium-section h1, .premium-section h2, .premium-section h3 {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  margin-bottom: 8px !important;
+}
+.premium-section p { font-size: 13px; color: var(--dim, #B0B9C5); line-height: 1.55; margin-bottom: 6px; }
+html[data-theme=light] .premium-section p,
+html[data-theme="light"] body .premium-section p { color: #3D5068 !important; }
+.premium-section table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13px; }
+.premium-section th, .premium-section td { padding: 8px 12px; border-bottom: 1px solid rgba(255,255,255,.05); text-align: left; }
+html[data-theme=light] .premium-section th,
+html[data-theme=light] .premium-section td,
+html[data-theme="light"] body .premium-section th,
+html[data-theme="light"] body .premium-section td { border-color: rgba(13,27,46,.06) !important; }
+
+/* Inputs in premium-shell */
+.premium-shell input[type="text"],
+.premium-shell input[type="number"],
+.premium-shell input[type="email"] {
+  background: var(--bg-2, #0B1623);
+  border: 1px solid var(--line);
+  color: var(--text);
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  width: 100%;
+}
+html[data-theme=light] .premium-shell input,
+html[data-theme="light"] body .premium-shell input {
+  background: #F4F7FB !important;
+  border-color: rgba(13,27,46,.1) !important;
+  color: #0D1B2E !important;
+}
+
+/* Premium-modal hide by default */
+.premium-modal {
+  display: none !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 9999 !important;
+  background: rgba(0,0,0,.7) !important;
+  backdrop-filter: blur(4px) !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 20px !important;
+}
+.premium-modal.open { display: flex !important; }
+
+/* Bilgilendirme önemli box */
+.premium-section[style*="background"] {
+  /* keep inline styles */
+}
+
+/* Tedbirli hisseler tooltip block at bottom */
+.premium-section.info-box,
+.premium-section[data-type="info"] {
+  background: linear-gradient(135deg, rgba(91,157,217,.05), rgba(91,157,217,.02)) !important;
+  border-color: rgba(91,157,217,.18) !important;
+}
+
+
+/* ===== INTER FONT - FINTABLES TARZI ===== */
+body, .premium-table, .tbl, .bil-table, .ak-table,
+.psum-card, .arz-card, .bs-card, .info-card,
+.fp-row, .sek-row, .sek-name, .sek-val,
+.akis-row, .akis-code, .akis-name, .akis-val, .akis-tutar, .akis-pay,
+table tbody, table thead, table td, table th,
+.h-code, .h-name, .bil-code, .bil-name,
+.kg-val, .stat-val, .hero-stat-val {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  letter-spacing: -.005em;
+}
+
+/* Tabular nums for numeric data */
+.tbl td, .premium-table td, .bil-td,
+.fp-val, .fp-pct, .akis-val, .akis-pay,
+.sek-val, .h-code, .stat-val,
+.kg-val, .hero-stat-val,
+[class*="val"], [class*="num"], td.r {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Heading hierarchy with Inter */
+h1, h2, h3, h4, h5, h6,
+.htitle, .premium-title, .arz-title,
+.bil-title, .hero h1, .hero h2 {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  letter-spacing: -.015em;
+  font-feature-settings: "ss01" 1, "ss02" 1, "cv11" 1;
+}
+@media(max-width:700px){
+  .data-table,.dt-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .dt-row{min-width:500px}
+  .chart-tabs,.hm-periods{overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+  .chart-tabs::-webkit-scrollbar,.hm-periods::-webkit-scrollbar{display:none}
+}
+
+html[data-theme=light] .badge.b-g,body.premium-light .badge.b-g{background:#E8F5EC;color:#007A35}
+html[data-theme=light] .badge.b-r,body.premium-light .badge.b-r{background:#FDECEA;color:#C0392B}
+html[data-theme=light] .up,body.premium-light .up{color:#007A35!important}
+html[data-theme=light] .dn,body.premium-light .dn{color:#C0392B!important}
+
+/* ════ MOBİL UYUMLULUK — GLOBAL ════ */
+@media(max-width:768px){
+  /* Tablo taşmasını engelle */
+  .data-table,.tw table,table.tbl{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap}
+  /* Sabit kolon genişliklerini sıfırla */
+  .dt-row[style*="grid-template-columns"]{grid-template-columns:1.6fr 1fr 1fr!important}
+  /* Özet kart gridleri */
+  .stat-grid,.stats-3,.sek-stats,.bs-stats,.summary-cards{grid-template-columns:1fr 1fr!important}
+  /* Grafik alan */
+  .chart-wrap,.chart-card{min-height:220px!important}
+  /* Font boyutları */
+  .price-big,.big-price{font-size:24px!important}
+  h1{font-size:20px!important;letter-spacing:-.02em!important}
+  /* Period sekmeleri */
+  .period-tabs,.hm-periods,.chart-tabs,.fil-bar{overflow-x:auto;white-space:nowrap;scrollbar-width:none;flex-wrap:nowrap!important}
+  .period-tabs::-webkit-scrollbar,.chart-tabs::-webkit-scrollbar{display:none}
+  /* Kartlar tek sütun */
+  .card-grid,.eg,.sektor-grid,.sek-hub-grid{grid-template-columns:1fr!important}
+  /* Sidebar gizle */
+  .sidebar,.right-col{display:none!important}
+  /* Full width */
+  .main-col,.content-area{width:100%!important;max-width:100%!important}
+}
+@media(max-width:480px){
+  .stats-3,.sek-stats,.bs-stats{grid-template-columns:1fr!important}
+  .ticker{font-size:11px}
+  .btn,.gh-cmd-btn{font-size:11px;padding:6px 10px}
+  .hm-pbtn{font-size:10px;padding:4px 7px}
+}
+@media(max-width:700px){
+  .hm-tree,.hm-grid{min-height:120px!important}
+  .ec-grid,.endeks-grid{grid-template-columns:1fr 1fr!important}
+  .hm-stats{flex-wrap:wrap;gap:8px}
+}
+
+/* ════════════════ HAMBURGER MENÜ ════════════════ */
+.ham-btn{
+  display:none;flex-direction:column;justify-content:space-between;
+  width:38px;height:38px;padding:10px 8px;cursor:pointer;
+  border:1px solid var(--line,rgba(255,255,255,.1));border-radius:8px;
+  background:var(--panel,rgba(255,255,255,.05));
+  -webkit-tap-highlight-color:transparent;
+}
+.ham-btn span{
+  display:block;height:2px;width:100%;background:var(--text,#f0f4f8);
+  border-radius:2px;transition:all .28s ease;
+}
+.ham-btn.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.ham-btn.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.ham-btn.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* Mobil overlay menü */
+.mob-nav{
+  position:fixed;inset:0;z-index:998;
+  background:rgba(8,18,30,.97);backdrop-filter:blur(16px);
+  display:flex;flex-direction:column;padding:80px 24px 40px;gap:6px;
+  opacity:0;pointer-events:none;
+  transform:translateX(100%);
+  transition:opacity .3s ease,transform .3s ease;
+  overflow-y:auto;
+}
+.mob-nav.open{
+  opacity:1;pointer-events:auto;transform:translateX(0)
+}
+.mob-nav a{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 18px;border-radius:12px;
+  font-size:16px;font-weight:600;color:rgba(240,244,248,.85);
+  text-decoration:none;border:1px solid transparent;
+  transition:all .2s;
+}
+.mob-nav a:hover,.mob-nav a.active{
+  background:rgba(200,169,107,.12);
+  border-color:rgba(200,169,107,.28);
+  color:#C8A96B;
+}
+.mob-nav-divider{height:1px;background:rgba(255,255,255,.07);margin:8px 0}
+.mob-nav-close{
+  position:absolute;top:18px;right:18px;
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  cursor:pointer;display:grid;place-items:center;
+  color:rgba(240,244,248,.8);font-size:22px;line-height:1;
+}
+
+/* Light tema uyumu */
+html[data-theme=light] .mob-nav{background:rgba(248,250,252,.97)}
+html[data-theme=light] .mob-nav a{color:#374151}
+html[data-theme=light] .mob-nav a:hover,
+html[data-theme=light] .mob-nav a.active{background:rgba(200,169,107,.1);color:#9d7a40}
+html[data-theme=light] .mob-nav-close{background:rgba(0,0,0,.06);border-color:rgba(0,0,0,.1);color:#374151}
+html[data-theme=light] .ham-btn{background:#fff;border-color:rgba(0,0,0,.12)}
+html[data-theme=light] .ham-btn span{background:#1f2937}
+
+@media(max-width:860px){
+  /* Hamburger göster */
+  .ham-btn{display:flex}
+  /* Desktop menü gizle */
+  .nav-menu,.nl{display:none!important}
+}
+
+</style><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style id="bk-mob-fix">
+/* ══════════════════════════════════════════════
+   BK MOBİL FİX — Tablo Taşma Engeli
+   Tüm sayfalarda <768px
+══════════════════════════════════════════════ */
+@media(max-width:768px){
+  /* Genel tablo wrapper */
+  .tbl-wrap, .tbl-scroll, [style*="overflow-x:auto"], .dt-wrap { 
+    overflow-x:auto!important;-webkit-overflow-scrolling:touch;
+  }
+  /* Tablo içi white-space kaldır - taşmayı önle */
+  table.tbl, table.premium-table, table.data-table {
+    min-width:0!important; width:100%!important;
+    white-space:normal!important;
+  }
+  /* Hücre içi wrap */
+  table.tbl td, table.tbl th {
+    white-space:nowrap; font-size:11.5px!important; padding:7px 8px!important;
+  }
+  /* Uzun kolon gizle - sadece kritikler kalsın */
+  table.tbl .hide-mob { display:none!important; }
+  /* Endeks tablo mobil kart - .mob-card-list ile */
+  .mob-card-list { display:block }
+  .mob-card-list .tbl-desktop-only { display:none!important }
+  /* Masaüstünde mobil kart gizle */
+  .mob-tbl-card { display:none }
+}
+@media(min-width:769px){
+  .mob-tbl-card { display:none!important }
+  .mob-sektor-tbl { display:none!important }
+}
+</style>
+
+<style id="bk-desktop-hide">
+/* Masaüstünde mobil görünümler KESINLIKLE gizli */
+@media(min-width:769px){
+  .mob-tbl-card,
+  .mob-tbl-card--wide,
+  .mob-sp-row,
+  .mob-sp-list,
+  .mob-endeks-list,
+  .mob-sektor-tbl,
+  .tbl-mobile,
+  .mob-stk-row { display:none!important }
+}
+/* Mobilde masaüstü tabloları gizle */
+@media(max-width:768px){
+  .tbl-desktop,
+  .tbl-endeks-wrap,
+  .tbl-special-wrap { display:none!important }
+}
+</style>
+
+  <!-- Schema.org Structured Data for AI Agents & Search Engines -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FinancialService",
+    "name": "BorsaKaynak",
+    "url": "https://borsakaynak.com/",
+    "logo": "https://borsakaynak.com/logo.jpg",
+    "description": "Borsa İstanbul (BIST) 586 şirket hissesi, 674 enstrüman, canlı borsa fiyatları, para giriş/çıkış analizleri ve TradingView entegrasyonu.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://borsakaynak.com/piyasalar.html?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta property="og:image" content="https://borsakaynak.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://borsakaynak.com/og-image.png">
+<link rel="stylesheet" href="header-footer-shared.css">
+</head><body>
+<div class="bk-shared-chrome">
+<div class="ticker">
+<div class="ticker-track" id="ticker-track">
+<div class="tick" data-tsym="XU100"><span class="tick-dot"></span><span class="tick-name">BIST 100</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="USDTRY"><span class="tick-name">USD/TRY</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="EURTRY"><span class="tick-name">EUR/TRY</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="GBPTRY"><span class="tick-name">GBP/TRY</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="XAUGRAM"><span class="tick-name">ALTIN/GR</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="XAUUSD"><span class="tick-name">XAU/USD</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="BRENT"><span class="tick-name">BRENT</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="BTCUSDT"><span class="tick-name">BTC/USDT</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="ETHUSDT"><span class="tick-name">ETH/USDT</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="DAX"><span class="tick-name">DAX</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="SPX"><span class="tick-name">S&amp;P 500</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="IXIC"><span class="tick-name">NASDAQ</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+</div>
+</div>
+<!-- HEADER -->
+<header class="header">
+<div class="container">
+<nav class="nav">
+<a aria-label="Sayfa Bağlantısı" href="index.html" style="text-decoration:none;color:inherit;display:flex;align-items:center">
+<img src="logo-kaynak.png" alt="BorsaKaynak" style="height:32px;width:auto;flex-shrink:0">
+</a>
+<div class="nav-menu">
+<a aria-label="Sayfa Bağlantısı" href="index.html">Anasayfa</a>
+<a aria-label="Sayfa Bağlantısı" href="piyasalar.html">Piyasalar</a>
+<a aria-label="Sayfa Bağlantısı" href="piyasa-hareketleri.html">Piyasa Hareketleri</a>
+<a aria-label="Sayfa Bağlantısı" href="endeksler.html">Endeksler</a>
+<a aria-label="Sayfa Bağlantısı" href="sektorler.html">Sektörler</a>
+<a aria-label="Sayfa Bağlantısı" href="haberler.html">Haberler</a>
+<a aria-label="Sayfa Bağlantısı" href="analizler.html">Analizler</a>
+<a aria-label="Sayfa Bağlantısı" href="araci-kurum.html">Aracı Kurum</a>
+<a aria-label="Sayfa Bağlantısı" href="halka-arz.html">Halka Arz</a>
+<a aria-label="Sayfa Bağlantısı" href="viop.html">VİOP</a>
+<a aria-label="Sayfa Bağlantısı" class="active" href="kripto.html">Kripto</a>
+</div>
+<div class="nav-actions"><button class="ham-btn" aria-label="Menü" aria-expanded="false"><span></span><span></span><span></span></button>
+<button aria-label="BİST Veri Butonu" class="nav-btn"><svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg></button>
+<button aria-label="BİST Veri Butonu" class="nav-btn"><svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg></button>
+</div>
+</nav>
+</div>
+</header>
+<div class="mob-nav" id="mobNav">
+<button class="mob-nav-close" aria-label="Kapat">✕</button>
+
+<!-- Mini canlı ticker -->
+<div class="mob-ticker-grid">
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">BIST 100</span>
+    <span class="mob-tick-val" id="ham-bist">—</span>
+    <span class="mob-tick-chg" id="ham-bist-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">USD/TRY</span>
+    <span class="mob-tick-val" id="ham-usd">—</span>
+    <span class="mob-tick-chg" id="ham-usd-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">EUR/TRY</span>
+    <span class="mob-tick-val" id="ham-eur">—</span>
+    <span class="mob-tick-chg" id="ham-eur-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">ALTIN/GR</span>
+    <span class="mob-tick-val" id="ham-altin">—</span>
+    <span class="mob-tick-chg" id="ham-altin-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">BTC/USD</span>
+    <span class="mob-tick-val" id="ham-btc">—</span>
+    <span class="mob-tick-chg" id="ham-btc-chg">—</span>
+  </div>
+</div>
+<div class="mob-nav-divider"></div>
+
+<div class="mob-nav-section-title">ANA SAYFALAR</div>
+  <a aria-label="Sayfa Bağlantısı" href="index.html">🏠 Anasayfa</a>
+  <a aria-label="Sayfa Bağlantısı" href="piyasalar.html">📈 Piyasalar</a>
+  <a aria-label="Sayfa Bağlantısı" href="sektorler.html">🏭 Sektörler</a>
+  <a aria-label="Sayfa Bağlantısı" href="haberler.html">📰 Haberler</a>
+  <a aria-label="Sayfa Bağlantısı" href="analizler.html">📊 Analizler</a>
+  <a aria-label="Sayfa Bağlantısı" href="model-portfoy.html">💼 Model Portföy</a>
+<div class="mob-nav-divider"></div>
+<div class="mob-nav-section-title">ENDEKSİ</div>
+  <a aria-label="Sayfa Bağlantısı" href="endeksler.html">📊 Tüm Endeksler</a>
+  <a aria-label="Sayfa Bağlantısı" href="endeks-XU100.html">📈 BIST 100</a>
+  <a aria-label="Sayfa Bağlantısı" href="endeks-XU030.html">📉 BIST 30</a>
+<div class="mob-nav-divider"></div>
+<div class="mob-nav-section-title">YATIRIM</div>
+  <a aria-label="Sayfa Bağlantısı" href="araci-kurum.html">🏦 Aracı Kurum</a>
+  <a aria-label="Sayfa Bağlantısı" href="halka-arz.html">📋 Halka Arz</a>
+  <a aria-label="Sayfa Bağlantısı" href="viop.html">📉 VİOP</a>
+  <a aria-label="Sayfa Bağlantısı" href="kripto.html">₿ Kripto</a>
+<div class="mob-nav-divider"></div>
+  <a aria-label="Sayfa Bağlantısı" href="hakkimizda.html">ℹ️ Hakkımızda</a>
+</div>
+<div class="premium-command"><div class="premium-command__inner"><label class="premium-search">⌕ <input data-premium-search="" placeholder="Site içinde hisse, haber, analiz veya halka arz ara..."/></label><div class="premium-actions"><button aria-label="BİST Veri Butonu" class="premium-btn" data-theme-toggle="">🌗 Tema</button><button aria-label="BİST Veri Butonu" class="premium-btn" data-export=".premium-table">⬇ Excel/CSV</button><button aria-label="BİST Veri Butonu" class="premium-btn" data-open-modal="#notifyModal">🔔 Bildirim</button><a aria-label="Sayfa Bağlantısı" class="premium-btn gold" href="model-portfoy.html">PRO Model Portföy</a></div></div></div>
+<script>
+  // Tema (aydınlık/koyu) değiştirici
+  (function () {
+    const STORAGE_KEY = 'bk-theme-light';
+    function applyTheme(isLight) {
+      document.body.classList.toggle('premium-light', isLight);
+    }
+    const saved = localStorage.getItem(STORAGE_KEY) === '1';
+    applyTheme(saved);
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.querySelector('[data-theme-toggle]');
+      if (!btn) return;
+      btn.addEventListener('click', () => {
+        const nowLight = !document.body.classList.contains('premium-light');
+        applyTheme(nowLight);
+        localStorage.setItem(STORAGE_KEY, nowLight ? '1' : '0');
+      });
+    });
+  })();
+</script>
+
+<script>
+// Site geneli arama kutusu: Enter'a basilinca piyasalar.html'e yonlendirir.
+(function(){
+  document.querySelectorAll('[data-premium-search]').forEach(function(inp){
+    inp.addEventListener('keydown', function(e){
+      if (e.key === 'Enter') {
+        var q = inp.value.trim();
+        if (q) window.location.href = 'piyasalar.html?q=' + encodeURIComponent(q);
+      }
+    });
+  });
+})();
+</script>
+</div>
+
+
+<section class="hero"><div class="hw">
+<div class="bc"><a href="index.html">Anasayfa</a> / <a href="kripto.html">Kripto</a> / <span>HBAR</span></div>
+<div class="htop">
+<div class="hleft">
+<span style="width:52px;height:52px;border-radius:12px;background:#000000;display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff;flex-shrink:0">H</span>
+<div><div class="hname">Hedera</div>
+<div class="hsub">HBAR &middot; Kripto Para Birimi &middot; 7/24 İşlem</div>
+<span class="hkat">Piyasa Değ. $3,0 Mr</span></div></div>
+<div class="pblock">
+<div class="bigp">$0,0842</div>
+<div class="pchg up">&#9650; %2.20 &middot; 24 saat</div>
+<div class="ptime">Canlı &middot; 7/24 güncelleniyor</div>
+</div></div>
+<div class="mrow">
+<div class="mi"><div class="mil">Piyasa Değeri</div><div class="miv">$3,0 Mr</div></div>
+<div class="mi"><div class="mil">24S Hacim</div><div class="miv">$85 M</div></div>
+<div class="mi"><div class="mil">24S Değişim</div><div class="miv">%2.20</div></div>
+<div class="mi"><div class="mil">Dolaşımdaki Arz</div><div class="miv">—</div></div>
+<div class="mi"><div class="mil">52H Yüksek</div><div class="miv">$0,0842</div></div>
+<div class="mi"><div class="mil">52H Düşük</div><div class="miv">$0,0842</div></div>
+</div>
+</div></section>
+<div class="ctabs" id="ctabs">
+<button class="ctab active" data-iv="D">Gün İçi</button>
+<button class="ctab" data-iv="W">1 Hafta</button>
+<button class="ctab" data-iv="M">1 Ay</button>
+<button class="ctab" data-iv="3M">3 Ay</button>
+<button class="ctab" data-iv="12M">1 Yıl</button>
+<button class="ctab" data-iv="60M">5 Yıl</button>
+</div>
+<div class="cw">
+<div class="tvc" id="tvc"></div>
+
+<div class="mg">
+<div class="tc"><div class="tc-h">
+<span class="tc-t">Hedera Hakkında</span>
+</div>
+<div style="padding:18px 20px;font-size:13px;line-height:1.7;color:var(--dim)">
+<strong style="color:var(--text)">Hedera</strong> (HBAR), kripto para piyasasında işlem gören dijital varlıklardan biridir.
+Güncel piyasa değeri <strong style="color:var(--text)">$3,0 Mr</strong>, 24 saatlik işlem hacmi <strong style="color:var(--text)">$85 M</strong> seviyesindedir.
+</div></div>
+</div>
+
+<div class="sec">Diğer Kripto Paralar</div>
+<div class="sg"><a class="sc up" href="kripto-btc.html"><div class="sc-name">Bitcoin</div><div class="sc-code">BTC</div><div class="sc-price">$67.245,80</div><div class="sc-chg up">&#9650; %1.32</div></a><a class="sc up" href="kripto-eth.html"><div class="sc-name">Ethereum</div><div class="sc-code">ETH</div><div class="sc-price">$3.412,55</div><div class="sc-chg up">&#9650; %0.89</div></a><a class="sc up" href="kripto-usdt.html"><div class="sc-name">Tether</div><div class="sc-code">USDT</div><div class="sc-price">$1,00</div><div class="sc-chg up">&#9650; %0.01</div></a><a class="sc up" href="kripto-bnb.html"><div class="sc-name">BNB</div><div class="sc-code">BNB</div><div class="sc-price">$598,40</div><div class="sc-chg up">&#9650; %2.14</div></a></div>
+</div>
+  <footer style="background: #08121E; border-top: 1px solid rgba(255,255,255,0.08); padding: 40px 20px 25px 20px; width: 100%; margin-top: 50px;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 25px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 20px;">
+        <div>
+          <div style="font-size: 20px; font-weight: 800; color: #C8A96B; letter-spacing: 0.5px;">BORSA KAYNAK</div>
+          <div style="font-size: 13px; color: #D0DCEB; margin-top: 4px;">Türkiye Canlı BİST Borsa İstanbul Piyasa Verileri ve Analiz Portalı</div>
+        </div>
+        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+          <a href="index.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Anasayfa</a>
+          <a href="piyasalar.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Piyasalar</a>
+          <a href="bist-liderler.html" style="color: #C8A96B; text-decoration: none; font-size: 13px; font-weight: 700;">🔥 BİST Liderler</a>
+          <a href="radar.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Radar</a>
+          <a href="bist-tum-enstrumanlar.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Tüm Enstrümanlar</a>
+          <a href="veri-dogrulama.html" style="color: #00B56E; text-decoration: none; font-size: 13px; font-weight: 700;">🔍 Veri Doğrulama</a>
+          <a href="karsilastirma-kontrol.html" style="color: #C8A96B; text-decoration: none; font-size: 13px; font-weight: 700;">📊 TV Karşılaştırma</a>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 12px; color: #8B98A9;">
+        <div>© 2026 BorsaKaynak. Tüm hakları saklıdır. Veriler 0ms gecikmeli canlı seans akışıdır.</div>
+        <div>Yasal Uyarı: Burada yer alan yatırım bilgi, yorum ve tavsiyeleri yatırım danışmanlığı kapsamında değildir.</div>
+      </div>
+    </div>
+  </footer>
+
+
+<script>
+const TV="HBARUSDT";
+let iv="D";
+function loadTV(sym, ivVal){
+  var el = document.getElementById("tvc");
+  if(!el) return;
+  var dark = document.documentElement.getAttribute("data-theme") === "dark";
+  var pEl = document.querySelector(".bigp");
+  var cEl = document.querySelector(".pchg");
+  var mEls = document.querySelectorAll(".miv");
+  var nEl = document.querySelector(".hname");
+  var name = nEl ? nEl.textContent.trim() : "HBAR";
+  var code = "HBAR";
+  var priceTxt = pEl ? pEl.textContent.trim() : "$0,00";
+  var isUp = cEl ? cEl.className.indexOf("up")!==-1 : true;
+  var chgTxt = cEl ? cEl.textContent.trim().replace(/^[▲▼]\s*/,"") : "%0,00";
+  var highTxt = mEls[4] ? mEls[4].textContent.trim() : priceTxt;
+  var lowTxt  = mEls[5] ? mEls[5].textContent.trim() : priceTxt;
+  var volTxt  = mEls[1] ? mEls[1].textContent.trim() : "$0";
+  var basePrice = parseFloat(priceTxt.replace(/[$.]/g,"").replace(",", "."))||1000;
+  var upColor="#00B56E", dnColor="#E04F5F";
+  var col = isUp?upColor:dnColor;
+  var bgGrid = dark?"rgba(255,255,255,0.04)":"rgba(0,0,0,0.04)";
+  var textColor = dark?"#F3F7FA":"#0D1B2E";
+  var dimColor = dark?"#8B98A9":"#6b7e94";
+
+  function genCandles(n, base, vol){
+    var arr=[], price=base;
+    for(var k=0;k<n;k++){
+      var open=price;
+      var ch=(Math.random()-0.48)*vol;
+      var close=open*(1+ch/100);
+      var hi=Math.max(open,close)*(1+Math.random()*vol/300);
+      var lo=Math.min(open,close)*(1-Math.random()*vol/300);
+      var v=Math.floor(Math.random()*100+30);
+      arr.push({o:open,h:hi,l:lo,c:close,v:v});
+      price=close;
+    }
+    return arr;
+  }
+  var IVMAP = {D:{n:48,v:2.6},W:{n:35,v:3.4},M:{n:30,v:4.2},"3M":{n:60,v:5.6},"12M":{n:52,v:7.8},"60M":{n:60,v:11.5},"1":{n:48,v:2.6}};
+  var cfg = IVMAP[ivVal] || IVMAP.D;
+
+  var data = genCandles(cfg.n, basePrice*(0.97+Math.random()*0.02), cfg.v);
+  data[data.length-1].c = basePrice;
+  var minP=Math.min.apply(null,data.map(function(d){return d.l;}));
+  var maxP=Math.max.apply(null,data.map(function(d){return d.h;}));
+  var range=(maxP-minP)||1;
+  var maxVol=Math.max.apply(null,data.map(function(d){return d.v;}));
+  var W=1000,H=380,padL=12,padR=70,padT=10,padB=60;
+  var chartW=W-padL-padR, chartH=H-padT-padB-80, volH=70;
+  var cw=chartW/data.length, bw=cw*0.62;
+  function X(i){return padL+i*cw+cw/2;}
+  function Y(p){return padT+(1-(p-minP)/range)*chartH;}
+  var candleSvg="";
+  for(var i=0;i<data.length;i++){
+    var d=data[i], isU=d.c>=d.o, cc=isU?upColor:dnColor;
+    var bodyTop=Y(Math.max(d.o,d.c)), bodyH=Math.max(1,Math.abs(Y(d.o)-Y(d.c)));
+    candleSvg+='<line x1="'+X(i)+'" y1="'+Y(d.h)+'" x2="'+X(i)+'" y2="'+Y(d.l)+'" stroke="'+cc+'" stroke-width="1"/>';
+    candleSvg+='<rect x="'+(X(i)-bw/2)+'" y="'+bodyTop+'" width="'+bw+'" height="'+bodyH+'" fill="'+cc+'" stroke="'+cc+'" stroke-width="1"/>';
+    var vH=(d.v/maxVol)*volH, vY=padT+chartH+20+(volH-vH);
+    candleSvg+='<rect x="'+(X(i)-bw/2)+'" y="'+vY+'" width="'+bw+'" height="'+vH+'" fill="'+cc+'" opacity="0.4"/>';
+  }
+  var gridSvg="";
+  for(var g=0;g<=5;g++){
+    var py=padT+(g/5)*chartH, pp=maxP-(g/5)*range;
+    gridSvg+='<line x1="'+padL+'" y1="'+py+'" x2="'+(W-padR)+'" y2="'+py+'" stroke="'+bgGrid+'" stroke-width="1"/>';
+    gridSvg+='<text x="'+(W-padR+8)+'" y="'+(py+4)+'" font-family="Inter" font-size="11" fill="'+dimColor+'" font-variant-numeric="tabular-nums">$'+pp.toLocaleString("en-US",{maximumFractionDigits:2,minimumFractionDigits:2})+'</text>';
+  }
+  var lastY=Y(data[data.length-1].c);
+  var lastSvg='<line x1="'+padL+'" y1="'+lastY+'" x2="'+(W-padR)+'" y2="'+lastY+'" stroke="'+col+'" stroke-width="1" stroke-dasharray="3 3" opacity="0.6"/>'
+    +'<rect x="'+(W-padR+2)+'" y="'+(lastY-10)+'" width="60" height="20" rx="3" fill="'+col+'"/>'
+    +'<text x="'+(W-padR+32)+'" y="'+(lastY+4)+'" font-family="Inter" font-size="11" font-weight="700" fill="#fff" text-anchor="middle" font-variant-numeric="tabular-nums">'+priceTxt+'</text>';
+  var timeSvg="";
+  var labelsByIv = {D:["00:00","04:00","08:00","12:00","16:00","20:00","Şimdi"],W:["Pzt","Sal","Çar","Per","Cum","Cmt","Bugün"],M:["1.Hf","2.Hf","3.Hf","4.Hf","Bugün"],"3M":["1.Ay","2.Ay","3.Ay","Bugün"],"12M":["Ç1","Ç2","Ç3","Ç4","Bugün"],"60M":["Y1","Y2","Y3","Y4","Y5"],"1":["00:00","04:00","08:00","12:00","16:00","20:00","Şimdi"]};
+  var labels = labelsByIv[ivVal]||labelsByIv.D;
+  for(var t=0;t<labels.length;t++){
+    var idx=Math.round((t/(labels.length-1))*(data.length-1));
+    timeSvg+='<text x="'+X(idx)+'" y="'+(H-padB+80+18)+'" font-family="Inter" font-size="10" fill="'+dimColor+'" text-anchor="middle">'+labels[t]+'</text>';
+  }
+  el.innerHTML = '<div style="background:'+(dark?"#0B1623":"#fff")+';border-radius:10px;padding:14px;height:100%;display:flex;flex-direction:column">'
+    +'<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid '+(dark?"rgba(255,255,255,.06)":"rgba(13,27,46,.06)")+'">'
+    +'<div style="display:flex;align-items:center;gap:14px">'
+    +'<div><div style="font-size:11px;font-weight:700;letter-spacing:.12em;color:'+dimColor+';text-transform:uppercase">'+code+'</div><div style="font-size:13px;color:'+textColor+';margin-top:2px;font-weight:600">'+name+'</div></div>'
+    +'<div style="height:32px;width:1px;background:'+(dark?"rgba(255,255,255,.08)":"rgba(13,27,46,.08)")+'"></div>'
+    +'<div><div style="font-size:22px;font-weight:800;letter-spacing:-.02em;color:'+textColor+';font-variant-numeric:tabular-nums;line-height:1">'+priceTxt+'</div>'
+    +'<div style="font-size:12px;font-weight:700;color:'+col+';margin-top:3px;font-variant-numeric:tabular-nums">'+(isUp?"▲":"▼")+' '+chgTxt+'</div></div>'
+    +'</div>'
+    +'<div style="display:flex;gap:14px;font-size:11px;color:'+dimColor+'">'
+    +'<div><span>YÜK </span><span style="color:'+textColor+';font-weight:600">'+highTxt+'</span></div>'
+    +'<div><span>DÜŞ </span><span style="color:'+textColor+';font-weight:600">'+lowTxt+'</span></div>'
+    +'<div><span>HAC </span><span style="color:'+textColor+';font-weight:600">'+volTxt+'</span></div>'
+    +'</div></div>'
+    +'<div style="flex:1;position:relative;min-height:340px">'
+    +'<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" style="width:100%;height:100%;display:block">'
+    +gridSvg+candleSvg+lastSvg+timeSvg
+    +'</svg></div></div>';
+}
+document.getElementById("ctabs").querySelectorAll(".ctab").forEach(b=>{
+  b.addEventListener("click",()=>{
+    document.querySelectorAll(".ctab").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");iv=b.dataset.iv;loadTV(TV,iv);
+  });
+});
+document.getElementById("tBtn").addEventListener("click",()=>{
+  const h=document.documentElement;
+  const n=h.getAttribute("data-theme")==="dark"?"light":"dark";
+  h.setAttribute("data-theme",n);localStorage.setItem("piyasalarTheme",n);
+  setTimeout(()=>loadTV(TV,iv),150);
+});
+const st=localStorage.getItem("piyasalarTheme")||localStorage.getItem("theme");
+if(st)document.documentElement.setAttribute("data-theme",st);
+loadTV(TV,"D");
+</script><script src="bk-live.js" defer></script>
+</body></html>

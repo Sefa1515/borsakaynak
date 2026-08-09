@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="100%" height="100%">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F6D365" />
+      <stop offset="100%" stop-color="#FDA085" />
+    </linearGradient>
+    <linearGradient id="goldGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C8A96B" />
+      <stop offset="100%" stop-color="#9D7A40" />
+    </linearGradient>
+    <linearGradient id="goldGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE000" />
+      <stop offset="100%" stop-color="#799F0C" />
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#08121E" />
+      <stop offset="100%" stop-color="#16243A" />
+    </linearGradient>
+  </defs>
+  <rect width="320" height="80" rx="12" fill="#08121E" />
+
+  <g transform="translate(15, 15)">
+    <polygon points="25,5 42,20 25,45 8,20" fill="none" stroke="url(#goldGrad2)" stroke-width="2"/>
+    <line x1="8" y1="20" x2="42" y2="20" stroke="url(#goldGrad2)" stroke-width="1.5"/>
+    <line x1="25" y1="5" x2="25" y2="45" stroke="#F3F7FA" stroke-width="1"/>
+  </g>
+  <text x="80" y="44" font-family="sans-serif" font-size="17" font-weight="900" fill="#F3F7FA">BORSA<tspan fill="#C8A96B">KAYNAK</tspan></text>
+  <text x="80" y="58" font-family="sans-serif" font-size="9" fill="#8B98A9">DEGERLI PORTFOYLER</text>
+</svg>

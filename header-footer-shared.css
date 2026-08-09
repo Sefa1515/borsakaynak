@@ -1,0 +1,122 @@
+/* ═══════════════════════════════════════════════════════════
+   BorsaKaynak — Paylasilan Header/Footer (anasayfadan alinmistir)
+   Tum stiller .bk-shared-chrome altinda izole edilmistir; boylece
+   hedef sayfanin kendi CSS'iyle (ayni sinif adlari olsa bile)
+   CATISMAZ. Degerler index.html'deki :root degiskenlerinden ve
+   kazanan (son tanimlanan) .premium-command kuralindan alinmistir.
+   ═══════════════════════════════════════════════════════════ */
+.bk-shared-chrome{
+  display:contents;
+  --bg:#08121E; --line:rgba(255,255,255,.05); --line-2:rgba(255,255,255,.09);
+  --text:#F3F7FA; --text-muted:#8B98A9;
+  --accent:#C8A96B; --accent-2:#D6B57A;
+  --green:#00B56E; --red:#E04F5F;
+  --panel:#111C2B; --panel-hi:#16354D;
+  --font-sans:'Inter','Geist',-apple-system,BlinkMacSystemFont,sans-serif;
+  --font-mono:'Geist Mono',monospace;
+  --premium-border:rgba(255,255,255,.115);
+}
+.bk-shared-chrome a{color:inherit;text-decoration:none}
+.bk-shared-chrome button{font-family:inherit}
+.bk-shared-chrome .container{max-width:1320px;margin:0 auto;padding:0 28px;position:relative;z-index:1}
+
+/* ============ TICKER ============ */
+.bk-shared-chrome .ticker{background:linear-gradient(180deg,#0B1623,#08121E);border-bottom:1px solid var(--line);overflow:hidden;position:relative;height:44px}
+.bk-shared-chrome .ticker::before,.bk-shared-chrome .ticker::after{content:"";position:absolute;top:0;bottom:0;width:90px;z-index:2;pointer-events:none}
+.bk-shared-chrome .ticker::before{left:0;background:linear-gradient(90deg,var(--bg) 0%,transparent 100%)}
+.bk-shared-chrome .ticker::after{right:0;background:linear-gradient(270deg,var(--bg) 0%,transparent 100%)}
+.bk-shared-chrome .ticker-track{display:flex;gap:44px;align-items:center;height:100%;width:max-content;animation:bk-ticker-scroll 70s linear infinite;padding-left:28px}
+.bk-shared-chrome .ticker:hover .ticker-track{animation-play-state:paused}
+@keyframes bk-ticker-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.bk-shared-chrome .tick{display:flex;align-items:center;gap:10px;white-space:nowrap;font-size:13px}
+.bk-shared-chrome .tick-name{color:#A0B0C0;font-weight:500;letter-spacing:.02em}
+.bk-shared-chrome .tick-val{color:var(--text);font-weight:600;font-family:var(--font-mono);font-size:13px}
+.bk-shared-chrome .tick-chg{display:inline-flex;align-items:center;gap:3px;font-weight:500;font-family:var(--font-mono);font-size:12px}
+.bk-shared-chrome .tick-chg.up{color:var(--green)}
+.bk-shared-chrome .tick-chg.dn{color:var(--red)}
+.bk-shared-chrome .tick-dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+
+/* ============ HEADER / NAV ============ */
+.bk-shared-chrome .header{border-bottom:1px solid var(--line);background:rgba(13,23,38,.85);backdrop-filter:blur(16px) saturate(180%);-webkit-backdrop-filter:blur(16px) saturate(180%);position:sticky;top:0;z-index:50}
+.bk-shared-chrome .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+.bk-shared-chrome .brand{display:flex;align-items:center;gap:12px}
+.bk-shared-chrome .brand-mark{width:42px;height:42px;border-radius:6px;background:linear-gradient(135deg,#C8A96B 0%,#9d8350 100%);display:grid;place-items:center;font-weight:800;color:#08121E;font-size:20px;box-shadow:inset 0 1px 0 rgba(255,255,255,.12);letter-spacing:-.04em}
+.bk-shared-chrome .brand-text h1{font-size:17px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.bk-shared-chrome .brand-text small{display:block;margin-top:5px;font-size:9.5px;color:var(--text-muted);letter-spacing:.32em;font-weight:500;font-family:var(--font-mono)}
+.bk-shared-chrome .nav-menu{display:flex;align-items:center;gap:2px}
+.bk-shared-chrome .nav-menu a{padding:9px 14px;font-size:13px;font-weight:500;letter-spacing:-.005em;color:#A0B0C0;border-radius:7px;transition:all .2s;position:relative}
+.bk-shared-chrome .nav-menu a:hover{color:var(--text);background:var(--panel-hi)}
+.bk-shared-chrome .nav-menu a.active{color:var(--text)}
+.bk-shared-chrome .nav-menu a.active::after{content:"";position:absolute;left:14px;right:14px;bottom:3px;height:2px;background:var(--accent);border-radius:2px}
+.bk-shared-chrome .nav-actions{display:flex;align-items:center;gap:8px}
+.bk-shared-chrome .nav-btn{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--panel);display:grid;place-items:center;cursor:pointer;transition:all .2s;color:#A0B0C0}
+.bk-shared-chrome .nav-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ============ HAMBURGER + MOBIL MENU ============ */
+.bk-shared-chrome .ham-btn{display:none;flex-direction:column;justify-content:space-between;width:38px;height:38px;padding:10px 8px;cursor:pointer;border:1px solid var(--line);border-radius:8px;background:var(--panel);-webkit-tap-highlight-color:transparent}
+.bk-shared-chrome .ham-btn span{display:block;height:2px;width:100%;background:var(--text);border-radius:2px;transition:all .28s ease}
+.bk-shared-chrome .ham-btn.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.bk-shared-chrome .ham-btn.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.bk-shared-chrome .ham-btn.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.bk-shared-chrome .mob-nav{position:fixed;inset:0;z-index:998;background:rgba(8,18,30,.97);backdrop-filter:blur(16px);display:flex;flex-direction:column;padding:80px 24px 40px;gap:6px;opacity:0;pointer-events:none;transform:translateX(100%);transition:opacity .3s ease,transform .3s ease;overflow-y:auto}
+.bk-shared-chrome .mob-nav.open{opacity:1;pointer-events:auto;transform:translateX(0)}
+.bk-shared-chrome .mob-nav a{display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:12px;font-size:16px;font-weight:600;color:rgba(240,244,248,.85);text-decoration:none;border:1px solid transparent;transition:all .2s}
+.bk-shared-chrome .mob-nav a:hover,.bk-shared-chrome .mob-nav a.active{background:rgba(200,169,107,.12);border-color:rgba(200,169,107,.28);color:#C8A96B}
+.bk-shared-chrome .mob-nav-divider{height:1px;background:rgba(255,255,255,.07);margin:8px 0}
+.bk-shared-chrome .mob-nav-close{position:absolute;top:18px;right:18px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);cursor:pointer;display:grid;place-items:center;color:rgba(240,244,248,.8);font-size:22px;line-height:1}
+.bk-shared-chrome .mob-nav-section-title{font-size:10px;text-transform:uppercase;letter-spacing:.1em;font-weight:800;color:rgba(200,169,107,.7);padding:8px 4px 4px}
+.bk-shared-chrome .mob-ticker-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 4px}
+.bk-shared-chrome .mob-tick-item{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.bk-shared-chrome .mob-tick-label{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:rgba(240,244,248,.45);font-weight:700}
+.bk-shared-chrome .mob-tick-val{font-family:var(--font-mono);font-size:14px;font-weight:700;color:var(--text)}
+.bk-shared-chrome .mob-tick-chg{font-size:11px;font-weight:600}
+.bk-shared-chrome .mob-tick-chg.up{color:#22c55e}
+.bk-shared-chrome .mob-tick-chg.dn{color:#ef4444}
+body.premium-light .bk-shared-chrome .mob-nav{background:rgba(248,250,252,.97)}
+body.premium-light .bk-shared-chrome .mob-nav a{color:#374151}
+body.premium-light .bk-shared-chrome .mob-nav a:hover,
+body.premium-light .bk-shared-chrome .mob-nav a.active{background:rgba(200,169,107,.1);color:#9d7a40}
+body.premium-light .bk-shared-chrome .mob-nav-close{background:rgba(0,0,0,.06);border-color:rgba(0,0,0,.1);color:#374151}
+body.premium-light .bk-shared-chrome .ham-btn{background:#fff;border-color:rgba(0,0,0,.12)}
+body.premium-light .bk-shared-chrome .ham-btn span{background:#1f2937}
+body.premium-light .bk-shared-chrome .mob-tick-item{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.08)}
+body.premium-light .bk-shared-chrome .mob-tick-label{color:rgba(30,40,60,.45)}
+
+/* ============ ARAMA / TEMA / BILDIRIM CUBUGU ============ */
+.bk-shared-chrome .premium-command{background:rgba(13,23,38,.95);border-bottom:1px solid rgba(255,255,255,.08);padding:8px 16px;position:sticky;top:0;z-index:49;backdrop-filter:blur(12px)}
+.bk-shared-chrome .premium-command__inner{max-width:1320px;margin:0 auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.bk-shared-chrome .premium-search{flex:1;min-width:200px;display:flex;align-items:center;gap:8px;padding:7px 12px;border:1px solid rgba(255,255,255,.1);border-radius:7px;background:rgba(255,255,255,.05);font-size:13px;color:#A0B0C0}
+.bk-shared-chrome .premium-search input{background:transparent;border:none;outline:none;color:var(--text);font-family:var(--font-sans);font-size:13px;width:100%}
+.bk-shared-chrome .premium-search input::placeholder{color:var(--text-muted)}
+.bk-shared-chrome .premium-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.bk-shared-chrome .premium-btn{cursor:pointer;border:1px solid rgba(255,255,255,.12);border-radius:7px;padding:7px 13px;background:rgba(255,255,255,.06);color:#A0B0C0;font-weight:600;font-size:12px;font-family:var(--font-sans);transition:.18s;text-decoration:none;white-space:nowrap}
+.bk-shared-chrome .premium-btn:hover{background:rgba(255,255,255,.1);color:var(--text)}
+.bk-shared-chrome .premium-btn.gold{background:linear-gradient(135deg,var(--accent),#9d8350);color:#08121E;border-color:transparent;font-weight:700}
+.bk-shared-chrome .premium-btn.gold:hover{background:linear-gradient(135deg,var(--accent-2),#b59560)}
+body.premium-light .bk-shared-chrome .premium-command{background:rgba(240,244,248,.97)!important;border-color:rgba(0,0,0,.1)!important}
+body.premium-light .bk-shared-chrome .premium-search{background:rgba(0,0,0,.04)!important;border-color:rgba(0,0,0,.12)!important;color:#6b7e94!important}
+body.premium-light .bk-shared-chrome .premium-search input{color:#0d1b2e!important}
+body.premium-light .bk-shared-chrome .premium-btn{background:rgba(0,0,0,.05)!important;border-color:rgba(0,0,0,.12)!important;color:#3d5068!important}
+body.premium-light .bk-shared-chrome .premium-btn:hover{background:rgba(0,0,0,.09)!important;color:#0d1b2e!important}
+
+@media(max-width:860px){
+  .bk-shared-chrome .ham-btn{display:flex}
+  .bk-shared-chrome .nav-menu{display:none!important}
+  .bk-shared-chrome .ticker{height:34px}
+  .bk-shared-chrome .tick-val{font-size:12px}
+  .bk-shared-chrome .tick-name{font-size:11px}
+  .bk-shared-chrome .mob-ticker-grid{grid-template-columns:1fr 1fr}
+  .bk-shared-chrome .header .container{padding:0 12px}
+  .bk-shared-chrome .premium-command .premium-command__inner{flex-direction:column!important;gap:8px!important}
+  .bk-shared-chrome .premium-actions{flex-wrap:wrap!important;gap:6px!important}
+  .bk-shared-chrome .premium-btn{flex:1!important;min-width:calc(50% - 3px)!important}
+  .bk-shared-chrome .premium-search{min-width:0!important}
+}
+@media(max-width:480px){
+  .bk-shared-chrome .mob-ticker-grid{grid-template-columns:1fr 1fr}
+  .bk-shared-chrome .mob-tick-val{font-size:13px}
+  .bk-shared-chrome .premium-btn{min-width:100%!important}
+}
+
+/* ============ FOOTER ============ */
+/* Not: Anasayfadaki footer tamamen inline-style'dir, harici CSS'e ihtiyac duymaz. */

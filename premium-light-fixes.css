@@ -1,0 +1,48 @@
+/* premium-light-fixes.css
+   Açık tema (☀️ Tema düğmesi -> body.premium-light) geçişinde bazı
+   metinlerin görünmez/okunaksız hale gelmesini düzeltir.
+
+   NEDEN GEREKLİ: Sitede 46 sayfada tema değiştirme düğmesi var, ama
+   açık tema CSS kuralları sayfadan sayfaya tutarsız/eksikti -- bazı
+   sayfalarda üstteki ticker şeridi (BIST 100, USD/TRY, ALTIN vb.)
+   açık temada çok düşük kontrastla (neredeyse görünmez) kalıyordu.
+   Bu dosya EN SON yüklenir ki hangi sayfada olursa olsun kesin olarak
+   üzerine yazsın.
+*/
+
+/* --- Üst ticker şeridi --- */
+body.premium-light .ticker,
+body.premium-light .ticker-track {
+  background: #E8EDF5 !important;
+  border-bottom-color: rgba(13,27,46,.08) !important;
+}
+body.premium-light .tick-name,
+body.premium-light .ticker-track .tick-name {
+  color: #3D5068 !important;
+}
+body.premium-light .tick-val,
+body.premium-light .ticker-track .tick-val {
+  color: #0D1B2E !important;
+}
+body.premium-light .tick-chg {
+  color: #3D5068 !important;
+}
+body.premium-light .tick-chg.up {
+  color: #00895C !important;
+}
+body.premium-light .tick-chg.dn {
+  color: #D33A3A !important;
+}
+body.premium-light .tick-dot {
+  background: #00895C !important;
+}
+
+/* --- Logo: "borsa" kelimesi beyaz renkte tasarlandığı için açık
+   temada arka planla aynı renge karışıp kayboluyor. Logonun etrafına
+   koyu bir rozet (badge) ekleyip kontrastı geri kazandırıyoruz. --- */
+body.premium-light img[src="logo-kaynak.png"] {
+  background: #0D1B2E !important;
+  border-radius: 8px !important;
+  padding: 4px 10px !important;
+  box-sizing: content-box !important;
+}

@@ -1,0 +1,10 @@
+{
+  "name": "borsakaynak",
+  "version": "3.0.0",
+  "description": "BorsaKaynak Node.js Live Server Engine",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {}
+}

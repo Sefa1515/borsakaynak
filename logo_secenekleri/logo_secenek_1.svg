@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="100%" height="100%">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F6D365" />
+      <stop offset="100%" stop-color="#FDA085" />
+    </linearGradient>
+    <linearGradient id="goldGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C8A96B" />
+      <stop offset="100%" stop-color="#9D7A40" />
+    </linearGradient>
+    <linearGradient id="goldGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE000" />
+      <stop offset="100%" stop-color="#799F0C" />
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#08121E" />
+      <stop offset="100%" stop-color="#16243A" />
+    </linearGradient>
+  </defs>
+  <rect width="320" height="80" rx="12" fill="#08121E" />
+
+  <g transform="translate(15, 15)">
+    <circle cx="25" cy="25" r="22" fill="none" stroke="url(#goldGrad2)" stroke-width="2.5"/>
+    <path d="M12 32 L20 22 L28 28 L38 16" fill="none" stroke="url(#goldGrad2)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="38" cy="16" r="3" fill="#FFE000"/>
+  </g>
+  <text x="80" y="44" font-family="'Inter', sans-serif" font-size="16" font-weight="800" letter-spacing="-0.03em" fill="#F3F7FA">BORSA<tspan fill="#C8A96B">KAYNAK</tspan></text>
+  <text x="80" y="58" font-family="monospace" font-size="8" font-weight="600" letter-spacing="0.25em" fill="#8B98A9">PREMIUM ANALIZ</text>
+</svg>

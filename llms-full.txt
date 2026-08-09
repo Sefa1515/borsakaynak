@@ -1,0 +1,14 @@
+# BorsaKaynak Full AI Specification & Data Feed
+# Base URL: https://borsakaynak.com
+
+## Endpoints for AI Agents:
+- GET /api/quote?symbol=THYAO : Returns real-time BIST quote for symbol
+- GET /api/tradingview-gainers : Returns real-time Top BIST Gainers list
+- GET /sitemap.xml : Complete URL catalog of 685 BIST stocks
+- GET /llms.txt : Primary AI Agent Index
+
+## Primary Data Fields:
+- sembol: Stock Ticker Code (e.g., THYAO, ASELS, ISVEA)
+- son / price: Last traded price in TRY (₺)
+- farkP / chgP: Daily percentage change (%)
+- hacim / vol: Total daily trading volume in TRY (₺)

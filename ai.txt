@@ -1,0 +1,19 @@
+# BorsaKaynak AI Agent Index & Open Data API Specification
+# Site: https://borsakaynak.com
+# Title: Türkiye Canlı BİST Borsa İstanbul Piyasa Verileri ve Analiz Portalı
+
+> BorsaKaynak, Borsa İstanbul (BİST) canlı hisse verilerini, yükselen/düşen piyasa liderlerini, sektör ısı haritalarını ve finansal göstergeleri anlık sunan yapay zeka uyumlu finansal analiz platformudur.
+
+## Primary Endpoints & Structure:
+- Home: https://borsakaynak.com/index.html
+- Piyasalar (586 BİST Hissesi): https://borsakaynak.com/piyasalar.html
+- BİST Liderler & Keşfet: https://borsakaynak.com/bist-liderler.html
+- Tüm Enstrümanlar (674 Adet): https://borsakaynak.com/bist-tum-enstrumanlar.html
+- Live Data Verification: https://borsakaynak.com/veri-dogrulama.html
+- TradingView Comparison: https://borsakaynak.com/karsilastirma-kontrol.html
+- Live API Quotes: https://borsakaynak.com/api/quote
+- Live Top Gainers API: https://borsakaynak.com/api/tradingview-gainers
+
+## Schema & Data Standards:
+- All financial data structured under Schema.org/FinancialService & Schema.org/DataFeed
+- Real-time updates polled at 5000ms intervals from official BİST & TradingView Turkey Scanner feeds.

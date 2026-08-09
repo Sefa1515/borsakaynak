@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://s3.tradingview.com" />
+  <link rel="dns-prefetch" href="https://scanner.tradingview.com" />
+  <link rel="dns-prefetch" href="https://web-api.forinvestcdn.com" />
+
+  <!-- Çerez/Önbellek engeli -->
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Hedef Fiyatlar — BorsaKaynak</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{overflow-x:hidden;max-width:100%}
+:root{--bg:#08121E;--bg2:#0B1623;--panel:#111C2B;--p2:#16243A;--line:rgba(255,255,255,.07);--l2:rgba(255,255,255,.12);--text:#F3F7FA;--dim:#B0B9C5;--mute:#8B98A9;--accent:#C8A96B;--G:#00B56E;--R:#E04F5F;--font:"Geist",-apple-system,sans-serif;--mono:"Geist Mono",monospace}
+html[data-theme=light]{--bg:#F0F4F8;--bg2:#E8EDF5;--panel:#FFF;--p2:#F4F7FB;--line:rgba(0,0,0,.07);--l2:rgba(0,0,0,.12);--text:#0D1B2E;--dim:#3D5068;--mute:#6b7e94}
+body{font-family:var(--font);background:radial-gradient(ellipse at top,#0d1f33 0%,#08121E 50%);color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh}
+html[data-theme=light] body{background:#F0F4F8}
+
+/* TICKER */
+.ticker{background:var(--bg2);border-bottom:1px solid var(--line);height:40px;overflow:hidden;position:relative}
+.ticker::before,.ticker::after{content:"";position:absolute;top:0;bottom:0;width:70px;z-index:2;pointer-events:none}
+.ticker::before{left:0;background:linear-gradient(90deg,var(--bg2),transparent)}
+.ticker::after{right:0;background:linear-gradient(270deg,var(--bg2),transparent)}
+.tt{display:flex;gap:36px;align-items:center;height:100%;width:max-content;animation:sc 55s linear infinite;padding-left:20px}
+.ticker:hover .tt{animation-play-state:paused}
+@keyframes sc{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.tk{display:flex;align-items:center;gap:7px;white-space:nowrap;font-size:12px}
+.tk-n{color:var(--dim);font-weight:500}
+.tk-v{color:var(--text);font-weight:600;font-family:var(--mono)}
+.tk-c{font-family:var(--mono);font-size:11px;font-weight:600}
+.tk-c.up{color:var(--G)}.tk-c.dn{color:var(--R)}
+.td{width:5px;height:5px;border-radius:50%;background:var(--accent)}
+
+/* HEADER */
+.hdr{background:rgba(8,18,30,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50}
+html[data-theme=light] .hdr{background:rgba(240,244,248,.92)}
+.nav{max-width:1320px;margin:0 auto;padding:13px 28px;display:flex;align-items:center;justify-content:space-between}
+.nl{display:flex;align-items:center;gap:2px}
+.nl a{padding:6px 10px;font-size:12.5px;font-weight:500;color:var(--dim);border-radius:6px;text-decoration:none;transition:.18s}
+.nl a:hover,.nl a.active{color:var(--text);background:var(--p2)}
+.nact{display:flex;gap:6px}
+.nb{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--panel);cursor:pointer;color:var(--dim);font-size:14px;display:grid;place-items:center;transition:.18s}
+.nb:hover{border-color:var(--accent);color:var(--accent)}
+
+main{max-width:1320px;margin:0 auto;padding:32px 28px 64px;position:relative;z-index:1}
+.bc{font-size:12px;color:var(--mute);margin-bottom:14px}
+.bc a{color:var(--mute);text-decoration:none}
+.bc a:hover{color:var(--accent)}
+.bc span{color:var(--accent)}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#111C2B 0%,#16243A 60%,#1a2b40 100%);border:1px solid rgba(200,169,107,.18);border-radius:18px;padding:28px;margin-bottom:24px;position:relative;overflow:hidden}
+html[data-theme=light] .hero{background:linear-gradient(135deg,#fff 0%,#f4f7fb 100%);border-color:rgba(200,169,107,.25)}
+.hero::before{content:"";position:absolute;top:-80px;right:-80px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(200,169,107,.12),transparent 70%);pointer-events:none}
+.hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.hero-eyebrow .ld{width:8px;height:8px;border-radius:50%;background:#00B56E;animation:pulse 1.5s ease-in-out infinite;box-shadow:0 0 12px #00B56E}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
+.hero h1{font-size:30px;font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-bottom:8px;color:var(--text)}
+.hero h1 span{color:var(--accent)}
+.hero p{font-size:14px;color:var(--dim);line-height:1.6;max-width:680px;margin-bottom:16px}
+.hero-stats{display:flex;gap:14px;flex-wrap:wrap;margin-top:16px}
+.hero-stat{padding:10px 16px;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:10px}
+html[data-theme=light] .hero-stat{background:rgba(0,0,0,.02)}
+.hero-stat-val{font-family:var(--mono);font-size:18px;font-weight:800;color:var(--text);letter-spacing:-.02em;line-height:1}
+.hero-stat-lbl{font-size:10.5px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase;margin-top:3px}
+
+/* FILTRE BAR */
+.fbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:16px;flex-wrap:wrap}
+.fchips{display:flex;gap:8px;flex-wrap:wrap}
+.fchip{padding:7px 14px;border-radius:20px;font-size:12px;font-weight:600;background:var(--panel);border:1px solid var(--line);color:var(--dim);cursor:pointer;transition:.18s;font-family:inherit}
+.fchip:hover{border-color:rgba(200,169,107,.4);color:var(--text)}
+.fchip.active{background:var(--accent);border-color:transparent;color:#08121E}
+.fsearch{padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--text);font-size:13px;outline:none;width:200px;font-family:inherit}
+.fsearch:focus{border-color:rgba(200,169,107,.5)}
+.fcount{font-size:12px;color:var(--mute)}
+
+/* TABLO */
+.tw{background:var(--panel);border:1px solid var(--line);border-radius:13px;overflow:hidden;margin-bottom:24px}
+.tbl-scroll{overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{padding:11px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);border-bottom:1px solid var(--line);background:rgba(255,255,255,.025);white-space:nowrap;cursor:pointer}
+html[data-theme=light] .tbl th{background:rgba(0,0,0,.025);color:#6b7e94}
+.tbl th:hover{color:var(--accent)}
+.tbl th.r{text-align:right}
+.tbl td{padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.03);color:var(--text);vertical-align:middle}
+html[data-theme=light] .tbl td{border-color:rgba(0,0,0,.04);color:#0d1b2e}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr.hover-row:hover td{background:rgba(255,255,255,.025)}
+html[data-theme=light] .tbl tr.hover-row:hover td{background:rgba(0,0,0,.02)}
+.tbl td.r{text-align:right;font-family:var(--mono)}
+.h-sym{display:flex;align-items:center;gap:10px}
+.h-logo{width:34px;height:34px;border-radius:50%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)}
+.h-logo img{width:100%;height:100%;object-fit:cover;display:block}
+.h-code{font-size:13px;font-weight:700;color:var(--text)}
+.h-name{font-size:10.5px;color:var(--mute);margin-top:1px}
+.badge{display:inline-flex;padding:3px 9px;border-radius:6px;font-family:var(--mono);font-size:11.5px;font-weight:700;white-space:nowrap}
+.b-g{background:rgba(0,181,110,.13);color:#00B56E}
+.b-r{background:rgba(224,79,95,.13);color:#E04F5F}
+.b-b{background:rgba(91,157,217,.12);color:#5B9DD9}
+.b-a{background:rgba(200,169,107,.13);color:#C8A96B}
+.b-n{background:rgba(255,255,255,.05);color:var(--dim)}
+html[data-theme=light] .b-n{background:rgba(0,0,0,.05);color:#6b7e94}
+.donem{font-size:11px;padding:2px 8px;border-radius:5px;background:rgba(91,157,217,.1);color:#5B9DD9;font-weight:600;font-family:var(--mono)}
+.bar-mini{display:flex;align-items:center;justify-content:flex-end;gap:8px}
+.bar-track{width:60px;height:5px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;flex-shrink:0}
+html[data-theme=light] .bar-track{background:rgba(0,0,0,.06)}
+.bar-fill{height:100%;border-radius:3px}
+
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--line);padding:36px 0 20px;margin-top:48px}
+.fcont{max-width:1320px;margin:0 auto;padding:0 28px}
+.fgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr 1fr;gap:32px;margin-bottom:28px}
+.fcol h4{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.fcol ul{list-style:none}.fcol li{margin-bottom:7px}
+.fcol a{font-size:12.5px;color:var(--dim);text-decoration:none;transition:.18s}.fcol a:hover{color:var(--text)}
+.fbrand p{font-size:12.5px;color:var(--dim);line-height:1.5;margin-top:12px;max-width:240px}
+.fbot{padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--mute);text-align:center}
+
+@media(max-width:980px){.nl{display:flex;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none;gap:2px}.nl::-webkit-scrollbar{display:none}.nl a{flex-shrink:0}.hero h1{font-size:24px}.fgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.fbar{flex-direction:column;align-items:stretch}.fsearch{width:100%}}
+
+/* ===== INLINE STYLE LIGHT THEME OVERRIDE ===== */
+html[data-theme=light] [style*="background:#111C2B"],
+html[data-theme=light] [style*="background: #111C2B"],
+html[data-theme="light"] body [style*="background:#111C2B"],
+html[data-theme="light"] body [style*="background: #111C2B"] {
+  background: #FFFFFF !important;
+  border-color: rgba(13,27,46,.1) !important;
+}
+
+html[data-theme=light] [style*="background:#0B1623"],
+html[data-theme=light] [style*="background: #0B1623"],
+html[data-theme="light"] body [style*="background:#0B1623"],
+html[data-theme="light"] body [style*="background: #0B1623"] {
+  background: #E8EDF5 !important;
+}
+
+html[data-theme=light] [style*="background:#08121E"],
+html[data-theme=light] [style*="background: #08121E"],
+html[data-theme="light"] body [style*="background:#08121E"],
+html[data-theme="light"] body [style*="background: #08121E"] {
+  background: #F0F4F8 !important;
+}
+
+html[data-theme=light] [style*="background:#16243A"],
+html[data-theme=light] [style*="background: #16243A"],
+html[data-theme="light"] body [style*="background:#16243A"],
+html[data-theme="light"] body [style*="background: #16243A"] {
+  background: #F4F7FB !important;
+}
+
+/* Dark gradient backgrounds → light gradient */
+html[data-theme=light] [style*="linear-gradient(135deg,#111C2B"],
+html[data-theme="light"] body [style*="linear-gradient(135deg,#111C2B"] {
+  background: linear-gradient(135deg,#FFFFFF,#F4F7FB) !important;
+}
+html[data-theme=light] [style*="linear-gradient(135deg,#0B1623"],
+html[data-theme="light"] body [style*="linear-gradient(135deg,#0B1623"] {
+  background: linear-gradient(135deg,#E8EDF5,#F4F7FB) !important;
+}
+
+/* Light text colors on dark inline backgrounds → dark text */
+html[data-theme=light] [style*="color:#F3F7FA"],
+html[data-theme=light] [style*="color: #F3F7FA"],
+html[data-theme="light"] body [style*="color:#F3F7FA"],
+html[data-theme="light"] body [style*="color: #F3F7FA"] {
+  color: #0D1B2E !important;
+}
+
+html[data-theme=light] [style*="color:#94a3b8"],
+html[data-theme=light] [style*="color: #94a3b8"],
+html[data-theme="light"] body [style*="color:#94a3b8"],
+html[data-theme="light"] body [style*="color: #94a3b8"] {
+  color: #6b7e94 !important;
+}
+
+html[data-theme=light] [style*="color:#B0B9C5"],
+html[data-theme=light] [style*="color: #B0B9C5"],
+html[data-theme="light"] body [style*="color:#B0B9C5"],
+html[data-theme="light"] body [style*="color: #B0B9C5"] {
+  color: #3D5068 !important;
+}
+
+html[data-theme=light] [style*="color:#8B98A9"],
+html[data-theme=light] [style*="color: #8B98A9"],
+html[data-theme="light"] body [style*="color:#8B98A9"],
+html[data-theme="light"] body [style*="color: #8B98A9"] {
+  color: #6b7e94 !important;
+}
+
+html[data-theme=light] [style*="color:#6B7A8D"],
+html[data-theme=light] [style*="color: #6B7A8D"],
+html[data-theme="light"] body [style*="color:#6B7A8D"],
+html[data-theme="light"] body [style*="color: #6B7A8D"] {
+  color: #6b7e94 !important;
+}
+
+/* Border lines */
+html[data-theme=light] [style*="border:1px solid rgba(255,255,255,.06)"],
+html[data-theme=light] [style*="border:1px solid rgba(255,255,255,.07)"],
+html[data-theme=light] [style*="border:1px solid rgba(255,255,255,.08)"],
+html[data-theme=light] [style*="border:1px solid rgba(255,255,255,.1)"],
+html[data-theme="light"] body [style*="border:1px solid rgba(255,255,255,.06)"],
+html[data-theme="light"] body [style*="border:1px solid rgba(255,255,255,.07)"],
+html[data-theme="light"] body [style*="border:1px solid rgba(255,255,255,.08)"],
+html[data-theme="light"] body [style*="border:1px solid rgba(255,255,255,.1)"] {
+  border-color: rgba(13,27,46,.1) !important;
+}
+
+html[data-theme=light] [style*="border-bottom:1px solid rgba(255,255,255,"],
+html[data-theme=light] [style*="border-top:1px solid rgba(255,255,255,"],
+html[data-theme="light"] body [style*="border-bottom:1px solid rgba(255,255,255,"],
+html[data-theme="light"] body [style*="border-top:1px solid rgba(255,255,255,"] {
+  border-color: rgba(13,27,46,.08) !important;
+}
+
+/* Background overlays */
+html[data-theme=light] [style*="background:rgba(255,255,255,.02)"],
+html[data-theme=light] [style*="background:rgba(255,255,255,.025)"],
+html[data-theme=light] [style*="background:rgba(255,255,255,.03)"],
+html[data-theme=light] [style*="background:rgba(255,255,255,.04)"],
+html[data-theme=light] [style*="background:rgba(255,255,255,.05)"],
+html[data-theme=light] [style*="background:rgba(255,255,255,.06)"],
+html[data-theme="light"] body [style*="background:rgba(255,255,255,.02)"],
+html[data-theme="light"] body [style*="background:rgba(255,255,255,.025)"],
+html[data-theme="light"] body [style*="background:rgba(255,255,255,.03)"],
+html[data-theme="light"] body [style*="background:rgba(255,255,255,.04)"],
+html[data-theme="light"] body [style*="background:rgba(255,255,255,.05)"],
+html[data-theme="light"] body [style*="background:rgba(255,255,255,.06)"] {
+  background: rgba(13,27,46,.03) !important;
+}
+
+/* Dark backgrounds with rgba */
+html[data-theme=light] [style*="background:rgba(255,255,255,.0"],
+html[data-theme="light"] body [style*="background:rgba(255,255,255,.0"] {
+  background: rgba(13,27,46,.03) !important;
+}
+
+/* Big numeric values without explicit color → use --text */
+html[data-theme=light] #sc-bist-val,
+html[data-theme=light] #sc-usd-val,
+html[data-theme=light] #sc-altin-val,
+html[data-theme=light] #sc-brent-val,
+html[data-theme="light"] body #sc-bist-val,
+html[data-theme="light"] body #sc-usd-val,
+html[data-theme="light"] body #sc-altin-val,
+html[data-theme="light"] body #sc-brent-val {
+  color: #0D1B2E !important;
+}
+
+/* Hover states for cards with white-ish backgrounds */
+html[data-theme=light] [style*="borderColor='rgba(255,255,255,"],
+html[data-theme="light"] body [style*="borderColor='rgba(255,255,255,"] {
+  border-color: rgba(13,27,46,.1) !important;
+}
+
+/* Section / hero text */
+html[data-theme=light] h1,
+html[data-theme=light] h2,
+html[data-theme=light] h3,
+html[data-theme=light] h4,
+html[data-theme="light"] body h1,
+html[data-theme="light"] body h2,
+html[data-theme="light"] body h3,
+html[data-theme="light"] body h4 {
+  color: #0D1B2E !important;
+}
+
+/* Common text elements inside dark containers */
+html[data-theme=light] .container *:not([style*="color"]):not(.b-g):not(.b-r):not(.b-b):not(.b-a):not(.tk-c):not(.badge):not(.hc-kat),
+html[data-theme="light"] body .container *:not([style*="color"]):not(.b-g):not(.b-r):not(.b-b):not(.b-a):not(.tk-c):not(.badge):not(.hc-kat) {
+  /* Allow color inheritance */
+}
+
+/* Specific summary card values that have no explicit color */
+html[data-theme=light] [id^="sc-"][id$="-val"],
+html[data-theme="light"] body [id^="sc-"][id$="-val"] {
+  color: #0D1B2E !important;
+}
+
+/* Hero card text without explicit color */
+html[data-theme=light] .hero-stat-val:not([style*="color"]),
+html[data-theme="light"] body .hero-stat-val:not([style*="color"]) {
+  color: #0D1B2E !important;
+}
+
+/* SVG sparkline gradients stay visible — adjust opacity in light */
+html[data-theme=light] svg polyline[stroke="#5eead4"],
+html[data-theme="light"] body svg polyline[stroke="#5eead4"] {
+  stroke: #0d9488 !important;
+}
+html[data-theme=light] svg polyline[stroke="#fca5a5"],
+html[data-theme="light"] body svg polyline[stroke="#fca5a5"] {
+  stroke: #dc2626 !important;
+}
+
+/* Premium card / shell elements */
+html[data-theme=light] .premium-card,
+html[data-theme=light] .premium-section,
+html[data-theme="light"] body .premium-card,
+html[data-theme="light"] body .premium-section {
+  background: #FFFFFF !important;
+  color: #0D1B2E !important;
+  border-color: rgba(13,27,46,.08) !important;
+}
+
+/* Page-stats / stat cards */
+html[data-theme=light] .stat-pill,
+html[data-theme="light"] body .stat-pill {
+  background: #FFFFFF !important;
+  border-color: rgba(13,27,46,.08) !important;
+}
+html[data-theme=light] .sp-lbl,
+html[data-theme="light"] body .sp-lbl {
+  color: #6b7e94 !important;
+}
+
+
+/* ===== HOVER FIX — CSS-only, theme-aware ===== */
+
+/* Cards with inline backgrounds need transition setup */
+.psum-card, .arz-card, .bs-card, .info-card, .bil-stats .bs-card, .karne-section {
+  transition: border-color .2s, transform .2s, box-shadow .2s, background .2s !important;
+}
+
+/* DARK MODE HOVER (default) */
+html[data-theme=dark] .psum-card:hover,
+.psum-card:hover {
+  border-color: rgba(200,169,107,.45) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 18px 44px rgba(0,0,0,.4) !important;
+}
+
+/* LIGHT MODE HOVER OVERRIDE — keep light background */
+html[data-theme=light] .psum-card,
+html[data-theme="light"] body .psum-card {
+  background: #FFFFFF !important;
+  border-color: rgba(13,27,46,.08) !important;
+}
+html[data-theme=light] .psum-card:hover,
+html[data-theme="light"] body .psum-card:hover {
+  background: #FFFFFF !important;
+  border-color: rgba(200,169,107,.55) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 18px 44px rgba(13,27,46,.12) !important;
+}
+
+/* Hisse/index cards in light mode */
+html[data-theme=light] .arz-card,
+html[data-theme=light] .bs-card,
+html[data-theme=light] .info-card,
+html[data-theme="light"] body .arz-card,
+html[data-theme="light"] body .bs-card,
+html[data-theme="light"] body .info-card {
+  background: #FFFFFF !important;
+  border-color: rgba(13,27,46,.08) !important;
+}
+html[data-theme=light] .arz-card:hover,
+html[data-theme=light] .bs-card:hover,
+html[data-theme=light] .info-card:hover,
+html[data-theme="light"] body .arz-card:hover,
+html[data-theme="light"] body .bs-card:hover,
+html[data-theme="light"] body .info-card:hover {
+  background: #FFFFFF !important;
+  border-color: rgba(200,169,107,.55) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 18px 44px rgba(13,27,46,.12) !important;
+}
+
+/* Inline onmouseenter handlers set this.style which has highest specificity
+   Override that with element.style protection via data attribute */
+html[data-theme=light] [style*="background:#111C2B"]:hover,
+html[data-theme=light] [style*="background: #111C2B"]:hover,
+html[data-theme="light"] body [style*="background:#111C2B"]:hover,
+html[data-theme="light"] body [style*="background: #111C2B"]:hover {
+  background: #FFFFFF !important;
+}
+
+/* Strong override for any element with background-color inline */
+html[data-theme=light] [style*="background:#111C2B"],
+html[data-theme="light"] body [style*="background:#111C2B"] {
+  background-color: #FFFFFF !important;
+}
+
+/* Hero cards with linear-gradient backgrounds */
+html[data-theme=light] [style*="linear-gradient(135deg,#111C2B"]:hover,
+html[data-theme="light"] body [style*="linear-gradient(135deg,#111C2B"]:hover {
+  background: linear-gradient(135deg,#FFFFFF,#F4F7FB) !important;
+}
+
+
+/* ===== LIGHT THEME — DARK GRADIENT SECTIONS FIX ===== */
+
+/* Hero sections with various dark gradients */
+html[data-theme=light] section[style*="linear-gradient(135deg,#0a1f3a"],
+html[data-theme=light] section[style*="linear-gradient(135deg,#111C2B"],
+html[data-theme=light] section[style*="linear-gradient(135deg,#16243A"],
+html[data-theme=light] section[style*="linear-gradient(135deg,#08121E"],
+html[data-theme="light"] body section[style*="linear-gradient(135deg,#0a1f3a"],
+html[data-theme="light"] body section[style*="linear-gradient(135deg,#111C2B"],
+html[data-theme="light"] body section[style*="linear-gradient(135deg,#16243A"],
+html[data-theme="light"] body section[style*="linear-gradient(135deg,#08121E"] {
+  background: linear-gradient(135deg, #FFFFFF 0%, #F4F7FB 50%, #E8EDF5 100%) !important;
+  border-bottom-color: rgba(13,27,46,.1) !important;
+}
+
+/* Stat cards with various tinted dark gradients (bs-card variants) */
+html[data-theme=light] .bs-card[style*="linear-gradient(135deg,#0a1f3a"],
+html[data-theme=light] .bs-card[style*="linear-gradient(135deg,#082a1c"],
+html[data-theme=light] .bs-card[style*="linear-gradient(135deg,#2a0d14"],
+html[data-theme=light] .bs-card[style*="linear-gradient(135deg,#2a2410"],
+html[data-theme="light"] body .bs-card[style*="linear-gradient(135deg,#0a1f3a"],
+html[data-theme="light"] body .bs-card[style*="linear-gradient(135deg,#082a1c"],
+html[data-theme="light"] body .bs-card[style*="linear-gradient(135deg,#2a0d14"],
+html[data-theme="light"] body .bs-card[style*="linear-gradient(135deg,#2a2410"] {
+  background: #FFFFFF !important;
+  border-color: rgba(13,27,46,.08) !important;
+}
+
+/* Light mode: bs-card colors get tinted backgrounds based on card type */
+html[data-theme=light] .bs-card[style*="rgba(91,157,217"],
+html[data-theme="light"] body .bs-card[style*="rgba(91,157,217"] {
+  background: linear-gradient(135deg, #fff, #f0f6fc) !important;
+  border-color: rgba(91,157,217,.3) !important;
+}
+html[data-theme=light] .bs-card[style*="rgba(0,181,110"],
+html[data-theme="light"] body .bs-card[style*="rgba(0,181,110"] {
+  background: linear-gradient(135deg, #fff, #f0fcf5) !important;
+  border-color: rgba(0,181,110,.3) !important;
+}
+html[data-theme=light] .bs-card[style*="rgba(224,79,95"],
+html[data-theme="light"] body .bs-card[style*="rgba(224,79,95"] {
+  background: linear-gradient(135deg, #fff, #fef0f1) !important;
+  border-color: rgba(224,79,95,.3) !important;
+}
+html[data-theme=light] .bs-card[style*="rgba(251,191,36"],
+html[data-theme="light"] body .bs-card[style*="rgba(251,191,36"] {
+  background: linear-gradient(135deg, #fff, #fef9e8) !important;
+  border-color: rgba(251,191,36,.4) !important;
+}
+
+/* Hero text inside dark sections */
+html[data-theme=light] section[style*="linear-gradient"] h1,
+html[data-theme=light] section[style*="linear-gradient"] h2,
+html[data-theme=light] section[style*="linear-gradient"] p,
+html[data-theme="light"] body section[style*="linear-gradient"] h1,
+html[data-theme="light"] body section[style*="linear-gradient"] h2,
+html[data-theme="light"] body section[style*="linear-gradient"] p {
+  color: #0D1B2E !important;
+}
+html[data-theme=light] section[style*="linear-gradient"] p,
+html[data-theme="light"] body section[style*="linear-gradient"] p {
+  color: #3D5068 !important;
+}
+
+/* Color variant text — large numbers retain their accent color */
+html[data-theme=light] .bs-num,
+html[data-theme="light"] body .bs-num {
+  /* keep color from inline style */
+}
+
+/* Header big H1 like "Bilançolar" / "Finans Haberleri" */
+html[data-theme=light] .htitle,
+html[data-theme="light"] body .htitle {
+  color: #0D1B2E !important;
+}
+
+/* Card descriptions / body text on light bg */
+html[data-theme=light] [style*="color:#94a3b8"],
+html[data-theme=light] [style*="color: #94a3b8"],
+html[data-theme="light"] body [style*="color:#94a3b8"],
+html[data-theme="light"] body [style*="color: #94a3b8"] {
+  color: #5b6b80 !important;
+}
+
+/* News card image backgrounds — KEEP THEM COLORFUL */
+/* These have inline rgb colors not dark hex — they're fine */
+html[data-theme=light] .hc-img-big,
+html[data-theme=light] .hc-img-sm,
+html[data-theme="light"] body .hc-img-big,
+html[data-theme="light"] body .hc-img-sm {
+  /* Don't override - colorful gradients should remain */
+}
+
+/* But news card text in light bg */
+html[data-theme=light] .hc,
+html[data-theme="light"] body .hc {
+  background: transparent !important;
+}
+html[data-theme=light] .hc:hover,
+html[data-theme="light"] body .hc:hover {
+  background: rgba(13,27,46,.025) !important;
+}
+
+/* Tabular data on light bg - filter chips, hover effects */
+html[data-theme=light] .fbar,
+html[data-theme="light"] body .fbar {
+  border-bottom-color: rgba(13,27,46,.08) !important;
+}
+
+/* All h1 / h2 with dark fill SVG text in light mode */
+html[data-theme=light] svg text[fill="var(--text)"],
+html[data-theme="light"] body svg text[fill="var(--text)"] {
+  fill: #0D1B2E !important;
+}
+html[data-theme=light] svg tspan[fill="var(--text)"],
+html[data-theme="light"] body svg tspan[fill="var(--text)"] {
+  fill: #0D1B2E !important;
+}
+
+/* Eyebrow text on light hero */
+html[data-theme=light] .hero-eyebrow,
+html[data-theme="light"] body .hero-eyebrow {
+  /* accent color stays gold - looks good on light too */
+}
+
+/* Karne / stat numbers stay vivid even in light */
+html[data-theme=light] .kg-val,
+html[data-theme="light"] body .kg-val {
+  /* Keep their color from inline */
+}
+
+/* Stat cells inside hero on light */
+html[data-theme=light] .hero-stat,
+html[data-theme="light"] body .hero-stat {
+  background: rgba(13,27,46,.04) !important;
+  border-color: rgba(13,27,46,.08) !important;
+}
+
+
+/* ===== PARA AKIŞI LIGHT MODE FIX ===== */
+html[data-theme=light] .akis-row,
+html[data-theme="light"] body .akis-row {
+  background: transparent !important;
+}
+html[data-theme=light] .akis-row:hover,
+html[data-theme="light"] body .akis-row:hover {
+  background: rgba(13,27,46,.025) !important;
+}
+html[data-theme=light] .akis-code,
+html[data-theme=light] .akis-sym,
+html[data-theme="light"] body .akis-code,
+html[data-theme="light"] body .akis-sym { color: #0D1B2E !important; }
+html[data-theme=light] .akis-name,
+html[data-theme="light"] body .akis-name { color: #6b7e94 !important; }
+html[data-theme=light] .akis-tutar.in,
+html[data-theme=light] .akis-val.up,
+html[data-theme="light"] body .akis-tutar.in,
+html[data-theme="light"] body .akis-val.up { color: #00B56E !important; }
+html[data-theme=light] .akis-tutar.out,
+html[data-theme=light] .akis-val.down,
+html[data-theme="light"] body .akis-tutar.out,
+html[data-theme="light"] body .akis-val.down { color: #E04F5F !important; }
+html[data-theme=light] .akis-pay,
+html[data-theme="light"] body .akis-pay { color: #3D5068 !important; }
+html[data-theme=light] .akis-col-lbl,
+html[data-theme="light"] body .akis-col-lbl { color: #6b7e94 !important; }
+html[data-theme=light] .akis-foot,
+html[data-theme="light"] body .akis-foot { border-top-color: rgba(13,27,46,.06) !important; }
+html[data-theme=light] .akis-foot-count,
+html[data-theme="light"] body .akis-foot-count { color: #6b7e94 !important; }
+html[data-theme=light] .akis-foot-total.in,
+html[data-theme="light"] body .akis-foot-total.in { color: #00B56E !important; }
+html[data-theme=light] .akis-foot-total.out,
+html[data-theme="light"] body .akis-foot-total.out { color: #E04F5F !important; }
+
+/* Panel containers in light mode */
+html[data-theme=light] .panel,
+html[data-theme="light"] body .panel {
+  background: #FFFFFF !important;
+  border-color: rgba(13,27,46,.08) !important;
+}
+html[data-theme=light] .panel-title,
+html[data-theme="light"] body .panel-title { color: #0D1B2E !important; }
+html[data-theme=light] .panel-head,
+html[data-theme="light"] body .panel-head { border-bottom-color: rgba(13,27,46,.06) !important; }
+html[data-theme=light] .data-grid,
+html[data-theme="light"] body .data-grid { background: transparent !important; }
+
+/* ===== ANALIZ ALT SAYFALARI ICIN PREMIUM-SHELL FIX (light) ===== */
+html[data-theme=light] body,
+html[data-theme="light"] body {
+  background: #F0F4F8 !important;
+  color: #0D1B2E !important;
+}
+html[data-theme=light] .header,
+html[data-theme=light] .footer,
+html[data-theme="light"] body .header,
+html[data-theme="light"] body .footer { background: #fff !important; border-color: rgba(13,27,46,.1) !important; }
+html[data-theme=light] .header,
+html[data-theme="light"] body .header { background: rgba(255,255,255,.95) !important; }
+html[data-theme=light] .nav-menu a,
+html[data-theme="light"] body .nav-menu a { color: #3D5068 !important; }
+html[data-theme=light] .nav-menu a:hover,
+html[data-theme=light] .nav-menu a.active,
+html[data-theme="light"] body .nav-menu a:hover,
+html[data-theme="light"] body .nav-menu a.active { color: #0D1B2E !important; }
+html[data-theme=light] .brand-text h1,
+html[data-theme="light"] body .brand-text h1 { color: #C8A96B !important; }
+html[data-theme=light] .brand-text small,
+html[data-theme="light"] body .brand-text small { color: #6b7e94 !important; }
+html[data-theme=light] .brand-mark,
+html[data-theme="light"] body .brand-mark { background: linear-gradient(135deg,#C8A96B,#9d7a40) !important; color: #08121E !important; }
+
+/* Ticker */
+html[data-theme=light] .ticker,
+html[data-theme="light"] body .ticker { background: #E8EDF5 !important; border-bottom-color: rgba(13,27,46,.08) !important; }
+html[data-theme=light] .tick-name,
+html[data-theme="light"] body .tick-name { color: #3D5068 !important; }
+html[data-theme=light] .tick-val,
+html[data-theme="light"] body .tick-val { color: #0D1B2E !important; }
+
+/* Premium command bar */
+html[data-theme=light] .premium-command,
+html[data-theme="light"] body .premium-command { background: #fff !important; border-color: rgba(13,27,46,.08) !important; }
+html[data-theme=light] .premium-search,
+html[data-theme="light"] body .premium-search { background: #F4F7FB !important; border-color: rgba(13,27,46,.1) !important; }
+html[data-theme=light] .premium-search input,
+html[data-theme="light"] body .premium-search input { color: #0D1B2E !important; }
+html[data-theme=light] .premium-search input::placeholder,
+html[data-theme="light"] body .premium-search input::placeholder { color: #6b7e94 !important; }
+
+/* Premium-shell */
+html[data-theme=light] .premium-shell,
+html[data-theme="light"] body .premium-shell {
+  background: transparent !important;
+}
+html[data-theme=light] .premium-section,
+html[data-theme="light"] body .premium-section {
+  background: #fff !important;
+  border: 1px solid rgba(13,27,46,.08) !important;
+  border-radius: 14px !important;
+  padding: 24px !important;
+  margin-bottom: 20px !important;
+  color: #0D1B2E !important;
+}
+html[data-theme=light] .premium-section .premium-kicker,
+html[data-theme="light"] body .premium-section .premium-kicker { color: #C8A96B !important; }
+html[data-theme=light] .premium-title,
+html[data-theme="light"] body .premium-title { color: #0D1B2E !important; font-size: 22px !important; font-weight: 700 !important; }
+html[data-theme=light] .premium-desc,
+html[data-theme="light"] body .premium-desc { color: #3D5068 !important; }
+html[data-theme=light] .premium-head,
+html[data-theme="light"] body .premium-head { display: flex !important; align-items: flex-start !important; justify-content: space-between !important; margin-bottom: 16px !important; }
+
+html[data-theme=light] .premium-grid,
+html[data-theme="light"] body .premium-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3,1fr) !important;
+  gap: 14px !important;
+  margin-bottom: 16px !important;
+}
+@media (max-width: 700px) {
+  html[data-theme=light] .premium-grid,
+  html[data-theme="light"] body .premium-grid { grid-template-columns: 1fr !important; }
+}
+html[data-theme=light] .premium-card,
+html[data-theme="light"] body .premium-card {
+  background: #F4F7FB !important;
+  border: 1px solid rgba(13,27,46,.06) !important;
+  border-radius: 10px !important;
+  padding: 16px !important;
+  color: #0D1B2E !important;
+}
+html[data-theme=light] .premium-card h3,
+html[data-theme="light"] body .premium-card h3 {
+  color: #0D1B2E !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  margin-bottom: 6px !important;
+}
+html[data-theme=light] .premium-card p,
+html[data-theme="light"] body .premium-card p {
+  color: #6b7e94 !important;
+  font-size: 12px !important;
+}
+html[data-theme=light] .premium-stat,
+html[data-theme="light"] body .premium-stat {
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  color: #C8A96B !important;
+}
+
+html[data-theme=light] .bar-track,
+html[data-theme="light"] body .bar-track {
+  height: 6px !important;
+  background: rgba(13,27,46,.08) !important;
+  border-radius: 3px !important;
+  overflow: hidden !important;
+  margin: 10px 0 !important;
+}
+html[data-theme=light] .bar-fill,
+html[data-theme="light"] body .bar-fill {
+  height: 100% !important;
+  background: linear-gradient(90deg, #C8A96B, #00B56E) !important;
+  border-radius: 3px !important;
+}
+
+html[data-theme=light] .premium-table-wrap,
+html[data-theme="light"] body .premium-table-wrap {
+  background: #fff !important;
+  border: 1px solid rgba(13,27,46,.08) !important;
+  border-radius: 10px !important;
+  overflow: hidden !important;
+  margin-top: 16px !important;
+}
+html[data-theme=light] .premium-table,
+html[data-theme="light"] body .premium-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  font-size: 13px !important;
+}
+html[data-theme=light] .premium-table th,
+html[data-theme="light"] body .premium-table th {
+  background: #F4F7FB !important;
+  color: #6b7e94 !important;
+  padding: 11px 14px !important;
+  text-align: left !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: .1em !important;
+  text-transform: uppercase !important;
+  border-bottom: 1px solid rgba(13,27,46,.08) !important;
+}
+html[data-theme=light] .premium-table td,
+html[data-theme="light"] body .premium-table td {
+  padding: 11px 14px !important;
+  color: #0D1B2E !important;
+  border-bottom: 1px solid rgba(13,27,46,.04) !important;
+}
+
+html[data-theme=light] .premium-btn,
+html[data-theme="light"] body .premium-btn {
+  background: #fff !important;
+  border: 1px solid rgba(13,27,46,.1) !important;
+  color: #3D5068 !important;
+  padding: 8px 14px !important;
+  border-radius: 8px !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+}
+html[data-theme=light] .premium-btn:hover,
+html[data-theme="light"] body .premium-btn:hover {
+  background: #F4F7FB !important;
+  color: #0D1B2E !important;
+}
+html[data-theme=light] .premium-btn.gold,
+html[data-theme="light"] body .premium-btn.gold {
+  background: #C8A96B !important;
+  color: #08121E !important;
+  border-color: transparent !important;
+}
+
+html[data-theme=light] .premium-badge,
+html[data-theme="light"] body .premium-badge {
+  display: inline-flex !important;
+  padding: 4px 10px !important;
+  border-radius: 6px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+}
+html[data-theme=light] .premium-badge.green,
+html[data-theme="light"] body .premium-badge.green {
+  background: rgba(0,181,110,.13) !important;
+  color: #00B56E !important;
+}
+html[data-theme=light] .premium-badge.red,
+html[data-theme="light"] body .premium-badge.red {
+  background: rgba(224,79,95,.13) !important;
+  color: #E04F5F !important;
+}
+html[data-theme=light] .premium-badge.pro,
+html[data-theme="light"] body .premium-badge.pro {
+  background: rgba(200,169,107,.13) !important;
+  color: #C8A96B !important;
+}
+
+html[data-theme=light] .premium-actions,
+html[data-theme="light"] body .premium-actions { display: flex !important; gap: 8px !important; flex-wrap: wrap !important; }
+
+
+/* ===== HAM METİN BLOK GİZLEME (any leftover content blocks) ===== */
+/* Hide standalone premium-shell/section content that appears as raw text */
+.premium-shell:empty,
+.premium-section:empty { display: none !important; }
+
+/* Hide any block with these specific Turkish texts when shown as raw */
+body > div:not([class]):not([id]):not([style]) { display: none !important; }
+
+/* If light mode + premium-shell content shows as raw paragraphs, force container styling */
+html[data-theme=light] .premium-shell > *,
+html[data-theme="light"] body .premium-shell > * {
+  background: transparent !important;
+}
+
+/* Bottom info boxes that user is seeing — give them basic styling */
+.premium-shell {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+.premium-section {
+  background: var(--panel, #111C2B) !important;
+  border: 1px solid var(--line, rgba(255,255,255,.07)) !important;
+  border-radius: 14px !important;
+  padding: 24px !important;
+  margin: 16px 0 !important;
+  color: var(--text, #F3F7FA);
+}
+html[data-theme=light] .premium-section,
+html[data-theme="light"] body .premium-section {
+  background: #fff !important;
+  border-color: rgba(13,27,46,.08) !important;
+  color: #0D1B2E !important;
+}
+.premium-section h1, .premium-section h2, .premium-section h3 {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  margin-bottom: 8px !important;
+}
+.premium-section p { font-size: 13px; color: var(--dim, #B0B9C5); line-height: 1.55; margin-bottom: 6px; }
+html[data-theme=light] .premium-section p,
+html[data-theme="light"] body .premium-section p { color: #3D5068 !important; }
+.premium-section table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13px; }
+.premium-section th, .premium-section td { padding: 8px 12px; border-bottom: 1px solid rgba(255,255,255,.05); text-align: left; }
+html[data-theme=light] .premium-section th,
+html[data-theme=light] .premium-section td,
+html[data-theme="light"] body .premium-section th,
+html[data-theme="light"] body .premium-section td { border-color: rgba(13,27,46,.06) !important; }
+
+/* Inputs in premium-shell */
+.premium-shell input[type="text"],
+.premium-shell input[type="number"],
+.premium-shell input[type="email"] {
+  background: var(--bg-2, #0B1623);
+  border: 1px solid var(--line);
+  color: var(--text);
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  width: 100%;
+}
+html[data-theme=light] .premium-shell input,
+html[data-theme="light"] body .premium-shell input {
+  background: #F4F7FB !important;
+  border-color: rgba(13,27,46,.1) !important;
+  color: #0D1B2E !important;
+}
+
+/* Premium-modal hide by default */
+.premium-modal {
+  display: none !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 9999 !important;
+  background: rgba(0,0,0,.7) !important;
+  backdrop-filter: blur(4px) !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 20px !important;
+}
+.premium-modal.open { display: flex !important; }
+
+/* Bilgilendirme önemli box */
+.premium-section[style*="background"] {
+  /* keep inline styles */
+}
+
+/* Tedbirli hisseler tooltip block at bottom */
+.premium-section.info-box,
+.premium-section[data-type="info"] {
+  background: linear-gradient(135deg, rgba(91,157,217,.05), rgba(91,157,217,.02)) !important;
+  border-color: rgba(91,157,217,.18) !important;
+}
+
+
+/* ===== INTER FONT - FINTABLES TARZI ===== */
+body, .premium-table, .tbl, .bil-table, .ak-table,
+.psum-card, .arz-card, .bs-card, .info-card,
+.fp-row, .sek-row, .sek-name, .sek-val,
+.akis-row, .akis-code, .akis-name, .akis-val, .akis-tutar, .akis-pay,
+table tbody, table thead, table td, table th,
+.h-code, .h-name, .bil-code, .bil-name,
+.kg-val, .stat-val, .hero-stat-val {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  letter-spacing: -.005em;
+}
+
+/* Tabular nums for numeric data */
+.tbl td, .premium-table td, .bil-td,
+.fp-val, .fp-pct, .akis-val, .akis-pay,
+.sek-val, .h-code, .stat-val,
+.kg-val, .hero-stat-val,
+[class*="val"], [class*="num"], td.r {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Heading hierarchy with Inter */
+h1, h2, h3, h4, h5, h6,
+.htitle, .premium-title, .arz-title,
+.bil-title, .hero h1, .hero h2 {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  letter-spacing: -.015em;
+  font-feature-settings: "ss01" 1, "ss02" 1, "cv11" 1;
+}
+
+/* ════ MOBİL UYUMLULUK — GLOBAL ════ */
+@media(max-width:768px){
+  /* Tablo taşmasını engelle */
+  .data-table,.tw table,table.tbl{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap}
+  /* Sabit kolon genişliklerini sıfırla */
+  .dt-row[style*="grid-template-columns"]{grid-template-columns:1.6fr 1fr 1fr!important}
+  /* Özet kart gridleri */
+  .stat-grid,.stats-3,.sek-stats,.bs-stats,.summary-cards{grid-template-columns:1fr 1fr!important}
+  /* Grafik alan */
+  .chart-wrap,.chart-card{min-height:220px!important}
+  /* Font boyutları */
+  .price-big,.big-price{font-size:24px!important}
+  h1{font-size:20px!important;letter-spacing:-.02em!important}
+  /* Period sekmeleri */
+  .period-tabs,.hm-periods,.chart-tabs,.fil-bar{overflow-x:auto;white-space:nowrap;scrollbar-width:none;flex-wrap:nowrap!important}
+  .period-tabs::-webkit-scrollbar,.chart-tabs::-webkit-scrollbar{display:none}
+  /* Kartlar tek sütun */
+  .card-grid,.eg,.sektor-grid,.sek-hub-grid{grid-template-columns:1fr!important}
+  /* Sidebar gizle */
+  .sidebar,.right-col{display:none!important}
+  /* Full width */
+  .main-col,.content-area{width:100%!important;max-width:100%!important}
+}
+@media(max-width:480px){
+  .stats-3,.sek-stats,.bs-stats{grid-template-columns:1fr!important}
+  .ticker{font-size:11px}
+  .btn,.gh-cmd-btn{font-size:11px;padding:6px 10px}
+  .hm-pbtn{font-size:10px;padding:4px 7px}
+}
+
+/* ════════════════ HAMBURGER MENÜ ════════════════ */
+.ham-btn{
+  display:none;flex-direction:column;justify-content:space-between;
+  width:38px;height:38px;padding:10px 8px;cursor:pointer;
+  border:1px solid var(--line,rgba(255,255,255,.1));border-radius:8px;
+  background:var(--panel,rgba(255,255,255,.05));
+  -webkit-tap-highlight-color:transparent;
+}
+.ham-btn span{
+  display:block;height:2px;width:100%;background:var(--text,#f0f4f8);
+  border-radius:2px;transition:all .28s ease;
+}
+.ham-btn.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.ham-btn.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.ham-btn.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* Mobil overlay menü */
+.mob-nav{
+  position:fixed;inset:0;z-index:998;
+  background:rgba(8,18,30,.97);backdrop-filter:blur(16px);
+  display:flex;flex-direction:column;padding:80px 24px 40px;gap:6px;
+  opacity:0;pointer-events:none;
+  transform:translateX(100%);
+  transition:opacity .3s ease,transform .3s ease;
+  overflow-y:auto;
+}
+.mob-nav.open{
+  opacity:1;pointer-events:auto;transform:translateX(0)
+}
+.mob-nav a{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 18px;border-radius:12px;
+  font-size:16px;font-weight:600;color:rgba(240,244,248,.85);
+  text-decoration:none;border:1px solid transparent;
+  transition:all .2s;
+}
+.mob-nav a:hover,.mob-nav a.active{
+  background:rgba(200,169,107,.12);
+  border-color:rgba(200,169,107,.28);
+  color:#C8A96B;
+}
+.mob-nav-divider{height:1px;background:rgba(255,255,255,.07);margin:8px 0}
+.mob-nav-close{
+  position:absolute;top:18px;right:18px;
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  cursor:pointer;display:grid;place-items:center;
+  color:rgba(240,244,248,.8);font-size:22px;line-height:1;
+}
+
+/* Light tema uyumu */
+html[data-theme=light] .mob-nav{background:rgba(248,250,252,.97)}
+html[data-theme=light] .mob-nav a{color:#374151}
+html[data-theme=light] .mob-nav a:hover,
+html[data-theme=light] .mob-nav a.active{background:rgba(200,169,107,.1);color:#9d7a40}
+html[data-theme=light] .mob-nav-close{background:rgba(0,0,0,.06);border-color:rgba(0,0,0,.1);color:#374151}
+html[data-theme=light] .ham-btn{background:#fff;border-color:rgba(0,0,0,.12)}
+html[data-theme=light] .ham-btn span{background:#1f2937}
+
+@media(max-width:860px){
+  /* Hamburger göster */
+  .ham-btn{display:flex}
+  /* Desktop menü gizle */
+  .nav-menu,.nl{display:none!important}
+}
+
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style id="bk-mob-fix">
+/* ══════════════════════════════════════════════
+   BK MOBİL FİX — Tablo Taşma Engeli
+   Tüm sayfalarda <768px
+══════════════════════════════════════════════ */
+@media(max-width:768px){
+  /* Genel tablo wrapper */
+  .tbl-wrap, .tbl-scroll, [style*="overflow-x:auto"], .dt-wrap { 
+    overflow-x:auto!important;-webkit-overflow-scrolling:touch;
+  }
+  /* Tablo içi white-space kaldır - taşmayı önle */
+  table.tbl, table.premium-table, table.data-table {
+    min-width:0!important; width:100%!important;
+    white-space:normal!important;
+  }
+  /* Hücre içi wrap */
+  table.tbl td, table.tbl th {
+    white-space:nowrap; font-size:11.5px!important; padding:7px 8px!important;
+  }
+  /* Uzun kolon gizle - sadece kritikler kalsın */
+  table.tbl .hide-mob { display:none!important; }
+  /* Endeks tablo mobil kart - .mob-card-list ile */
+  .mob-card-list { display:block }
+  .mob-card-list .tbl-desktop-only { display:none!important }
+  /* Masaüstünde mobil kart gizle */
+  .mob-tbl-card { display:none }
+}
+@media(min-width:769px){
+  .mob-tbl-card { display:none!important }
+  .mob-sektor-tbl { display:none!important }
+}
+</style>
+
+<style id="bk-desktop-hide">
+/* Masaüstünde mobil görünümler KESINLIKLE gizli */
+@media(min-width:769px){
+  .mob-tbl-card,
+  .mob-tbl-card--wide,
+  .mob-sp-row,
+  .mob-sp-list,
+  .mob-endeks-list,
+  .mob-sektor-tbl,
+  .tbl-mobile,
+  .mob-stk-row { display:none!important }
+}
+/* Mobilde masaüstü tabloları gizle */
+@media(max-width:768px){
+  .tbl-desktop,
+  .tbl-endeks-wrap,
+  .tbl-special-wrap { display:none!important }
+}
+</style>
+
+  <!-- Schema.org Structured Data for AI Agents & Search Engines -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FinancialService",
+    "name": "BorsaKaynak",
+    "url": "https://borsakaynak.com/",
+    "logo": "https://borsakaynak.com/logo.jpg",
+    "description": "Borsa İstanbul (BIST) 586 şirket hissesi, 674 enstrüman, canlı borsa fiyatları, para giriş/çıkış analizleri ve TradingView entegrasyonu.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://borsakaynak.com/piyasalar.html?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta property="og:image" content="https://borsakaynak.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://borsakaynak.com/og-image.png">
+<link rel="stylesheet" href="premium-light-fixes.css">
+<link rel="stylesheet" href="header-footer-shared.css">
+</head>
+<body>
+<div class="bk-shared-chrome">
+<div class="ticker">
+<div class="ticker-track" id="ticker-track">
+<div class="tick" data-tsym="XU100"><span class="tick-dot"></span><span class="tick-name">BIST 100</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="USDTRY"><span class="tick-name">USD/TRY</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="EURTRY"><span class="tick-name">EUR/TRY</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="GBPTRY"><span class="tick-name">GBP/TRY</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="XAUGRAM"><span class="tick-name">ALTIN/GR</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="XAUUSD"><span class="tick-name">XAU/USD</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="BRENT"><span class="tick-name">BRENT</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="BTCUSDT"><span class="tick-name">BTC/USDT</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="ETHUSDT"><span class="tick-name">ETH/USDT</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="DAX"><span class="tick-name">DAX</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="SPX"><span class="tick-name">S&amp;P 500</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="IXIC"><span class="tick-name">NASDAQ</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+</div>
+</div>
+<!-- HEADER -->
+<header class="header">
+<div class="container">
+<nav class="nav">
+<a aria-label="Sayfa Bağlantısı" href="index.html" style="text-decoration:none;color:inherit;display:flex;align-items:center">
+<img src="logo-kaynak.png" alt="BorsaKaynak" style="height:32px;width:auto;flex-shrink:0">
+</a>
+<div class="nav-menu">
+<a aria-label="Sayfa Bağlantısı" href="index.html">Anasayfa</a>
+<a aria-label="Sayfa Bağlantısı" href="piyasalar.html">Piyasalar</a>
+<a aria-label="Sayfa Bağlantısı" href="piyasa-hareketleri.html">Piyasa Hareketleri</a>
+<a aria-label="Sayfa Bağlantısı" href="endeksler.html">Endeksler</a>
+<a aria-label="Sayfa Bağlantısı" href="sektorler.html">Sektörler</a>
+<a aria-label="Sayfa Bağlantısı" href="haberler.html">Haberler</a>
+<a aria-label="Sayfa Bağlantısı" href="analizler.html">Analizler</a>
+<a aria-label="Sayfa Bağlantısı" href="araci-kurum.html">Aracı Kurum</a>
+<a aria-label="Sayfa Bağlantısı" href="halka-arz.html">Halka Arz</a>
+<a aria-label="Sayfa Bağlantısı" href="viop.html">VİOP</a>
+<a aria-label="Sayfa Bağlantısı" href="kripto.html">Kripto</a>
+</div>
+<div class="nav-actions"><button class="ham-btn" aria-label="Menü" aria-expanded="false"><span></span><span></span><span></span></button>
+<button aria-label="BİST Veri Butonu" class="nav-btn"><svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg></button>
+<button aria-label="BİST Veri Butonu" class="nav-btn"><svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg></button>
+</div>
+</nav>
+</div>
+</header>
+<div class="mob-nav" id="mobNav">
+<button class="mob-nav-close" aria-label="Kapat">✕</button>
+
+<!-- Mini canlı ticker -->
+<div class="mob-ticker-grid">
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">BIST 100</span>
+    <span class="mob-tick-val" id="ham-bist">—</span>
+    <span class="mob-tick-chg" id="ham-bist-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">USD/TRY</span>
+    <span class="mob-tick-val" id="ham-usd">—</span>
+    <span class="mob-tick-chg" id="ham-usd-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">EUR/TRY</span>
+    <span class="mob-tick-val" id="ham-eur">—</span>
+    <span class="mob-tick-chg" id="ham-eur-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">ALTIN/GR</span>
+    <span class="mob-tick-val" id="ham-altin">—</span>
+    <span class="mob-tick-chg" id="ham-altin-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">BTC/USD</span>
+    <span class="mob-tick-val" id="ham-btc">—</span>
+    <span class="mob-tick-chg" id="ham-btc-chg">—</span>
+  </div>
+</div>
+<div class="mob-nav-divider"></div>
+
+<div class="mob-nav-section-title">ANA SAYFALAR</div>
+  <a aria-label="Sayfa Bağlantısı" href="index.html">🏠 Anasayfa</a>
+  <a aria-label="Sayfa Bağlantısı" href="piyasalar.html">📈 Piyasalar</a>
+  <a aria-label="Sayfa Bağlantısı" href="sektorler.html">🏭 Sektörler</a>
+  <a aria-label="Sayfa Bağlantısı" href="haberler.html">📰 Haberler</a>
+  <a aria-label="Sayfa Bağlantısı" href="analizler.html">📊 Analizler</a>
+  <a aria-label="Sayfa Bağlantısı" href="model-portfoy.html">💼 Model Portföy</a>
+<div class="mob-nav-divider"></div>
+<div class="mob-nav-section-title">ENDEKSİ</div>
+  <a aria-label="Sayfa Bağlantısı" href="endeksler.html">📊 Tüm Endeksler</a>
+  <a aria-label="Sayfa Bağlantısı" href="endeks-XU100.html">📈 BIST 100</a>
+  <a aria-label="Sayfa Bağlantısı" href="endeks-XU030.html">📉 BIST 30</a>
+<div class="mob-nav-divider"></div>
+<div class="mob-nav-section-title">YATIRIM</div>
+  <a aria-label="Sayfa Bağlantısı" href="araci-kurum.html">🏦 Aracı Kurum</a>
+  <a aria-label="Sayfa Bağlantısı" href="halka-arz.html">📋 Halka Arz</a>
+  <a aria-label="Sayfa Bağlantısı" href="viop.html">📉 VİOP</a>
+  <a aria-label="Sayfa Bağlantısı" href="kripto.html">₿ Kripto</a>
+<div class="mob-nav-divider"></div>
+  <a aria-label="Sayfa Bağlantısı" href="hakkimizda.html">ℹ️ Hakkımızda</a>
+</div>
+<div class="premium-command"><div class="premium-command__inner"><label class="premium-search">⌕ <input data-premium-search="" placeholder="Site içinde hisse, haber, analiz veya halka arz ara..."/></label><div class="premium-actions"><button aria-label="BİST Veri Butonu" class="premium-btn" data-theme-toggle="">🌗 Tema</button><button aria-label="BİST Veri Butonu" class="premium-btn" data-export=".premium-table">⬇ Excel/CSV</button><button aria-label="BİST Veri Butonu" class="premium-btn" data-open-modal="#notifyModal">🔔 Bildirim</button><a aria-label="Sayfa Bağlantısı" class="premium-btn gold" href="model-portfoy.html">PRO Model Portföy</a></div></div></div>
+<script>
+  // Tema (aydınlık/koyu) değiştirici
+  (function () {
+    const STORAGE_KEY = 'bk-theme-light';
+    function applyTheme(isLight) {
+      document.body.classList.toggle('premium-light', isLight);
+    }
+    const saved = localStorage.getItem(STORAGE_KEY) === '1';
+    applyTheme(saved);
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.querySelector('[data-theme-toggle]');
+      if (!btn) return;
+      btn.addEventListener('click', () => {
+        const nowLight = !document.body.classList.contains('premium-light');
+        applyTheme(nowLight);
+        localStorage.setItem(STORAGE_KEY, nowLight ? '1' : '0');
+      });
+    });
+  })();
+</script>
+
+<script>
+// Site geneli arama kutusu: Enter'a basilinca piyasalar.html'e yonlendirir.
+(function(){
+  document.querySelectorAll('[data-premium-search]').forEach(function(inp){
+    inp.addEventListener('keydown', function(e){
+      if (e.key === 'Enter') {
+        var q = inp.value.trim();
+        if (q) window.location.href = 'piyasalar.html?q=' + encodeURIComponent(q);
+      }
+    });
+  });
+})();
+</script>
+</div>
+
+
+<main>
+<div class="bc"><a href="index.html">Anasayfa</a> / <a href="analizler.html">Analizler</a> / <span>Hedef Fiyatlar</span></div>
+
+<section class="hero">
+  <div class="hero-eyebrow"><span class="ld"></span>ANALİST HEDEF FİYAT REVİZYONLARI</div>
+  <h1>Hedef <span>Fiyat</span> Revizyonları</h1>
+  <p>Aracı kurumlar ve analistlerin hedef fiyat revizyonları, getiri potansiyeli, konsensüs tavsiyesi (AL/TUT/SAT) ve son güncelleme tarihleri. En çok güncellenen hisseler ve sektör trendleri.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="hero-stat-val" style="color:#00B56E">82</div><div class="hero-stat-lbl">Yukarı Revize</div></div>
+    <div class="hero-stat"><div class="hero-stat-val" style="color:#E04F5F">24</div><div class="hero-stat-lbl">Aşağı Revize</div></div>
+    <div class="hero-stat"><div class="hero-stat-val" style="color:#C8A96B">+%28,4</div><div class="hero-stat-lbl">Ort. Potansiyel</div></div>
+    <div class="hero-stat"><div class="hero-stat-val" style="color:#5B9DD9">14</div><div class="hero-stat-lbl">AL Konsensüsü</div></div>
+  </div>
+</section>
+
+<div class="fbar">
+  <div class="fchips">
+    <button class="fchip active" data-f="all">Tümü</button>
+    <button class="fchip" data-f="al">AL</button>
+    <button class="fchip" data-f="tut">TUT</button>
+    <button class="fchip" data-f="sat">SAT</button>
+    <button class="fchip" data-f="yukari">Yukarı Revize</button>
+  </div>
+  <input type="text" class="fsearch" placeholder="🔍 Hisse ara...">
+</div>
+
+<div class="tw"><div class="tbl-scroll">
+<table class="tbl">
+<thead><tr>
+  <th>Hisse</th>
+  <th>Tavsiye</th>
+  <th class="r">Güncel</th>
+  <th class="r">Hedef</th>
+  <th class="r">Potansiyel</th>
+  <th class="r">Revizyon</th>
+  <th class="r">Analist</th>
+  <th class="r">Tarih</th>
+</tr></thead>
+<tbody>
+<tr class="hover-row" data-cat="al yukari">
+    <td><div class="h-sym"><span class="h-logo"><img src="https://storage.fintables.com/media/uploads/company-logos/asels_icon.png" alt="ASELS" loading="lazy" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div class="h-code">ASELS</div><div class="h-name">Aselsan</div></span></div></td>
+    <td><span class="badge b-g">AL</span></td>
+    <td class="r">410,00 ₺</td>
+    <td class="r" style="color:var(--accent);font-weight:700">548,00 ₺</td>
+    <td class="r"><span class="badge b-g">▲ %33,7</span></td>
+    <td class="r"><span class="badge b-g">↑ %12</span></td>
+    <td class="r" style="color:var(--dim);font-size:12px">İş Yatırım</td>
+    <td class="r" style="color:var(--mute);font-size:11px">12 May 2026</td>
+  </tr><tr class="hover-row" data-cat="al yukari">
+    <td><div class="h-sym"><span class="h-logo"><img src="https://storage.fintables.com/media/uploads/company-logos/thyao_icon.png" alt="THYAO" loading="lazy" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div class="h-code">THYAO</div><div class="h-name">THY</div></span></div></td>
+    <td><span class="badge b-g">AL</span></td>
+    <td class="r">298,40 ₺</td>
+    <td class="r" style="color:var(--accent);font-weight:700">385,00 ₺</td>
+    <td class="r"><span class="badge b-g">▲ %29,0</span></td>
+    <td class="r"><span class="badge b-g">↑ %8</span></td>
+    <td class="r" style="color:var(--dim);font-size:12px">Garanti BBVA Yat.</td>
+    <td class="r" style="color:var(--mute);font-size:11px">11 May 2026</td>
+  </tr><tr class="hover-row" data-cat="al yukari">
+    <td><div class="h-sym"><span class="h-logo"><img src="https://storage.fintables.com/media/uploads/company-logos/kchol_icon.png" alt="KCHOL" loading="lazy" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div class="h-code">KCHOL</div><div class="h-name">Koç Holding</div></span></div></td>
+    <td><span class="badge b-g">AL</span></td>
+    <td class="r">178,20 ₺</td>
+    <td class="r" style="color:var(--accent);font-weight:700">228,00 ₺</td>
+    <td class="r"><span class="badge b-g">▲ %27,9</span></td>
+    <td class="r"><span class="badge b-g">↑ %6</span></td>
+    <td class="r" style="color:var(--dim);font-size:12px">AK Yatırım</td>
+    <td class="r" style="color:var(--mute);font-size:11px">10 May 2026</td>
+  </tr><tr class="hover-row" data-cat="al">
+    <td><div class="h-sym"><span class="h-logo"><img src="https://storage.fintables.com/media/uploads/company-logos/sahol_icon.png" alt="SAHOL" loading="lazy" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div class="h-code">SAHOL</div><div class="h-name">Sabancı Holding</div></span></div></td>
+    <td><span class="badge b-g">AL</span></td>
+    <td class="r">82,10 ₺</td>
+    <td class="r" style="color:var(--accent);font-weight:700">108,00 ₺</td>
+    <td class="r"><span class="badge b-g">▲ %31,5</span></td>
+    <td class="r"><span class="badge b-n">sabit</span></td>
+    <td class="r" style="color:var(--dim);font-size:12px">Yapı Kredi Yat.</td>
+    <td class="r" style="color:var(--mute);font-size:11px">09 May 2026</td>
+  </tr><tr class="hover-row" data-cat="tut">
+    <td><div class="h-sym"><span class="h-logo"><img src="https://storage.fintables.com/media/uploads/company-logos/tuprs_icon.png" alt="TUPRS" loading="lazy" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div class="h-code">TUPRS</div><div class="h-name">Tüpraş</div></span></div></td>
+    <td><span class="badge b-a">TUT</span></td>
+    <td class="r">312,80 ₺</td>
+    <td class="r" style="color:var(--accent);font-weight:700">340,00 ₺</td>
+    <td class="r"><span class="badge b-g">▲ %8,7</span></td>
+    <td class="r"><span class="badge b-r">↓ %4</span></td>
+    <td class="r" style="color:var(--dim);font-size:12px">Deniz Yatırım</td>
+    <td class="r" style="color:var(--mute);font-size:11px">08 May 2026</td>
+  </tr><tr class="hover-row" data-cat="al yukari">
+    <td><div class="h-sym"><span class="h-logo"><img src="https://storage.fintables.com/media/uploads/company-logos/akbnk_icon.png" alt="AKBNK" loading="lazy" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div class="h-code">AKBNK</div><div class="h-name">Akbank</div></span></div></td>
+    <td><span class="badge b-g">AL</span></td>
+    <td class="r">62,40 ₺</td>
+    <td class="r" style="color:var(--accent);font-weight:700">82,00 ₺</td>
+    <td class="r"><span class="badge b-g">▲ %31,4</span></td>
+    <td class="r"><span class="badge b-g">↑ %5</span></td>
+    <td class="r" style="color:var(--dim);font-size:12px">İş Yatırım</td>
+    <td class="r" style="color:var(--mute);font-size:11px">07 May 2026</td>
+  </tr><tr class="hover-row" data-cat="al">
+    <td><div class="h-sym"><span class="h-logo"><img src="https://storage.fintables.com/media/uploads/company-logos/garan_icon.png" alt="GARAN" loading="lazy" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div class="h-code">GARAN</div><div class="h-name">Garanti BBVA</div></span></div></td>
+    <td><span class="badge b-g">AL</span></td>
+    <td class="r">63,60 ₺</td>
+    <td class="r" style="color:var(--accent);font-weight:700">84,00 ₺</td>
+    <td class="r"><span class="badge b-g">▲ %32,1</span></td>
+    <td class="r"><span class="badge b-n">sabit</span></td>
+    <td class="r" style="color:var(--dim);font-size:12px">Yapı Kredi Yat.</td>
+    <td class="r" style="color:var(--mute);font-size:11px">06 May 2026</td>
+  </tr><tr class="hover-row" data-cat="al yukari">
+    <td><div class="h-sym"><span class="h-logo"><img src="https://storage.fintables.com/media/uploads/company-logos/sise_icon.png" alt="SISE" loading="lazy" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div class="h-code">SISE</div><div class="h-name">Şişecam</div></span></div></td>
+    <td><span class="badge b-g">AL</span></td>
+    <td class="r">45,80 ₺</td>
+    <td class="r" style="color:var(--accent);font-weight:700">58,00 ₺</td>
+    <td class="r"><span class="badge b-g">▲ %26,6</span></td>
+    <td class="r"><span class="badge b-g">↑ %9</span></td>
+    <td class="r" style="color:var(--dim);font-size:12px">OYAK Yatırım</td>
+    <td class="r" style="color:var(--mute);font-size:11px">05 May 2026</td>
+  </tr><tr class="hover-row" data-cat="sat">
+    <td><div class="h-sym"><span class="h-logo"><img src="https://storage.fintables.com/media/uploads/company-logos/eregl_icon.png" alt="EREGL" loading="lazy" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div class="h-code">EREGL</div><div class="h-name">Ereğli Demir</div></span></div></td>
+    <td><span class="badge b-r">SAT</span></td>
+    <td class="r">48,20 ₺</td>
+    <td class="r" style="color:var(--accent);font-weight:700">42,00 ₺</td>
+    <td class="r"><span class="badge b-r">▼ %12,9</span></td>
+    <td class="r"><span class="badge b-r">↓ %8</span></td>
+    <td class="r" style="color:var(--dim);font-size:12px">Tacirler Yatırım</td>
+    <td class="r" style="color:var(--mute);font-size:11px">04 May 2026</td>
+  </tr><tr class="hover-row" data-cat="tut">
+    <td><div class="h-sym"><span class="h-logo"><img src="https://storage.fintables.com/media/uploads/company-logos/bimas_icon.png" alt="BIMAS" loading="lazy" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div class="h-code">BIMAS</div><div class="h-name">BİM Mağazalar</div></span></div></td>
+    <td><span class="badge b-a">TUT</span></td>
+    <td class="r">248,40 ₺</td>
+    <td class="r" style="color:var(--accent);font-weight:700">268,00 ₺</td>
+    <td class="r"><span class="badge b-g">▲ %7,9</span></td>
+    <td class="r"><span class="badge b-n">sabit</span></td>
+    <td class="r" style="color:var(--dim);font-size:12px">Garanti BBVA Yat.</td>
+    <td class="r" style="color:var(--mute);font-size:11px">03 May 2026</td>
+  </tr><tr class="hover-row" data-cat="al yukari">
+    <td><div class="h-sym"><span class="h-logo"><img src="https://storage.fintables.com/media/uploads/company-logos/froto_icon.png" alt="FROTO" loading="lazy" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div class="h-code">FROTO</div><div class="h-name">Ford Otosan</div></span></div></td>
+    <td><span class="badge b-g">AL</span></td>
+    <td class="r">842,40 ₺</td>
+    <td class="r" style="color:var(--accent);font-weight:700">1.080,00 ₺</td>
+    <td class="r"><span class="badge b-g">▲ %28,2</span></td>
+    <td class="r"><span class="badge b-g">↑ %7</span></td>
+    <td class="r" style="color:var(--dim);font-size:12px">İş Yatırım</td>
+    <td class="r" style="color:var(--mute);font-size:11px">02 May 2026</td>
+  </tr><tr class="hover-row" data-cat="sat">
+    <td><div class="h-sym"><span class="h-logo"><img src="https://storage.fintables.com/media/uploads/company-logos/pgsus_icon.png" alt="PGSUS" loading="lazy" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div class="h-code">PGSUS</div><div class="h-name">Pegasus</div></span></div></td>
+    <td><span class="badge b-r">SAT</span></td>
+    <td class="r">482,50 ₺</td>
+    <td class="r" style="color:var(--accent);font-weight:700">420,00 ₺</td>
+    <td class="r"><span class="badge b-r">▼ %13,0</span></td>
+    <td class="r"><span class="badge b-r">↓ %6</span></td>
+    <td class="r" style="color:var(--dim);font-size:12px">AK Yatırım</td>
+    <td class="r" style="color:var(--mute);font-size:11px">01 May 2026</td>
+  </tr>
+</tbody>
+</table>
+</div></div>
+
+</main>
+
+  <footer style="background: #08121E; border-top: 1px solid rgba(255,255,255,0.08); padding: 40px 20px 25px 20px; width: 100%; margin-top: 50px;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 25px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 20px;">
+        <div>
+          <div style="font-size: 20px; font-weight: 800; color: #C8A96B; letter-spacing: 0.5px;">BORSA KAYNAK</div>
+          <div style="font-size: 13px; color: #D0DCEB; margin-top: 4px;">Türkiye Canlı BİST Borsa İstanbul Piyasa Verileri ve Analiz Portalı</div>
+        </div>
+        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+          <a href="index.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Anasayfa</a>
+          <a href="piyasalar.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Piyasalar</a>
+          <a href="bist-liderler.html" style="color: #C8A96B; text-decoration: none; font-size: 13px; font-weight: 700;">🔥 BİST Liderler</a>
+          <a href="radar.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Radar</a>
+          <a href="bist-tum-enstrumanlar.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Tüm Enstrümanlar</a>
+          <a href="veri-dogrulama.html" style="color: #00B56E; text-decoration: none; font-size: 13px; font-weight: 700;">🔍 Veri Doğrulama</a>
+          <a href="karsilastirma-kontrol.html" style="color: #C8A96B; text-decoration: none; font-size: 13px; font-weight: 700;">📊 TV Karşılaştırma</a>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 12px; color: #8B98A9;">
+        <div>© 2026 BorsaKaynak. Tüm hakları saklıdır. Veriler 0ms gecikmeli canlı seans akışıdır.</div>
+        <div>Yasal Uyarı: Burada yer alan yatırım bilgi, yorum ve tavsiyeleri yatırım danışmanlığı kapsamında değildir.</div>
+      </div>
+    </div>
+  </footer>
+
+
+<script>
+(function(){
+  var _t = localStorage.getItem("piyasalarTheme");
+  if(_t==="light") document.documentElement.setAttribute("data-theme","light");
+  document.querySelectorAll("[data-theme-toggle]").forEach(function(b){
+    b.addEventListener("click", function(){
+      var c = document.documentElement.getAttribute("data-theme")==="light" ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", c);
+      localStorage.setItem("piyasalarTheme", c);
+    });
+  });
+  // Filter
+  document.querySelectorAll(".fchip").forEach(function(b){
+    b.addEventListener("click", function(){
+      document.querySelectorAll(".fchip").forEach(function(x){x.classList.remove("active");});
+      b.classList.add("active");
+      var cat = b.dataset.f;
+      document.querySelectorAll("tr[data-cat]").forEach(function(tr){
+        tr.style.display = (cat==="all" || tr.dataset.cat===cat) ? "" : "none";
+      });
+    });
+  });
+  // Search
+  var s = document.querySelector(".fsearch");
+  if(s){
+    s.addEventListener("input", function(){
+      var q = this.value.toLowerCase();
+      document.querySelectorAll("tr[data-cat]").forEach(function(tr){
+        var t = tr.textContent.toLowerCase();
+        tr.style.display = (!q || t.indexOf(q)>=0) ? "" : "none";
+      });
+    });
+  }
+})();
+</script>
+<script src="bk-live.js" defer></script>
+</body></html>

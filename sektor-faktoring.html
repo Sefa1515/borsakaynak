@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://s3.tradingview.com" />
+  <link rel="dns-prefetch" href="https://scanner.tradingview.com" />
+  <link rel="dns-prefetch" href="https://web-api.forinvestcdn.com" />
+
+  <!-- Çerez/Önbellek engeli -->
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Faktoring Sektörü — BorsaKaynak</title></title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{overflow-x:hidden;max-width:100%}
+:root{--bg:#08121E;--bg2:#0B1623;--panel:#111C2B;--p2:#16243A;--line:rgba(255,255,255,.07);--l2:rgba(255,255,255,.12);--text:#F3F7FA;--dim:#B0B9C5;--mute:#8B98A9;--accent:#C8A96B;--G:#00B56E;--R:#E04F5F;--font:"Inter","Geist",-apple-system,sans-serif;--mono:"Geist Mono",monospace}
+html[data-theme=light]{--bg:#F0F4F8;--bg2:#E8EDF5;--panel:#FFF;--p2:#F4F7FB;--line:rgba(0,0,0,.07);--l2:rgba(0,0,0,.12);--text:#0D1B2E;--dim:#3D5068;--mute:#6b7e94}
+body{font-family:var(--font);background:radial-gradient(ellipse at top,#0d1f33 0%,#08121E 50%);color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh;letter-spacing:-.005em}
+html[data-theme=light] body{background:#F0F4F8}
+
+.ticker{background:var(--bg2);border-bottom:1px solid var(--line);height:40px;overflow:hidden;position:relative}
+.ticker::before,.ticker::after{content:"";position:absolute;top:0;bottom:0;width:70px;z-index:2;pointer-events:none}
+.ticker::before{left:0;background:linear-gradient(90deg,var(--bg2),transparent)}
+.ticker::after{right:0;background:linear-gradient(270deg,var(--bg2),transparent)}
+.tt{display:flex;gap:36px;align-items:center;height:100%;width:max-content;animation:sc 55s linear infinite;padding-left:20px}
+@keyframes sc{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.tk{display:flex;align-items:center;gap:7px;white-space:nowrap;font-size:12px}
+.tk-n{color:var(--dim);font-weight:500}
+.tk-v{color:var(--text);font-weight:600;font-family:var(--mono)}
+.tk-c{font-family:var(--mono);font-size:11px;font-weight:600}
+.tk-c.up{color:var(--G)}.tk-c.dn{color:var(--R)}
+.td{width:5px;height:5px;border-radius:50%;background:var(--accent)}
+
+.hdr{background:rgba(8,18,30,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50}
+html[data-theme=light] .hdr{background:rgba(240,244,248,.92)}
+.nav{max-width:1320px;margin:0 auto;padding:13px 28px;display:flex;align-items:center;justify-content:space-between}
+.nl{display:flex;align-items:center;gap:2px}
+.nl a{padding:6px 10px;font-size:12.5px;font-weight:500;color:var(--dim);border-radius:6px;text-decoration:none;transition:.18s}
+.nl a:hover,.nl a.active{color:var(--text);background:var(--p2)}
+.nact{display:flex;gap:6px}
+.nb{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--panel);cursor:pointer;color:var(--dim);font-size:14px;display:grid;place-items:center;transition:.18s}
+.nb:hover{border-color:var(--accent);color:var(--accent)}
+
+main{max-width:1320px;margin:0 auto;padding:32px 28px 64px;position:relative;z-index:1}
+.bc{font-size:12px;color:var(--mute);margin-bottom:14px}
+.bc a{color:var(--mute);text-decoration:none}
+.bc a:hover{color:var(--accent)}
+.bc span{color:var(--accent)}
+
+.shero{background:linear-gradient(135deg,#111C2B 0%,#16243A 60%,#1a2b40 100%);border:1px solid rgba(200,169,107,.18);border-radius:18px;padding:28px;margin-bottom:24px;position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 360px;gap:32px;align-items:center}
+html[data-theme=light] .shero{background:linear-gradient(135deg,#fff 0%,#f4f7fb 100%)}
+.shero::before{content:"";position:absolute;top:-80px;right:-80px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(200,169,107,.15),transparent 70%);pointer-events:none}
+.shero-eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.shero h1{font-size:36px;font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-bottom:10px;color:var(--text)}
+.shero h1 span{color:var(--accent)}
+.shero p{font-size:14px;color:var(--dim);line-height:1.6;margin-bottom:16px}
+.shero-pills{display:flex;flex-wrap:wrap;gap:8px}
+.shero-pill{padding:6px 12px;border-radius:18px;font-size:11.5px;font-weight:600;background:rgba(255,255,255,.05);border:1px solid var(--line)}
+html[data-theme=light] .shero-pill{background:rgba(13,27,46,.04)}
+.shero-akis{background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:14px;padding:20px;text-align:center}
+html[data-theme=light] .shero-akis{background:rgba(13,27,46,.04)}
+.shero-akis-lbl{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:10px}
+.shero-akis-val{font-size:36px;font-weight:800;letter-spacing:-.03em;line-height:1;font-family:var(--mono);margin-bottom:8px}
+.shero-akis-sub{font-size:11.5px;color:var(--mute)}
+
+.stats-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px}
+.stat-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px}
+.stat-lbl{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:7px}
+.stat-val{font-size:24px;font-weight:800;letter-spacing:-.02em;color:var(--text);font-family:var(--mono);margin-bottom:3px}
+.stat-sub{font-size:11.5px;color:var(--dim)}
+
+.tw{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:28px}
+.tw-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--line);flex-wrap:wrap;gap:14px}
+.tw-title{font-size:15px;font-weight:700;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+.tw-title::before{content:"";width:4px;height:18px;background:var(--accent);border-radius:2px}
+.tw-actions{display:flex;gap:6px}
+.tw-flt{padding:6px 12px;border-radius:18px;font-size:11.5px;font-weight:600;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--dim);cursor:pointer;transition:.15s;font-family:inherit}
+html[data-theme=light] .tw-flt{background:rgba(13,27,46,.03);color:#3D5068}
+.tw-flt:hover{color:var(--text)}
+.tw-flt.active{background:var(--accent);border-color:transparent;color:#08121E}
+
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th{padding:11px 18px;text-align:left;font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);border-bottom:1px solid var(--line);background:rgba(255,255,255,.025)}
+html[data-theme=light] .tbl th{background:rgba(13,27,46,.03)}
+.tbl th.r{text-align:right}
+.tbl td{padding:13px 18px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--text);vertical-align:middle;font-family:'Inter',-apple-system,sans-serif;font-variant-numeric:tabular-nums}
+html[data-theme=light] .tbl td{border-color:rgba(13,27,46,.04)}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:rgba(255,255,255,.02)}
+html[data-theme=light] .tbl tr:hover td{background:rgba(13,27,46,.02)}
+.tbl td.r{text-align:right}
+.h-sym{display:flex;align-items:center;gap:11px}
+.h-logo{width:34px;height:34px;border-radius:50%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)}
+.h-logo img{width:100%;height:100%;object-fit:cover;display:block}
+.h-code{font-size:13.5px;font-weight:700;color:var(--text);letter-spacing:-.005em}
+.h-name{font-size:11px;color:var(--mute);margin-top:1px;font-weight:400}
+.badge{display:inline-flex;padding:3px 9px;border-radius:6px;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;white-space:nowrap;letter-spacing:-.01em}
+.b-g{background:rgba(0,181,110,.13);color:#00B56E}
+.b-r{background:rgba(224,79,95,.13);color:#E04F5F}
+
+footer{background:var(--bg2);border-top:1px solid var(--line);padding:36px 0 20px;margin-top:48px}
+.fcont{max-width:1320px;margin:0 auto;padding:0 28px}
+.fgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr 1fr;gap:32px;margin-bottom:28px}
+.fcol h4{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.fcol ul{list-style:none}.fcol li{margin-bottom:7px}
+.fcol a{font-size:12.5px;color:var(--dim);text-decoration:none;transition:.18s}.fcol a:hover{color:var(--text)}
+.fbrand p{font-size:12.5px;color:var(--dim);line-height:1.5;margin-top:12px;max-width:240px}
+.fbot{padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--mute);text-align:center}
+
+@media(max-width:980px){.nl{display:flex;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none;gap:2px}.nl::-webkit-scrollbar{display:none}.nl a{flex-shrink:0}.shero{grid-template-columns:1fr}.shero h1{font-size:26px}.stats-3{grid-template-columns:1fr 1fr}.fgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.stats-3{grid-template-columns:1fr}.tw-head{flex-direction:column;align-items:flex-start}}
+
+/* ===== INTER FONT - FINTABLES TARZI ===== */
+body, .premium-table, .tbl, .bil-table, .ak-table,
+.psum-card, .arz-card, .bs-card, .info-card,
+.fp-row, .sek-row, .sek-name, .sek-val,
+.akis-row, .akis-code, .akis-name, .akis-val, .akis-tutar, .akis-pay,
+table tbody, table thead, table td, table th,
+.h-code, .h-name, .bil-code, .bil-name,
+.kg-val, .stat-val, .hero-stat-val {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  letter-spacing: -.005em;
+}
+
+/* Tabular nums for numeric data */
+.tbl td, .premium-table td, .bil-td,
+.fp-val, .fp-pct, .akis-val, .akis-pay,
+.sek-val, .h-code, .stat-val,
+.kg-val, .hero-stat-val,
+[class*="val"], [class*="num"], td.r {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Heading hierarchy with Inter */
+h1, h2, h3, h4, h5, h6,
+.htitle, .premium-title, .arz-title,
+.bil-title, .hero h1, .hero h2 {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  letter-spacing: -.015em;
+  font-feature-settings: "ss01" 1, "ss02" 1, "cv11" 1;
+}
+
+html[data-theme=light] .dt-row:hover,
+body.premium-light .dt-row:hover { background:rgba(13,27,46,.04) }
+html[data-theme=light] .badge.b-g,
+body.premium-light .badge.b-g { background:#E8F5EC; color:#00873E }
+html[data-theme=light] .badge.b-r,
+body.premium-light .badge.b-r { background:#FEF0EE; color:#C0392B }
+
+
+/* ════ MOBİL UYUMLULUK — GLOBAL ════ */
+@media(max-width:768px){
+  /* Tablo taşmasını engelle */
+  .data-table,.tw table,table.tbl{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap}
+  /* Sabit kolon genişliklerini sıfırla */
+  .dt-row[style*="grid-template-columns"]{grid-template-columns:1.6fr 1fr 1fr!important}
+  /* Özet kart gridleri */
+  .stat-grid,.stats-3,.sek-stats,.bs-stats,.summary-cards{grid-template-columns:1fr 1fr!important}
+  /* Grafik alan */
+  .chart-wrap,.chart-card{min-height:220px!important}
+  /* Font boyutları */
+  .price-big,.big-price{font-size:24px!important}
+  h1{font-size:20px!important;letter-spacing:-.02em!important}
+  /* Period sekmeleri */
+  .period-tabs,.hm-periods,.chart-tabs,.fil-bar{overflow-x:auto;white-space:nowrap;scrollbar-width:none;flex-wrap:nowrap!important}
+  .period-tabs::-webkit-scrollbar,.chart-tabs::-webkit-scrollbar{display:none}
+  /* Kartlar tek sütun */
+  .card-grid,.eg,.sektor-grid,.sek-hub-grid{grid-template-columns:1fr!important}
+  /* Sidebar gizle */
+  .sidebar,.right-col{display:none!important}
+  /* Full width */
+  .main-col,.content-area{width:100%!important;max-width:100%!important}
+}
+@media(max-width:480px){
+  .stats-3,.sek-stats,.bs-stats{grid-template-columns:1fr!important}
+  .ticker{font-size:11px}
+  .btn,.gh-cmd-btn{font-size:11px;padding:6px 10px}
+  .hm-pbtn{font-size:10px;padding:4px 7px}
+}
+
+/* ════════════════ HAMBURGER MENÜ ════════════════ */
+.ham-btn{
+  display:none;flex-direction:column;justify-content:space-between;
+  width:38px;height:38px;padding:10px 8px;cursor:pointer;
+  border:1px solid var(--line,rgba(255,255,255,.1));border-radius:8px;
+  background:var(--panel,rgba(255,255,255,.05));
+  -webkit-tap-highlight-color:transparent;
+}
+.ham-btn span{
+  display:block;height:2px;width:100%;background:var(--text,#f0f4f8);
+  border-radius:2px;transition:all .28s ease;
+}
+.ham-btn.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.ham-btn.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.ham-btn.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* Mobil overlay menü */
+.mob-nav{
+  position:fixed;inset:0;z-index:998;
+  background:rgba(8,18,30,.97);backdrop-filter:blur(16px);
+  display:flex;flex-direction:column;padding:80px 24px 40px;gap:6px;
+  opacity:0;pointer-events:none;
+  transform:translateX(100%);
+  transition:opacity .3s ease,transform .3s ease;
+  overflow-y:auto;
+}
+.mob-nav.open{
+  opacity:1;pointer-events:auto;transform:translateX(0)
+}
+.mob-nav a{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 18px;border-radius:12px;
+  font-size:16px;font-weight:600;color:rgba(240,244,248,.85);
+  text-decoration:none;border:1px solid transparent;
+  transition:all .2s;
+}
+.mob-nav a:hover,.mob-nav a.active{
+  background:rgba(200,169,107,.12);
+  border-color:rgba(200,169,107,.28);
+  color:#C8A96B;
+}
+.mob-nav-divider{height:1px;background:rgba(255,255,255,.07);margin:8px 0}
+.mob-nav-close{
+  position:absolute;top:18px;right:18px;
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  cursor:pointer;display:grid;place-items:center;
+  color:rgba(240,244,248,.8);font-size:22px;line-height:1;
+}
+
+/* Light tema uyumu */
+html[data-theme=light] .mob-nav{background:rgba(248,250,252,.97)}
+html[data-theme=light] .mob-nav a{color:#374151}
+html[data-theme=light] .mob-nav a:hover,
+html[data-theme=light] .mob-nav a.active{background:rgba(200,169,107,.1);color:#9d7a40}
+html[data-theme=light] .mob-nav-close{background:rgba(0,0,0,.06);border-color:rgba(0,0,0,.1);color:#374151}
+html[data-theme=light] .ham-btn{background:#fff;border-color:rgba(0,0,0,.12)}
+html[data-theme=light] .ham-btn span{background:#1f2937}
+
+@media(max-width:860px){
+  /* Hamburger göster */
+  .ham-btn{display:flex}
+  /* Desktop menü gizle */
+  .nav-menu,.nl{display:none!important}
+}
+
+</style>
+
+<style id="bk-mob-fix">
+/* ══════════════════════════════════════════════
+   BK MOBİL FİX — Tablo Taşma Engeli
+   Tüm sayfalarda <768px
+══════════════════════════════════════════════ */
+@media(max-width:768px){
+  /* Genel tablo wrapper */
+  .tbl-wrap, .tbl-scroll, [style*="overflow-x:auto"], .dt-wrap { 
+    overflow-x:auto!important;-webkit-overflow-scrolling:touch;
+  }
+  /* Tablo içi white-space kaldır - taşmayı önle */
+  table.tbl, table.premium-table, table.data-table {
+    min-width:0!important; width:100%!important;
+    white-space:normal!important;
+  }
+  /* Hücre içi wrap */
+  table.tbl td, table.tbl th {
+    white-space:nowrap; font-size:11.5px!important; padding:7px 8px!important;
+  }
+  /* Uzun kolon gizle - sadece kritikler kalsın */
+  table.tbl .hide-mob { display:none!important; }
+  /* Endeks tablo mobil kart - .mob-card-list ile */
+  .mob-card-list { display:block }
+  .mob-card-list .tbl-desktop-only { display:none!important }
+  /* Masaüstünde mobil kart gizle */
+  .mob-tbl-card { display:none }
+}
+@media(min-width:769px){
+  .mob-tbl-card { display:none!important }
+  .mob-sektor-tbl { display:none!important }
+}
+</style>
+
+<style id="bk-desktop-hide">
+/* Masaüstünde mobil görünümler KESINLIKLE gizli */
+@media(min-width:769px){
+  .mob-tbl-card,
+  .mob-tbl-card--wide,
+  .mob-sp-row,
+  .mob-sp-list,
+  .mob-endeks-list,
+  .mob-sektor-tbl,
+  .tbl-mobile,
+  .mob-stk-row { display:none!important }
+}
+/* Mobilde masaüstü tabloları gizle */
+@media(max-width:768px){
+  .tbl-desktop,
+  .tbl-endeks-wrap,
+  .tbl-special-wrap { display:none!important }
+}
+</style>
+
+  <!-- Schema.org Structured Data for AI Agents & Search Engines -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FinancialService",
+    "name": "BorsaKaynak",
+    "url": "https://borsakaynak.com/",
+    "logo": "https://borsakaynak.com/logo.jpg",
+    "description": "Borsa İstanbul (BIST) 586 şirket hissesi, 674 enstrüman, canlı borsa fiyatları, para giriş/çıkış analizleri ve TradingView entegrasyonu.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://borsakaynak.com/piyasalar.html?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta property="og:image" content="https://borsakaynak.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://borsakaynak.com/og-image.png">
+<link rel="stylesheet" href="premium-light-fixes.css">
+<link rel="stylesheet" href="header-footer-shared.css">
+</head>
+<body><div class="bk-shared-chrome">
+<div class="ticker">
+<div class="ticker-track" id="ticker-track">
+<div class="tick" data-tsym="XU100"><span class="tick-dot"></span><span class="tick-name">BIST 100</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="USDTRY"><span class="tick-name">USD/TRY</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="EURTRY"><span class="tick-name">EUR/TRY</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="GBPTRY"><span class="tick-name">GBP/TRY</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="XAUGRAM"><span class="tick-name">ALTIN/GR</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="XAUUSD"><span class="tick-name">XAU/USD</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="BRENT"><span class="tick-name">BRENT</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="BTCUSDT"><span class="tick-name">BTC/USDT</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="ETHUSDT"><span class="tick-name">ETH/USDT</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="DAX"><span class="tick-name">DAX</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="SPX"><span class="tick-name">S&amp;P 500</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="IXIC"><span class="tick-name">NASDAQ</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+</div>
+</div>
+<!-- HEADER -->
+<header class="header">
+<div class="container">
+<nav class="nav">
+<a aria-label="Sayfa Bağlantısı" href="index.html" style="text-decoration:none;color:inherit;display:flex;align-items:center">
+<img src="logo-kaynak.png" alt="BorsaKaynak" style="height:32px;width:auto;flex-shrink:0">
+</a>
+<div class="nav-menu">
+<a aria-label="Sayfa Bağlantısı" href="index.html">Anasayfa</a>
+<a aria-label="Sayfa Bağlantısı" href="piyasalar.html">Piyasalar</a>
+<a aria-label="Sayfa Bağlantısı" href="piyasa-hareketleri.html">Piyasa Hareketleri</a>
+<a aria-label="Sayfa Bağlantısı" href="endeksler.html">Endeksler</a>
+<a aria-label="Sayfa Bağlantısı" class="active" href="sektorler.html">Sektörler</a>
+<a aria-label="Sayfa Bağlantısı" href="haberler.html">Haberler</a>
+<a aria-label="Sayfa Bağlantısı" href="analizler.html">Analizler</a>
+<a aria-label="Sayfa Bağlantısı" href="araci-kurum.html">Aracı Kurum</a>
+<a aria-label="Sayfa Bağlantısı" href="halka-arz.html">Halka Arz</a>
+<a aria-label="Sayfa Bağlantısı" href="viop.html">VİOP</a>
+<a aria-label="Sayfa Bağlantısı" href="kripto.html">Kripto</a>
+</div>
+<div class="nav-actions"><button class="ham-btn" aria-label="Menü" aria-expanded="false"><span></span><span></span><span></span></button>
+<button aria-label="BİST Veri Butonu" class="nav-btn"><svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg></button>
+<button aria-label="BİST Veri Butonu" class="nav-btn"><svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg></button>
+</div>
+</nav>
+</div>
+</header>
+<div class="mob-nav" id="mobNav">
+<button class="mob-nav-close" aria-label="Kapat">✕</button>
+
+<!-- Mini canlı ticker -->
+<div class="mob-ticker-grid">
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">BIST 100</span>
+    <span class="mob-tick-val" id="ham-bist">—</span>
+    <span class="mob-tick-chg" id="ham-bist-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">USD/TRY</span>
+    <span class="mob-tick-val" id="ham-usd">—</span>
+    <span class="mob-tick-chg" id="ham-usd-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">EUR/TRY</span>
+    <span class="mob-tick-val" id="ham-eur">—</span>
+    <span class="mob-tick-chg" id="ham-eur-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">ALTIN/GR</span>
+    <span class="mob-tick-val" id="ham-altin">—</span>
+    <span class="mob-tick-chg" id="ham-altin-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">BTC/USD</span>
+    <span class="mob-tick-val" id="ham-btc">—</span>
+    <span class="mob-tick-chg" id="ham-btc-chg">—</span>
+  </div>
+</div>
+<div class="mob-nav-divider"></div>
+
+<div class="mob-nav-section-title">ANA SAYFALAR</div>
+  <a aria-label="Sayfa Bağlantısı" href="index.html">🏠 Anasayfa</a>
+  <a aria-label="Sayfa Bağlantısı" href="piyasalar.html">📈 Piyasalar</a>
+  <a aria-label="Sayfa Bağlantısı" class="active" href="sektorler.html">🏭 Sektörler</a>
+  <a aria-label="Sayfa Bağlantısı" href="haberler.html">📰 Haberler</a>
+  <a aria-label="Sayfa Bağlantısı" href="analizler.html">📊 Analizler</a>
+  <a aria-label="Sayfa Bağlantısı" href="model-portfoy.html">💼 Model Portföy</a>
+<div class="mob-nav-divider"></div>
+<div class="mob-nav-section-title">ENDEKSİ</div>
+  <a aria-label="Sayfa Bağlantısı" href="endeksler.html">📊 Tüm Endeksler</a>
+  <a aria-label="Sayfa Bağlantısı" href="endeks-XU100.html">📈 BIST 100</a>
+  <a aria-label="Sayfa Bağlantısı" href="endeks-XU030.html">📉 BIST 30</a>
+<div class="mob-nav-divider"></div>
+<div class="mob-nav-section-title">YATIRIM</div>
+  <a aria-label="Sayfa Bağlantısı" href="araci-kurum.html">🏦 Aracı Kurum</a>
+  <a aria-label="Sayfa Bağlantısı" href="halka-arz.html">📋 Halka Arz</a>
+  <a aria-label="Sayfa Bağlantısı" href="viop.html">📉 VİOP</a>
+  <a aria-label="Sayfa Bağlantısı" href="kripto.html">₿ Kripto</a>
+<div class="mob-nav-divider"></div>
+  <a aria-label="Sayfa Bağlantısı" href="hakkimizda.html">ℹ️ Hakkımızda</a>
+</div>
+<div class="premium-command"><div class="premium-command__inner"><label class="premium-search">⌕ <input data-premium-search="" placeholder="Site içinde hisse, haber, analiz veya halka arz ara..."/></label><div class="premium-actions"><button aria-label="BİST Veri Butonu" class="premium-btn" data-theme-toggle="">🌗 Tema</button><button aria-label="BİST Veri Butonu" class="premium-btn" data-export=".premium-table">⬇ Excel/CSV</button><button aria-label="BİST Veri Butonu" class="premium-btn" data-open-modal="#notifyModal">🔔 Bildirim</button><a aria-label="Sayfa Bağlantısı" class="premium-btn gold" href="model-portfoy.html">PRO Model Portföy</a></div></div></div>
+<script>
+  // Tema (aydınlık/koyu) değiştirici
+  (function () {
+    const STORAGE_KEY = 'bk-theme-light';
+    function applyTheme(isLight) {
+      document.body.classList.toggle('premium-light', isLight);
+    }
+    const saved = localStorage.getItem(STORAGE_KEY) === '1';
+    applyTheme(saved);
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.querySelector('[data-theme-toggle]');
+      if (!btn) return;
+      btn.addEventListener('click', () => {
+        const nowLight = !document.body.classList.contains('premium-light');
+        applyTheme(nowLight);
+        localStorage.setItem(STORAGE_KEY, nowLight ? '1' : '0');
+      });
+    });
+  })();
+</script>
+
+<script>
+// Site geneli arama kutusu: Enter'a basilinca piyasalar.html'e yonlendirir.
+(function(){
+  document.querySelectorAll('[data-premium-search]').forEach(function(inp){
+    inp.addEventListener('keydown', function(e){
+      if (e.key === 'Enter') {
+        var q = inp.value.trim();
+        if (q) window.location.href = 'piyasalar.html?q=' + encodeURIComponent(q);
+      }
+    });
+  });
+})();
+</script>
+</div>
+
+<main>
+<div class="bc"><a href="index.html">Anasayfa</a> / <a href="sektorler.html" class="active">Sektörler</a> / <span>Faktoring</span></div>
+
+<section class="shero">
+  <div>
+    <div class="shero-eyebrow">SEKTÖR ANALİZİ · CANLI</div>
+    <h1>Faktoring <span>Sektörü</span></h1>
+    <p>Alacak finansmanı ve faktoring hizmetleri sunan finansal kuruluşlar.</p>
+    <div class="shero-pills">
+      <span class="shero-pill">📊 3 Hisse</span>
+      <span class="shero-pill">🏷 F/K Ort: 11.8</span>
+      <span class="shero-pill">💰 PMF Ort: 12.3</span>
+      <span class="shero-pill">📅 Güncel: 20 Haz 2026</span>
+    </div>
+  </div>
+</section>
+
+<div class="stats-3">
+  <div class="stat-card">
+    <div class="stat-lbl">Sektör Hisse Sayısı</div>
+    <div class="stat-val" style="color:#5B9DD9">3</div>
+    <div class="stat-sub">BIST kotasyonunda</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-lbl">Ortalama F/K</div>
+    <div class="stat-val" style="color:#C8A96B">11.8</div>
+    <div class="stat-sub">Sektör ortalaması</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-lbl">Ortalama PMF</div>
+    <div class="stat-val" style="color:#fbbf24">12.3</div>
+    <div class="stat-sub">Piyasa/Defter</div>
+  </div>
+</div>
+
+<div class="tw">
+  <div class="tw-head">
+    <div class="tw-title">Faktoring Hisseleri</div>
+    <div class="tw-actions">
+      <button class="tw-flt active">Tümü</button>
+      <button class="tw-flt">Yükselen</button>
+      <button class="tw-flt">Düşen</button>
+      <button class="tw-flt">Hacim</button>
+    </div>
+  </div>
+  <div style="overflow-x:auto">
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>Hisse</th>
+          <th class="r">Fiyat</th>
+          <th class="r">Günlük Δ</th>
+          <th class="r">Piyasa Değ.</th>
+          <th class="r">F/K</th>
+          <th class="r">Hacim</th>
+        </tr>
+      </thead>
+      <tbody>
+<tr>
+<td><div class="h-sym"><span class="h-logo"><img src="https://storage.fintables.com/media/uploads/company-logos/lidfa_icon.png" alt="LIDFA" loading="lazy" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div class="h-code">LIDFA</div><div class="h-name">Lider Faktoring</div></span></div></td>
+<td class="r" style="font-weight:600">57,22 ₺</td>
+<td class="r"><span class="badge b-r">▼ %7.19</span></td>
+<td class="r" style="color:var(--accent);font-weight:600;font-family:var(--m)">895,60 M ₺</td>
+<td class="r" style="color:var(--dim)">13,2</td>
+<td class="r" style="color:var(--accent);font-weight:600">895,60 M ₺</td>
+</tr><tr>
+<td><div class="h-sym"><span class="h-logo"><img src="https://storage.fintables.com/media/uploads/company-logos/dstkf_icon.png" alt="DSTKF" loading="lazy" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div class="h-code">DSTKF</div><div class="h-name">Destek Finans Faktoring</div></span></div></td>
+<td class="r" style="font-weight:600">1.987,00 ₺</td>
+<td class="r"><span class="badge b-r">▼ %7.31</span></td>
+<td class="r" style="color:var(--accent);font-weight:600;font-family:var(--m)">65,90 M ₺</td>
+<td class="r" style="color:var(--dim)">5,0</td>
+<td class="r" style="color:var(--accent);font-weight:600">65,90 M ₺</td>
+</tr><tr>
+<td><div class="h-sym"><span class="h-logo"><img src="https://storage.fintables.com/media/uploads/company-logos/ulufa_icon.png" alt="ULUFA" loading="lazy" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div class="h-code">ULUFA</div><div class="h-name">Ulusal Faktoring</div></span></div></td>
+<td class="r" style="font-weight:600">598,83 ₺</td>
+<td class="r"><span class="badge b-g">▲ %6.22</span></td>
+<td class="r" style="color:var(--accent);font-weight:600;font-family:var(--m)">1770,10 M ₺</td>
+<td class="r" style="color:var(--dim)">17,1</td>
+<td class="r" style="color:var(--accent);font-weight:600">1770,10 M ₺</td>
+</tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</main>  <footer style="background: #08121E; border-top: 1px solid rgba(255,255,255,0.08); padding: 40px 20px 25px 20px; width: 100%; margin-top: 50px;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 25px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 20px;">
+        <div>
+          <div style="font-size: 20px; font-weight: 800; color: #C8A96B; letter-spacing: 0.5px;">BORSA KAYNAK</div>
+          <div style="font-size: 13px; color: #D0DCEB; margin-top: 4px;">Türkiye Canlı BİST Borsa İstanbul Piyasa Verileri ve Analiz Portalı</div>
+        </div>
+        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+          <a href="index.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Anasayfa</a>
+          <a href="piyasalar.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Piyasalar</a>
+          <a href="bist-liderler.html" style="color: #C8A96B; text-decoration: none; font-size: 13px; font-weight: 700;">🔥 BİST Liderler</a>
+          <a href="radar.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Radar</a>
+          <a href="bist-tum-enstrumanlar.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Tüm Enstrümanlar</a>
+          <a href="veri-dogrulama.html" style="color: #00B56E; text-decoration: none; font-size: 13px; font-weight: 700;">🔍 Veri Doğrulama</a>
+          <a href="karsilastirma-kontrol.html" style="color: #C8A96B; text-decoration: none; font-size: 13px; font-weight: 700;">📊 TV Karşılaştırma</a>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 12px; color: #8B98A9;">
+        <div>© 2026 BorsaKaynak. Tüm hakları saklıdır. Veriler 0ms gecikmeli canlı seans akışıdır.</div>
+        <div>Yasal Uyarı: Burada yer alan yatırım bilgi, yorum ve tavsiyeleri yatırım danışmanlığı kapsamında değildir.</div>
+      </div>
+    </div>
+  </footer>
+
+<script>
+(function(){
+  var t = localStorage.getItem("piyasalarTheme");
+  if(t==="light") document.documentElement.setAttribute("data-theme","light");
+  document.querySelectorAll("[data-theme-toggle]").forEach(function(b){
+    b.addEventListener("click", function(){
+      var c = document.documentElement.getAttribute("data-theme")==="light" ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", c);
+      localStorage.setItem("piyasalarTheme", c);
+    });
+  });
+  document.querySelectorAll(".tw-flt").forEach(function(b){
+    b.addEventListener("click", function(){
+      document.querySelectorAll(".tw-flt").forEach(function(x){x.classList.remove("active");});
+      b.classList.add("active");
+    });
+  });
+})();
+</script>
+<script src="bk-live.js" defer></script>
+</body></html>

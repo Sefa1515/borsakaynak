@@ -1,0 +1,2599 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://s3.tradingview.com" />
+  <link rel="dns-prefetch" href="https://scanner.tradingview.com" />
+  <link rel="dns-prefetch" href="https://web-api.forinvestcdn.com" />
+
+  <!-- Çerez/Önbellek engeli -->
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Aracı Kurum İşlemleri — Piyasalar</title>
+<meta name="description" content="Aracı kurum bazlı alım-satım işlemleri, yabancı yatırımcı akışları ve kurum dağılımı verileri."/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#08121E;--bg-2:#0B1623;--header-bg:#0D1726;--panel:#111C2B;--panel-2:#16243A;--panel-hi:#16354D;--footer-bg:#09131F;--line:rgba(255,255,255,0.05);--line-2:rgba(255,255,255,0.09);--line-hi:rgba(255,255,255,0.14);--text:#F3F7FA;--text-dim:#B0B9C5;--text-muted:#8B98A9;--accent:#C8A96B;--accent-2:#D6B57A;--accent-soft:rgba(200,169,107,.12);--green:#00B56E;--green-dim:#008a54;--red:#E04F5F;--red-dim:#a83946;--gold:#C8A96B;--blue:#5B9DD9;--font-sans:'Inter','Geist',-apple-system,BlinkMacSystemFont,sans-serif;--font-mono:'Geist Mono',monospace;--shadow-1:0 1px 0 rgba(255,255,255,.03) inset;--shadow-2:0 8px 24px -10px rgba(0,0,0,.5);}
+*{box-sizing:border-box;margin:0;padding:0}html,body{overflow-x:hidden;max-width:100%}
+html,body{background:var(--bg);color:var(--text);font-family:var(--font-sans);font-weight:400;-webkit-font-smoothing:antialiased;overflow-x:hidden;letter-spacing:-.011em;}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(1200px 600px at 90% -10%,rgba(200,169,107,.04),transparent 55%),radial-gradient(800px 400px at -10% 20%,rgba(255,255,255,.025),transparent 60%);}
+a{color:inherit;text-decoration:none} button{font-family:inherit}
+.num{font-family:var(--font-mono);font-feature-settings:"tnum" 1,"ss01" 1;letter-spacing:-.02em;font-weight:500}
+.container{max-width:1320px;margin:0 auto;padding:0 28px;position:relative;z-index:1}
+.mono-cap{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:500}
+
+/* TICKER */
+.ticker{background:linear-gradient(180deg,#0B1623,#08121E);border-bottom:1px solid var(--line);overflow:hidden;position:relative;height:44px;}
+.ticker::before,.ticker::after{content:"";position:absolute;top:0;bottom:0;width:90px;z-index:2;pointer-events:none;}
+.ticker::before{left:0;background:linear-gradient(90deg,var(--bg) 0%,transparent 100%)}
+.ticker::after{right:0;background:linear-gradient(270deg,var(--bg) 0%,transparent 100%)}
+.ticker-track{display:flex;gap:44px;align-items:center;height:100%;width:max-content;animation:scroll 70s linear infinite;padding-left:28px;}
+.ticker:hover .ticker-track{animation-play-state:paused}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.tick{display:flex;align-items:center;gap:10px;white-space:nowrap;font-size:13px}
+.tick-name{color:var(--text-dim);font-weight:500;letter-spacing:.02em}
+.tick-val{color:var(--text);font-weight:600;font-family:var(--font-mono);font-size:13px}
+.tick-chg{display:inline-flex;align-items:center;gap:3px;font-weight:500;font-family:var(--font-mono);font-size:12px}
+.tick-chg.up{color:var(--green)} .tick-chg.dn{color:var(--red)}
+.tick-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);}
+
+/* HEADER */
+.header{border-bottom:1px solid var(--line);background:rgba(13,23,38,.85);backdrop-filter:blur(16px) saturate(180%);-webkit-backdrop-filter:blur(16px) saturate(180%);position:sticky;top:0;z-index:50;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{width:42px;height:42px;border-radius:6px;background:linear-gradient(135deg,#C8A96B 0%,#9d8350 100%);display:grid;place-items:center;font-weight:800;color:#08121E;font-size:20px;box-shadow:inset 0 1px 0 rgba(255,255,255,.12);letter-spacing:-.04em;}
+.brand-text h1{font-size:17px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.brand-text small{display:block;margin-top:5px;font-size:9.5px;color:var(--text-muted);letter-spacing:.32em;font-weight:500;font-family:var(--font-mono)}
+.nav-menu{display:flex;align-items:center;gap:2px}
+.nav-menu a{padding:9px 14px;font-size:13px;font-weight:500;letter-spacing:-.005em;color:var(--text-dim);border-radius:7px;transition:all .2s;position:relative;}
+.nav-menu a:hover{color:var(--text);background:var(--panel-hi)}
+.nav-menu a.active{color:var(--text)}
+.nav-menu a.active::after{content:"";position:absolute;left:14px;right:14px;bottom:3px;height:2px;background:var(--accent);border-radius:2px;}
+.nav-actions{display:flex;align-items:center;gap:8px}
+.nav-btn{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--panel);display:grid;place-items:center;cursor:pointer;transition:all .2s;color:var(--text-dim);}
+.nav-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* PAGE HERO */
+.page-hero{padding:40px 0 32px;border-bottom:1px solid var(--line);}
+.page-hero-inner{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+.page-eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.28em;color:var(--accent);text-transform:uppercase;font-weight:500;margin-bottom:12px;display:flex;align-items:center;gap:10px;}
+.page-eyebrow::before{content:"";width:28px;height:1px;background:var(--accent);}
+.page-title{font-size:36px;font-weight:700;letter-spacing:-.035em;line-height:1.05;margin-bottom:10px;}
+.page-desc{color:var(--text-dim);font-size:14px;line-height:1.65;max-width:600px;}
+.page-stats{display:flex;gap:24px;flex-wrap:wrap;}
+.stat-pill{display:flex;flex-direction:column;gap:3px;padding:14px 20px;background:var(--panel);border:1px solid var(--line);border-radius:8px;min-width:110px;}
+.stat-pill .sp-val{font-family:var(--font-mono);font-size:22px;font-weight:700;letter-spacing:-.03em;}
+.stat-pill .sp-val.up{color:var(--green)} .stat-pill .sp-val.dn{color:var(--red)} .stat-pill .sp-val.neutral{color:var(--accent)}
+.stat-pill .sp-lbl{font-size:11px;color:var(--text-muted);letter-spacing:.05em;font-weight:500}
+
+/* MAIN */
+.main{padding:32px 0 48px}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--line);}
+.section-head h2{font-size:20px;font-weight:700;letter-spacing:-.02em;display:flex;align-items:center;gap:10px;}
+.section-head h2::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent);}
+.section-head .head-right{display:flex;align-items:center;gap:10px;}
+
+/* TABS */
+.tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:5px;}
+.tab{padding:9px 18px;border-radius:6px;font-size:13px;font-weight:500;color:var(--text-dim);cursor:pointer;border:none;background:transparent;transition:all .2s;letter-spacing:-.005em;}
+.tab:hover{color:var(--text)}
+.tab.active{background:var(--panel-2);color:var(--text);border:1px solid var(--line-2);}
+
+/* TABLE */
+.tbl-wrap{overflow-x:auto;border-radius:8px;border:1px solid var(--line);}
+.tbl{width:100%;border-collapse:collapse;min-width:900px;background:var(--panel);}
+.tbl th{position:sticky;top:0;background:rgba(13,23,38,.98);padding:13px 16px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted);font-weight:500;white-space:nowrap;cursor:pointer;transition:color .2s;border-bottom:1px solid var(--line-2);}
+.tbl th:hover{color:var(--accent)}
+.tbl th .sort-icon{margin-left:4px;opacity:.4}
+.tbl td{padding:12px 16px;border-bottom:1px solid var(--line);font-size:13.5px;vertical-align:middle;white-space:nowrap;}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:rgba(255,255,255,.018)}
+.tbl td.num{font-family:var(--font-mono);font-size:13px;font-weight:500}
+.tbl td .up{color:var(--green)} .tbl td .dn{color:var(--red)}
+.kurum-cell{display:flex;align-items:center;gap:10px;}
+.kurum-badge{width:34px;height:34px;border-radius:8px;display:grid;place-items:center;font-size:12px;font-weight:700;color:#08121E;flex-shrink:0;letter-spacing:-.02em;}
+.kurum-name{font-weight:500;color:var(--text);font-size:13.5px;}
+.kurum-type{font-size:11px;color:var(--text-muted);margin-top:1px;}
+.bar-cell{display:flex;align-items:center;gap:8px;}
+.bar-mini{height:5px;border-radius:3px;min-width:6px;max-width:90px;}
+.chg-badge{display:inline-flex;align-items:center;gap:4px;padding:4px 9px;border-radius:5px;font-family:var(--font-mono);font-size:11.5px;font-weight:600;}
+.chg-badge.up{background:rgba(0,181,110,.12);color:var(--green)} .chg-badge.dn{background:rgba(224,79,95,.12);color:var(--red)}
+
+/* GRID CARDS */
+.cards-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px;}
+.info-card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:24px;transition:all .2s;}
+.info-card:hover{border-color:var(--line-2);background:var(--panel-2)}
+.ic-eyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:.22em;color:var(--accent);text-transform:uppercase;font-weight:500;margin-bottom:10px;}
+.ic-val{font-family:var(--font-mono);font-size:32px;font-weight:700;letter-spacing:-.04em;margin-bottom:4px;}
+.ic-val.up{color:var(--green)} .ic-val.dn{color:var(--red)} .ic-val.gold{color:var(--accent)}
+.ic-sub{font-size:12.5px;color:var(--text-dim);line-height:1.5;}
+.ic-trend{display:flex;align-items:center;gap:6px;margin-top:12px;font-size:12px;}
+.ic-trend.up{color:var(--green)} .ic-trend.dn{color:var(--red)}
+
+/* YABANCI SECTION */
+.yabanci-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px;}
+.flow-panel{background:var(--panel);border:1px solid var(--line);border-radius:8px;overflow:hidden;}
+.flow-panel.green{border-top:2px solid var(--green)}
+.flow-panel.red{border-top:2px solid var(--red)}
+.fp-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line);}
+.fp-title{display:flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--text);font-weight:500;}
+.fp-dot{width:6px;height:6px;border-radius:50%}
+.fp-dot.green{background:var(--green)} .fp-dot.red{background:var(--red)}
+.fp-unit{font-size:10px;color:var(--text-muted);letter-spacing:.1em;font-family:var(--font-mono);}
+.fp-body{padding:6px 0;}
+.fp-col-head{display:grid;grid-template-columns:1fr minmax(80px,110px) minmax(56px,80px);padding:10px 16px;font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;color:var(--text-muted);text-transform:uppercase;border-bottom:1px solid var(--line);}
+.fp-col-head span:nth-child(2),.fp-col-head span:nth-child(3){text-align:right}
+.fp-row{display:grid;grid-template-columns:1fr minmax(80px,110px) minmax(56px,80px);align-items:center;padding:10px 16px;border-bottom:1px solid rgba(28,38,50,.5);font-size:13px;transition:background .12s;}
+/* fp-name flex children: sembol ve şirket adı taşmasın */
+.fp-name{min-width:0;overflow:hidden}
+.fp-name>span:last-child{min-width:0;overflow:hidden}
+.fp-name>span:last-child>div:last-child{
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap
+}
+.fp-row:last-child{border-bottom:none}
+.fp-row:hover{background:rgba(255,255,255,.015)}
+.fp-name{font-weight:500;color:var(--text);}
+.fp-val{font-family:var(--font-mono);font-size:13px;font-weight:600;text-align:right;}
+.fp-val.in{color:var(--green)} .fp-val.out{color:var(--red)}
+.fp-pct{font-family:var(--font-mono);font-size:11px;color:var(--text-muted);text-align:right;}
+
+/* FOOTER */
+.footer{border-top:1px solid var(--line);padding:48px 0 32px;margin-top:24px;background:var(--footer-bg)}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr 1.4fr;gap:32px;margin-bottom:32px;}
+.foot-col h4{font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;color:var(--text);font-weight:500;margin-bottom:18px;text-transform:uppercase}
+.foot-col ul{list-style:none} .foot-col li{margin-bottom:10px}
+.foot-col a{font-size:13.5px;color:var(--text-dim);transition:color .2s;letter-spacing:-.005em}
+.foot-col a:hover{color:var(--accent)}
+.foot-brand .brand{margin-bottom:18px}
+.foot-brand p{font-size:13px;color:var(--text-dim);line-height:1.7;max-width:300px}
+.foot-contact{font-size:13.5px;color:var(--text-dim);display:flex;flex-direction:column;gap:10px}
+.foot-contact .ic{display:inline-flex;align-items:center;gap:8px}
+.foot-bottom{border-top:1px solid var(--line);padding-top:24px;display:flex;align-items:center;justify-content:space-between;font-size:12.5px;color:var(--text-muted)}
+.foot-social{display:flex;gap:8px}
+.foot-social a{width:36px;height:36px;border-radius:8px;border:1px solid var(--line);background:var(--panel);display:grid;place-items:center;color:var(--text-dim);transition:all .2s}
+.foot-social a:hover{border-color:var(--accent);color:var(--accent)}
+
+/* PREMIUM */
+:root{--premium-gold:#C8A96B;--premium-gold-2:#F0D89B;--premium-ink:#08121E;--premium-border:rgba(255,255,255,.115);}
+.premium-command{position:sticky;top:0;z-index:50;margin:0 auto;padding:10px 18px;backdrop-filter:blur(18px);background:linear-gradient(180deg,rgba(8,18,30,.86),rgba(8,18,30,.66));border-bottom:1px solid var(--premium-border);box-shadow:0 18px 42px rgba(0,0,0,.22)}
+.premium-command__inner{max-width:1240px;margin:auto;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+.premium-search{display:flex;gap:10px;align-items:center;padding:9px 13px;border:1px solid var(--premium-border);border-radius:999px;background:rgba(255,255,255,.055)}
+.premium-search input{width:100%;border:0;outline:0;background:transparent;color:var(--text);font:inherit}
+.premium-search input::placeholder{color:var(--text-muted)}
+.premium-actions{display:flex;gap:8px;flex-wrap:wrap}
+.premium-btn{cursor:pointer;border:1px solid var(--premium-border);border-radius:999px;padding:9px 13px;background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.035));color:var(--text);font-weight:700;transition:.22s ease}
+.premium-btn:hover{transform:translateY(-2px);border-color:rgba(200,169,107,.55)}
+.premium-btn.gold{background:linear-gradient(135deg,var(--premium-gold),#8D723D);color:#08121E;border-color:transparent}
+.premium-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(200,169,107,.12);border:1px solid rgba(200,169,107,.26);color:var(--premium-gold-2);font-weight:800;font-size:12px;letter-spacing:.02em}
+.premium-toast{position:fixed;right:18px;bottom:18px;z-index:220;padding:12px 14px;border-radius:14px;background:#0B1623;color:#fff;border:1px solid var(--premium-border);box-shadow:0 16px 50px rgba(0,0,0,.35);opacity:0;transform:translateY(16px);transition:.25s}
+.premium-toast.show{opacity:1;transform:translateY(0)}
+
+@media(max-width:1024px){.cards-3{grid-template-columns:1fr 1fr}.cards-3 > .info-card:nth-child(3){grid-column:1/-1}.gunun-ozeti-list{flex-direction:row !important;gap:22px !important}.gunun-ozeti-list > div{flex:1}.foot-grid{grid-template-columns:1fr 1fr 1fr}}
+@media(max-width:640px){.container{padding:0 14px}.nav-menu{display:none}.yabanci-grid{grid-template-columns:1fr}.cards-3{grid-template-columns:1fr}.gunun-ozeti-list{flex-direction:column !important;gap:14px !important}.page-title{font-size:26px}.page-stats{gap:12px}.tabs{flex-wrap:wrap}.premium-command__inner{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr 1fr}.foot-col.foot-brand{grid-column:1/-1}.foot-bottom{flex-direction:column;gap:14px;text-align:center}}
+
+/* ======== MOBİL UYUM ======== */
+@media(max-width:768px){
+  .nav{padding:10px 14px}
+  .nl{display:flex;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none;gap:2px}.nl::-webkit-scrollbar{display:none}.nl a{flex-shrink:0}
+  .nact .nb{width:30px;height:30px;font-size:13px}
+  /* Para Akışı panelleri: 768px altında üst üste */
+  .yabanci-grid{grid-template-columns:1fr!important;gap:12px!important}
+  .flow-panel{margin-bottom:0}
+  /* fp-row: 3. kolon (yüzde) gizle, satır daha geniş */
+  .fp-col-head span:nth-child(3),.fp-row>.fp-pct{display:none!important}
+  .fp-col-head{grid-template-columns:1fr minmax(100px,130px)!important}
+  .fp-row{grid-template-columns:1fr minmax(100px,130px)!important;padding:9px 12px!important;gap:4px}
+  /* logo küçült */
+  .fp-name>span[style]{width:26px!important;height:26px!important;min-width:26px!important}
+  /* şirket adı gizle, sadece sembol kalsın */
+  .fp-name>span:last-child>div:last-child{display:none!important}
+  .fp-name>span:last-child>div:first-child{font-size:12px!important}
+  /* tutar font */
+  .fp-val{font-size:12.5px!important;white-space:nowrap!important}
+  .fp-title{font-size:9.5px!important;letter-spacing:.1em!important}
+}
+@media(max-width:600px){
+  .hw,.cw{padding:0 14px!important}
+  .hero,.ahero{padding:20px 0 0!important}
+  .hero-title,.htitle,.a-title,.hname,.hero-title{font-size:22px!important}
+  .mrow{overflow-x:auto}
+  .mi{min-width:40%;font-size:12px}
+  .mgrid,.agrid,.main-grid{grid-template-columns:1fr!important}
+  .summary-strip{grid-template-columns:1fr 1fr!important}
+  .sum-value{font-size:26px!important}
+  .twin-panels{grid-template-columns:1fr!important}
+  .chart-grid{grid-template-columns:1fr!important}
+  .tvc-mid{grid-template-columns:1fr 1fr!important}
+  .sg{grid-template-columns:1fr 1fr!important}
+  .eg{grid-template-columns:1fr 1fr!important}
+  .hm-tree{padding:8px}
+  .hmc{min-width:48px!important;min-height:44px!important}
+  .hmc-code{font-size:9px!important}
+  .hmc-chg{font-size:8px!important}
+  .tbl th,.tbl td{padding:7px 8px;font-size:11.5px}
+  .tv-wrap,.tvc{height:320px!important}
+  .ctabs{gap:2px}
+  .ctab{padding:5px 10px;font-size:11px}
+  .fb,.fbar{gap:6px;padding:10px 14px}
+  .flt{padding:5px 12px;font-size:11px}
+  .breaking{flex-direction:column;height:auto}
+  .br-all{display:none}
+  .bc{font-size:11px}
+  .ft{padding:16px 14px;flex-direction:column;gap:8px;align-items:flex-start}
+  /* Para Akışı satırları - 600px */
+  .fp-row{padding:8px 10px!important;font-size:12px!important}
+  .fp-head{padding:12px 12px!important}
+  .fp-body{padding:4px 0!important}
+  /* fp-name bileşeni: logo + kod + tutar yan yana */
+  .fp-name{gap:8px!important}
+  .fp-name>span:first-child{width:26px!important;height:26px!important;min-width:26px!important}
+  .fp-name div[style*="font-size:13px"]{font-size:11.5px!important}
+  .fp-name div[style*="font-size:11px"]{font-size:10px!important}
+  .fp-val{font-size:12px!important;white-space:nowrap}
+  /* Kart başlıkları küçült */
+  .fp-title{font-size:10px!important;letter-spacing:.12em!important}
+  .fp-unit{font-size:9px!important}
+  /* Kartlar grid içeriği */
+  .cards-3{grid-template-columns:1fr!important}
+  /* Aracı kurum tablosu */
+  .ak-table-row{grid-template-columns:1.4fr 1fr 1fr!important;font-size:11.5px!important;padding:8px 10px!important}
+}
+@media(max-width:380px){
+  .summary-strip{grid-template-columns:1fr!important}
+  .eg{grid-template-columns:1fr!important}
+  .sg{grid-template-columns:1fr!important}
+  /* Para Akışı: çok küçük ekranda tutar sütunu da kısalt */
+  .fp-row{grid-template-columns:1fr minmax(70px,100px)!important}
+  .fp-val{font-size:11.5px!important}
+}
+
+
+  .kurum-logo-wrap {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #fff;
+    border: 1px solid rgba(0,0,0,.08);
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .kurum-logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .kurum-badge-fb {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 800;
+    color: #08121E;
+    letter-spacing: -.02em;
+  }
+  .kurum-badge {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 800;
+    color: #08121E;
+    letter-spacing: -.02em;
+    flex-shrink: 0;
+  }
+
+
+@media(max-width:900px){.big-stats{grid-template-columns:1fr 1fr!important}}
+@media(max-width:480px){.big-stats{grid-template-columns:1fr!important}}
+
+
+.sek-row{display:grid;grid-template-columns:24px 22px 1fr auto;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.025);font-size:13px}
+.sek-row:last-child{border-bottom:none}
+.sek-row:hover{background:rgba(255,255,255,.02)}
+.sek-num{font-family:monospace;font-size:11px;color:#8B98A9;font-weight:700}
+.sek-icon{width:22px;height:22px;flex-shrink:0}
+.sek-name{color:var(--text);font-weight:500}
+.sek-val{font-family:monospace;font-size:13px;font-weight:700}
+.sek-val.up{color:#00B56E}.sek-val.dn{color:#E04F5F}
+
+@keyframes akPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+
+/* ===== LIGHT THEME READABILITY FIX ===== */
+html[data-theme=light],
+body.premium-light {
+  --bg: #F0F4F8 !important;
+  --bg-2: #E8EDF5 !important;
+  --bg2: #E8EDF5 !important;
+  --panel: #FFFFFF !important;
+  --panel-2: #F4F7FB !important;
+  --panel-hi: #EFF3F8 !important;
+  --p2: #F4F7FB !important;
+  --header-bg: #FFFFFF !important;
+  --footer-bg: #E8EDF5 !important;
+  --line: rgba(13,27,46,.10) !important;
+  --line-2: rgba(13,27,46,.14) !important;
+  --l2: rgba(13,27,46,.14) !important;
+  --text: #0D1B2E !important;
+  --text-dim: #3D5068 !important;
+  --dim: #3D5068 !important;
+  --text-muted: #6b7e94 !important;
+  --mute: #6b7e94 !important;
+}
+html[data-theme=light] body,
+body.premium-light body,
+body.premium-light {
+  background: #F0F4F8 !important;
+  color: #0D1B2E !important;
+}
+html[data-theme=light] body::before,
+body.premium-light body::before,
+body.premium-light::before { display: none !important; }
+
+/* Force readable colors in light mode for common elements */
+html[data-theme=light] *:not(.tk-c.up):not(.tk-c.dn):not(.badge):not(.b-g):not(.b-r):not(.b-b):not(.b-a):not(.kg-val):not(.bs-num):not(.bil-badge):not(.hero-stat-val):not(.arz-meta-val):not(.tick-chg) {
+  /* Inherit text color */
+}
+html[data-theme=light] .hdr,
+body.premium-light .hdr {
+  background: rgba(255,255,255,.95) !important;
+  border-bottom-color: rgba(13,27,46,.1) !important;
+}
+html[data-theme=light] .nl a,
+body.premium-light .nl a { color: #3D5068 !important; }
+html[data-theme=light] .nl a:hover,
+html[data-theme=light] .nl a.active,
+body.premium-light .nl a:hover,
+body.premium-light .nl a.active { color: #0D1B2E !important; background: rgba(13,27,46,.05) !important; }
+
+html[data-theme=light] .ticker,
+body.premium-light .ticker { background: #E8EDF5 !important; }
+html[data-theme=light] .ticker::before,
+body.premium-light .ticker::before { background: linear-gradient(90deg, #E8EDF5, transparent) !important; }
+html[data-theme=light] .ticker::after,
+body.premium-light .ticker::after { background: linear-gradient(270deg, #E8EDF5, transparent) !important; }
+html[data-theme=light] .tk-n,
+body.premium-light .tk-n { color: #3D5068 !important; }
+html[data-theme=light] .tk-v,
+body.premium-light .tk-v { color: #0D1B2E !important; }
+
+/* HERO / SECTION light mode */
+html[data-theme=light] .hero,
+body.premium-light .hero {
+  background: linear-gradient(135deg, #fff 0%, #f4f7fb 100%) !important;
+  border-color: rgba(200,169,107,.25) !important;
+}
+html[data-theme=light] .hero h1,
+body.premium-light .hero h1 { color: #0D1B2E !important; }
+html[data-theme=light] .hero p,
+body.premium-light .hero p { color: #3D5068 !important; }
+html[data-theme=light] .hero-stat,
+body.premium-light .hero-stat { background: rgba(0,0,0,.025) !important; border-color: rgba(13,27,46,.08) !important; }
+
+html[data-theme=light] .hc-title,
+body.premium-light .hc-title { color: #0D1B2E !important; }
+html[data-theme=light] .hc-ozet,
+body.premium-light .hc-ozet { color: #3D5068 !important; }
+html[data-theme=light] .hc-meta,
+body.premium-light .hc-meta { color: #6b7e94 !important; }
+
+/* SIDEBAR */
+html[data-theme=light] .sb-card,
+body.premium-light .sb-card { background: #fff !important; border-color: rgba(13,27,46,.08) !important; }
+html[data-theme=light] .sb-t,
+body.premium-light .sb-t { color: #0D1B2E !important; }
+html[data-theme=light] .sb-v,
+body.premium-light .sb-v { color: #6b7e94 !important; }
+html[data-theme=light] .sb-head,
+body.premium-light .sb-head { color: #6b7e94 !important; border-color: rgba(13,27,46,.08) !important; }
+html[data-theme=light] .sb-item:hover,
+body.premium-light .sb-item:hover { background: rgba(0,0,0,.025) !important; }
+
+/* TABLES */
+html[data-theme=light] .tbl th,
+html[data-theme=light] .premium-table th,
+html[data-theme=light] .bil-th,
+body.premium-light .tbl th,
+body.premium-light .premium-table th,
+body.premium-light .bil-th {
+  background: rgba(13,27,46,.04) !important;
+  color: #6b7e94 !important;
+  border-color: rgba(13,27,46,.1) !important;
+}
+html[data-theme=light] .tbl td,
+html[data-theme=light] .premium-table td,
+html[data-theme=light] .bil-td,
+body.premium-light .tbl td,
+body.premium-light .premium-table td,
+body.premium-light .bil-td {
+  color: #0D1B2E !important;
+  border-color: rgba(13,27,46,.05) !important;
+}
+html[data-theme=light] .tbl tr.hover-row:hover td,
+html[data-theme=light] .bil-tr:hover .bil-td,
+body.premium-light .bil-tr:hover .bil-td,
+body.premium-light .tbl tr.hover-row:hover td { background: rgba(13,27,46,.03) !important; }
+html[data-theme=light] .h-code,
+html[data-theme=light] .bil-code,
+body.premium-light .h-code,
+body.premium-light .bil-code { color: #0D1B2E !important; }
+html[data-theme=light] .h-name,
+html[data-theme=light] .bil-name,
+body.premium-light .h-name,
+body.premium-light .bil-name { color: #6b7e94 !important; }
+
+/* FILTERS */
+html[data-theme=light] .fchip,
+html[data-theme=light] .bil-flt,
+html[data-theme=light] .flt,
+body.premium-light .fchip,
+body.premium-light .bil-flt,
+body.premium-light .flt {
+  background: #fff !important;
+  border-color: rgba(13,27,46,.1) !important;
+  color: #3D5068 !important;
+}
+html[data-theme=light] .fchip:hover,
+html[data-theme=light] .bil-flt:hover,
+html[data-theme=light] .flt:hover,
+body.premium-light .fchip:hover,
+body.premium-light .bil-flt:hover,
+body.premium-light .flt:hover { color: #0D1B2E !important; }
+html[data-theme=light] .fchip.active,
+html[data-theme=light] .bil-flt.active,
+html[data-theme=light] .flt.active,
+body.premium-light .fchip.active,
+body.premium-light .bil-flt.active,
+body.premium-light .flt.active { background: #C8A96B !important; color: #08121E !important; }
+html[data-theme=light] .fsearch,
+html[data-theme=light] #bil-search,
+body.premium-light .fsearch,
+body.premium-light #bil-search { background: #fff !important; color: #0D1B2E !important; border-color: rgba(13,27,46,.1) !important; }
+
+/* PANELS / CARDS */
+html[data-theme=light] [class*="info-card"],
+html[data-theme=light] .tw,
+html[data-theme=light] .karne-section,
+html[data-theme=light] .arz-card,
+html[data-theme=light] .bs-card,
+body.premium-light [class*="info-card"],
+body.premium-light .tw,
+body.premium-light .karne-section,
+body.premium-light .arz-card,
+body.premium-light .bs-card {
+  background: #fff !important;
+  border-color: rgba(13,27,46,.08) !important;
+}
+
+/* FOOTER */
+html[data-theme=light] footer,
+html[data-theme=light] .footer,
+body.premium-light footer,
+body.premium-light .footer { background: #E8EDF5 !important; border-color: rgba(13,27,46,.08) !important; }
+html[data-theme=light] .fcol a,
+html[data-theme=light] .foot-col a,
+body.premium-light .fcol a,
+body.premium-light .foot-col a { color: #3D5068 !important; }
+html[data-theme=light] .fcol a:hover,
+html[data-theme=light] .foot-col a:hover,
+body.premium-light .fcol a:hover,
+body.premium-light .foot-col a:hover { color: #0D1B2E !important; }
+html[data-theme=light] .fbot,
+html[data-theme=light] .foot-bottom,
+body.premium-light .fbot,
+body.premium-light .foot-bottom { color: #6b7e94 !important; }
+html[data-theme=light] .fbrand p,
+body.premium-light .fbrand p { color: #3D5068 !important; }
+
+/* NB / Theme toggle */
+html[data-theme=light] .nb,
+body.premium-light .nb { background: #fff !important; color: #3D5068 !important; border-color: rgba(13,27,46,.1) !important; }
+html[data-theme=light] .nb:hover,
+body.premium-light .nb:hover { color: #C8A96B !important; }
+
+/* premium-shell content */
+html[data-theme=light] .premium-shell,
+html[data-theme=light] .premium-section,
+html[data-theme=light] .premium-card,
+body.premium-light .premium-shell,
+body.premium-light .premium-section,
+body.premium-light .premium-card {
+  background: #fff !important;
+  color: #0D1B2E !important;
+}
+html[data-theme=light] .premium-title,
+html[data-theme=light] .premium-kicker,
+body.premium-light .premium-title,
+body.premium-light .premium-kicker { color: #0D1B2E !important; }
+html[data-theme=light] .premium-desc,
+body.premium-light .premium-desc { color: #3D5068 !important; }
+html[data-theme=light] .premium-btn,
+body.premium-light .premium-btn { background: #fff !important; color: #3D5068 !important; border-color: rgba(13,27,46,.1) !important; }
+html[data-theme=light] .premium-btn.gold,
+body.premium-light .premium-btn.gold { background: #C8A96B !important; color: #08121E !important; }
+
+/* SVG logo text fix for light mode */
+html[data-theme=light] svg text tspan[style*="F3F7FA"],
+body.premium-light svg text tspan[style*="F3F7FA"] { fill: #0D1B2E !important; }
+
+
+/* ===== INLINE STYLE LIGHT THEME OVERRIDE ===== */
+html[data-theme=light] [style*="background:#111C2B"],
+html[data-theme=light] [style*="background: #111C2B"],
+body.premium-light [style*="background:#111C2B"],
+body.premium-light [style*="background: #111C2B"] {
+  background: #FFFFFF !important;
+  border-color: rgba(13,27,46,.1) !important;
+}
+
+html[data-theme=light] [style*="background:#0B1623"],
+html[data-theme=light] [style*="background: #0B1623"],
+body.premium-light [style*="background:#0B1623"],
+body.premium-light [style*="background: #0B1623"] {
+  background: #E8EDF5 !important;
+}
+
+html[data-theme=light] [style*="background:#08121E"],
+html[data-theme=light] [style*="background: #08121E"],
+body.premium-light [style*="background:#08121E"],
+body.premium-light [style*="background: #08121E"] {
+  background: #F0F4F8 !important;
+}
+
+html[data-theme=light] [style*="background:#16243A"],
+html[data-theme=light] [style*="background: #16243A"],
+body.premium-light [style*="background:#16243A"],
+body.premium-light [style*="background: #16243A"] {
+  background: #F4F7FB !important;
+}
+
+/* Dark gradient backgrounds → light gradient */
+html[data-theme=light] [style*="linear-gradient(135deg,#111C2B"],
+body.premium-light [style*="linear-gradient(135deg,#111C2B"] {
+  background: linear-gradient(135deg,#FFFFFF,#F4F7FB) !important;
+}
+html[data-theme=light] [style*="linear-gradient(135deg,#0B1623"],
+body.premium-light [style*="linear-gradient(135deg,#0B1623"] ,
+body.premium-light [style*="linear-gradient(135deg,#0B1623"],
+body.premium-light [style*="linear-gradient(135deg,#0B1623"]{
+  background: linear-gradient(135deg,#E8EDF5,#F4F7FB) !important;
+}
+
+/* Light text colors on dark inline backgrounds → dark text */
+html[data-theme=light] [style*="color:#F3F7FA"],
+html[data-theme=light] [style*="color: #F3F7FA"],
+body.premium-light [style*="color:#F3F7FA"],
+body.premium-light [style*="color: #F3F7FA"] {
+  color: #0D1B2E !important;
+}
+
+html[data-theme=light] [style*="color:#94a3b8"],
+html[data-theme=light] [style*="color: #94a3b8"],
+body.premium-light [style*="color:#94a3b8"],
+body.premium-light [style*="color: #94a3b8"] {
+  color: #6b7e94 !important;
+}
+
+html[data-theme=light] [style*="color:#B0B9C5"],
+html[data-theme=light] [style*="color: #B0B9C5"],
+body.premium-light [style*="color:#B0B9C5"],
+body.premium-light [style*="color: #B0B9C5"] {
+  color: #3D5068 !important;
+}
+
+html[data-theme=light] [style*="color:#8B98A9"],
+html[data-theme=light] [style*="color: #8B98A9"],
+body.premium-light [style*="color:#8B98A9"],
+body.premium-light [style*="color: #8B98A9"] {
+  color: #6b7e94 !important;
+}
+
+html[data-theme=light] [style*="color:#6B7A8D"],
+html[data-theme=light] [style*="color: #6B7A8D"],
+body.premium-light [style*="color:#6B7A8D"],
+body.premium-light [style*="color: #6B7A8D"] {
+  color: #6b7e94 !important;
+}
+
+/* Border lines */
+html[data-theme=light] [style*="border:1px solid rgba(255,255,255,.06)"],
+html[data-theme=light] [style*="border:1px solid rgba(255,255,255,.07)"],
+html[data-theme=light] [style*="border:1px solid rgba(255,255,255,.08)"],
+html[data-theme=light] [style*="border:1px solid rgba(255,255,255,.1)"],
+body.premium-light [style*="border:1px solid rgba(255,255,255,.06)"],
+body.premium-light [style*="border:1px solid rgba(255,255,255,.07)"],
+body.premium-light [style*="border:1px solid rgba(255,255,255,.08)"],
+body.premium-light [style*="border:1px solid rgba(255,255,255,.1)"] {
+  border-color: rgba(13,27,46,.1) !important;
+}
+
+html[data-theme=light] [style*="border-bottom:1px solid rgba(255,255,255,"],
+html[data-theme=light] [style*="border-top:1px solid rgba(255,255,255,"],
+body.premium-light [style*="border-bottom:1px solid rgba(255,255,255,"],
+body.premium-light [style*="border-top:1px solid rgba(255,255,255,"] ,
+body.premium-light [style*="border-bottom:1px solid rgba(255,255,255,"],
+html[data-theme=light] [style*="border-top:1px solid rgba(255,255,255,"],
+body.premium-light [style*="border-bottom:1px solid rgba(255,255,255,"],
+body.premium-light [style*="border-top:1px solid rgba(255,255,255,"]{
+  border-color: rgba(13,27,46,.08) !important;
+}
+
+/* Background overlays */
+html[data-theme=light] [style*="background:rgba(255,255,255,.02)"],
+html[data-theme=light] [style*="background:rgba(255,255,255,.025)"],
+html[data-theme=light] [style*="background:rgba(255,255,255,.03)"],
+html[data-theme=light] [style*="background:rgba(255,255,255,.04)"],
+html[data-theme=light] [style*="background:rgba(255,255,255,.05)"],
+html[data-theme=light] [style*="background:rgba(255,255,255,.06)"],
+body.premium-light [style*="background:rgba(255,255,255,.02)"],
+body.premium-light [style*="background:rgba(255,255,255,.025)"],
+body.premium-light [style*="background:rgba(255,255,255,.03)"],
+body.premium-light [style*="background:rgba(255,255,255,.04)"],
+body.premium-light [style*="background:rgba(255,255,255,.05)"],
+body.premium-light [style*="background:rgba(255,255,255,.06)"] {
+  background: rgba(13,27,46,.03) !important;
+}
+
+/* Dark backgrounds with rgba */
+html[data-theme=light] [style*="background:rgba(255,255,255,.0"],
+body.premium-light [style*="background:rgba(255,255,255,.0"] {
+  background: rgba(13,27,46,.03) !important;
+}
+
+/* Big numeric values without explicit color → use --text */
+html[data-theme=light] #sc-bist-val,
+html[data-theme=light] #sc-usd-val,
+html[data-theme=light] #sc-altin-val,
+html[data-theme=light] #sc-brent-val,
+body.premium-light #sc-bist-val,
+body.premium-light #sc-usd-val,
+body.premium-light #sc-altin-val,
+body.premium-light #sc-brent-val {
+  color: #0D1B2E !important;
+}
+
+/* Hover states for cards with white-ish backgrounds */
+html[data-theme=light] [style*="borderColor='rgba(255,255,255,"],
+body.premium-light [style*="borderColor='rgba(255,255,255,"] {
+  border-color: rgba(13,27,46,.1) !important;
+}
+
+/* Section / hero text */
+html[data-theme=light] h1,
+html[data-theme=light] h2,
+html[data-theme=light] h3,
+html[data-theme=light] h4,
+body.premium-light h1,
+body.premium-light h2,
+body.premium-light h3,
+body.premium-light h4 {
+  color: #0D1B2E !important;
+}
+
+/* Common text elements inside dark containers */
+html[data-theme=light] .container *:not([style*="color"]):not(.b-g):not(.b-r):not(.b-b):not(.b-a):not(.tk-c):not(.badge):not(.hc-kat),
+body.premium-light .container *:not([style*="color"]):not(.b-g):not(.b-r):not(.b-b):not(.b-a):not(.tk-c):not(.badge):not(.hc-kat) {
+  /* Allow color inheritance */
+}
+
+/* Specific summary card values that have no explicit color */
+html[data-theme=light] [id^="sc-"][id$="-val"],
+body.premium-light [id^="sc-"][id$="-val"] {
+  color: #0D1B2E !important;
+}
+
+/* Hero card text without explicit color */
+html[data-theme=light] .hero-stat-val:not([style*="color"]),
+body.premium-light .hero-stat-val:not([style*="color"]) {
+  color: #0D1B2E !important;
+}
+
+/* SVG sparkline gradients stay visible — adjust opacity in light */
+html[data-theme=light] svg polyline[stroke="#5eead4"],
+body.premium-light svg polyline[stroke="#5eead4"] {
+  stroke: #0d9488 !important;
+}
+html[data-theme=light] svg polyline[stroke="#fca5a5"],
+body.premium-light svg polyline[stroke="#fca5a5"] {
+  stroke: #dc2626 !important;
+}
+
+/* Premium card / shell elements */
+html[data-theme=light] .premium-card,
+html[data-theme=light] .premium-section,
+body.premium-light .premium-card,
+body.premium-light .premium-section {
+  background: #FFFFFF !important;
+  color: #0D1B2E !important;
+  border-color: rgba(13,27,46,.08) !important;
+}
+
+/* Page-stats / stat cards */
+html[data-theme=light] .stat-pill,
+body.premium-light .stat-pill {
+  background: #FFFFFF !important;
+  border-color: rgba(13,27,46,.08) !important;
+}
+html[data-theme=light] .sp-lbl,
+body.premium-light .sp-lbl {
+  color: #6b7e94 !important;
+}
+
+
+/* ===== HOVER FIX — CSS-only, theme-aware ===== */
+
+/* Cards with inline backgrounds need transition setup */
+.psum-card, .arz-card, .bs-card, .info-card, .bil-stats .bs-card, .karne-section {
+  transition: border-color .2s, transform .2s, box-shadow .2s, background .2s !important;
+}
+
+/* DARK MODE HOVER (default) */
+html[data-theme=dark] .psum-card:hover,
+.psum-card:hover {
+  border-color: rgba(200,169,107,.45) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 18px 44px rgba(0,0,0,.4) !important;
+}
+
+/* LIGHT MODE HOVER OVERRIDE — keep light background */
+html[data-theme=light] .psum-card,
+body.premium-light .psum-card {
+  background: #FFFFFF !important;
+  border-color: rgba(13,27,46,.08) !important;
+}
+html[data-theme=light] .psum-card:hover,
+body.premium-light .psum-card:hover {
+  background: #FFFFFF !important;
+  border-color: rgba(200,169,107,.55) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 18px 44px rgba(13,27,46,.12) !important;
+}
+
+/* Hisse/index cards in light mode */
+html[data-theme=light] .arz-card,
+html[data-theme=light] .bs-card,
+html[data-theme=light] .info-card,
+body.premium-light .arz-card,
+body.premium-light .bs-card,
+body.premium-light .info-card {
+  background: #FFFFFF !important;
+  border-color: rgba(13,27,46,.08) !important;
+}
+html[data-theme=light] .arz-card:hover,
+html[data-theme=light] .bs-card:hover,
+html[data-theme=light] .info-card:hover,
+body.premium-light .arz-card:hover,
+body.premium-light .bs-card:hover,
+body.premium-light .info-card:hover {
+  background: #FFFFFF !important;
+  border-color: rgba(200,169,107,.55) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 18px 44px rgba(13,27,46,.12) !important;
+}
+
+/* Inline onmouseenter handlers set this.style which has highest specificity
+   Override that with element.style protection via data attribute */
+html[data-theme=light] [style*="background:#111C2B"]:hover,
+html[data-theme=light] [style*="background: #111C2B"]:hover,
+body.premium-light [style*="background:#111C2B"]:hover,
+body.premium-light [style*="background: #111C2B"]:hover {
+  background: #FFFFFF !important;
+}
+
+/* Strong override for any element with background-color inline */
+html[data-theme=light] [style*="background:#111C2B"],
+body.premium-light [style*="background:#111C2B"] {
+  background-color: #FFFFFF !important;
+}
+
+/* Hero cards with linear-gradient backgrounds */
+html[data-theme=light] [style*="linear-gradient(135deg,#111C2B"]:hover,
+body.premium-light [style*="linear-gradient(135deg,#111C2B"]:hover {
+  background: linear-gradient(135deg,#FFFFFF,#F4F7FB) !important;
+}
+
+
+/* ===== LIGHT THEME — DARK GRADIENT SECTIONS FIX ===== */
+
+/* Hero sections with various dark gradients */
+html[data-theme=light] section[style*="linear-gradient(135deg,#0a1f3a"],
+html[data-theme=light] section[style*="linear-gradient(135deg,#111C2B"],
+html[data-theme=light] section[style*="linear-gradient(135deg,#16243A"],
+html[data-theme=light] section[style*="linear-gradient(135deg,#08121E"],
+body.premium-light section[style*="linear-gradient(135deg,#0a1f3a"],
+body.premium-light section[style*="linear-gradient(135deg,#111C2B"],
+body.premium-light section[style*="linear-gradient(135deg,#16243A"],
+body.premium-light section[style*="linear-gradient(135deg,#08121E"] {
+  background: linear-gradient(135deg, #FFFFFF 0%, #F4F7FB 50%, #E8EDF5 100%) !important;
+  border-bottom-color: rgba(13,27,46,.1) !important;
+}
+
+/* Stat cards with various tinted dark gradients (bs-card variants) */
+html[data-theme=light] .bs-card[style*="linear-gradient(135deg,#0a1f3a"],
+html[data-theme=light] .bs-card[style*="linear-gradient(135deg,#082a1c"],
+html[data-theme=light] .bs-card[style*="linear-gradient(135deg,#2a0d14"],
+html[data-theme=light] .bs-card[style*="linear-gradient(135deg,#2a2410"],
+body.premium-light .bs-card[style*="linear-gradient(135deg,#0a1f3a"],
+body.premium-light .bs-card[style*="linear-gradient(135deg,#082a1c"],
+body.premium-light .bs-card[style*="linear-gradient(135deg,#2a0d14"],
+body.premium-light .bs-card[style*="linear-gradient(135deg,#2a2410"] {
+  background: #FFFFFF !important;
+  border-color: rgba(13,27,46,.08) !important;
+}
+
+/* Light mode: bs-card colors get tinted backgrounds based on card type */
+html[data-theme=light] .bs-card[style*="rgba(91,157,217"],
+body.premium-light .bs-card[style*="rgba(91,157,217"] {
+  background: linear-gradient(135deg, #fff, #f0f6fc) !important;
+  border-color: rgba(91,157,217,.3) !important;
+}
+html[data-theme=light] .bs-card[style*="rgba(0,181,110"],
+body.premium-light .bs-card[style*="rgba(0,181,110"] ,
+body.premium-light .bs-card[style*="rgba(0,181,110"],
+body.premium-light .bs-card[style*="rgba(0,181,110"]{
+  background: linear-gradient(135deg, #fff, #f0fcf5) !important;
+  border-color: rgba(0,181,110,.3) !important;
+}
+html[data-theme=light] .bs-card[style*="rgba(224,79,95"],
+body.premium-light .bs-card[style*="rgba(224,79,95"] ,
+body.premium-light .bs-card[style*="rgba(224,79,95"],
+body.premium-light .bs-card[style*="rgba(224,79,95"]{
+  background: linear-gradient(135deg, #fff, #fef0f1) !important;
+  border-color: rgba(224,79,95,.3) !important;
+}
+html[data-theme=light] .bs-card[style*="rgba(251,191,36"],
+body.premium-light .bs-card[style*="rgba(251,191,36"] ,
+body.premium-light .bs-card[style*="rgba(251,191,36"],
+body.premium-light .bs-card[style*="rgba(251,191,36"]{
+  background: linear-gradient(135deg, #fff, #fef9e8) !important;
+  border-color: rgba(251,191,36,.4) !important;
+}
+
+/* Hero text inside dark sections */
+html[data-theme=light] section[style*="linear-gradient"] h1,
+html[data-theme=light] section[style*="linear-gradient"] h2,
+html[data-theme=light] section[style*="linear-gradient"] p,
+body.premium-light section[style*="linear-gradient"] h1,
+body.premium-light section[style*="linear-gradient"] h2,
+body.premium-light section[style*="linear-gradient"] p {
+  color: #0D1B2E !important;
+}
+html[data-theme=light] section[style*="linear-gradient"] p,
+body.premium-light section[style*="linear-gradient"] p {
+  color: #3D5068 !important;
+}
+
+/* Color variant text — large numbers retain their accent color */
+html[data-theme=light] .bs-num,
+body.premium-light .bs-num {
+  /* keep color from inline style */
+}
+
+/* Header big H1 like "Bilançolar" / "Finans Haberleri" */
+html[data-theme=light] .htitle,
+body.premium-light .htitle {
+  color: #0D1B2E !important;
+}
+
+/* Card descriptions / body text on light bg */
+html[data-theme=light] [style*="color:#94a3b8"],
+html[data-theme=light] [style*="color: #94a3b8"],
+body.premium-light [style*="color:#94a3b8"],
+body.premium-light [style*="color: #94a3b8"] {
+  color: #5b6b80 !important;
+}
+
+/* News card image backgrounds — KEEP THEM COLORFUL */
+/* These have inline rgb colors not dark hex — they're fine */
+html[data-theme=light] .hc-img-big,
+html[data-theme=light] .hc-img-sm,
+body.premium-light .hc-img-big,
+body.premium-light .hc-img-sm {
+  /* Don't override - colorful gradients should remain */
+}
+
+/* But news card text in light bg */
+html[data-theme=light] .hc,
+body.premium-light .hc {
+  background: transparent !important;
+}
+html[data-theme=light] .hc:hover,
+body.premium-light .hc:hover {
+  background: rgba(13,27,46,.025) !important;
+}
+
+/* Tabular data on light bg - filter chips, hover effects */
+html[data-theme=light] .fbar,
+body.premium-light .fbar {
+  border-bottom-color: rgba(13,27,46,.08) !important;
+}
+
+/* All h1 / h2 with dark fill SVG text in light mode */
+html[data-theme=light] svg text[fill="var(--text)"],
+body.premium-light svg text[fill="var(--text)"] {
+  fill: #0D1B2E !important;
+}
+html[data-theme=light] svg tspan[fill="var(--text)"],
+body.premium-light svg tspan[fill="var(--text)"] {
+  fill: #0D1B2E !important;
+}
+
+/* Eyebrow text on light hero */
+html[data-theme=light] .hero-eyebrow,
+body.premium-light .hero-eyebrow {
+  /* accent color stays gold - looks good on light too */
+}
+
+/* Karne / stat numbers stay vivid even in light */
+html[data-theme=light] .kg-val,
+body.premium-light .kg-val {
+  /* Keep their color from inline */
+}
+
+/* Stat cells inside hero on light */
+html[data-theme=light] .hero-stat,
+body.premium-light .hero-stat {
+  background: rgba(13,27,46,.04) !important;
+  border-color: rgba(13,27,46,.08) !important;
+}
+
+
+/* ===== PARA AKIŞI LIGHT MODE FIX ===== */
+html[data-theme=light] .akis-row,
+body.premium-light .akis-row {
+  background: transparent !important;
+}
+html[data-theme=light] .akis-row:hover,
+body.premium-light .akis-row:hover {
+  background: rgba(13,27,46,.025) !important;
+}
+html[data-theme=light] .akis-code,
+html[data-theme=light] .akis-sym,
+body.premium-light .akis-code,
+body.premium-light .akis-sym { color: #0D1B2E !important; }
+html[data-theme=light] .akis-name,
+body.premium-light .akis-name { color: #6b7e94 !important; }
+html[data-theme=light] .akis-tutar.in,
+html[data-theme=light] .akis-val.up,
+body.premium-light .akis-tutar.in,
+body.premium-light .akis-val.up { color: #00B56E !important; }
+html[data-theme=light] .akis-tutar.out,
+html[data-theme=light] .akis-val.down,
+body.premium-light .akis-tutar.out,
+body.premium-light .akis-val.down { color: #E04F5F !important; }
+html[data-theme=light] .akis-pay,
+body.premium-light .akis-pay { color: #3D5068 !important; }
+html[data-theme=light] .akis-col-lbl,
+body.premium-light .akis-col-lbl { color: #6b7e94 !important; }
+html[data-theme=light] .akis-foot,
+body.premium-light .akis-foot { border-top-color: rgba(13,27,46,.06) !important; }
+html[data-theme=light] .akis-foot-count,
+body.premium-light .akis-foot-count { color: #6b7e94 !important; }
+html[data-theme=light] .akis-foot-total.in,
+body.premium-light .akis-foot-total.in { color: #00B56E !important; }
+html[data-theme=light] .akis-foot-total.out,
+body.premium-light .akis-foot-total.out { color: #E04F5F !important; }
+
+/* Panel containers in light mode */
+html[data-theme=light] .panel,
+body.premium-light .panel {
+  background: #FFFFFF !important;
+  border-color: rgba(13,27,46,.08) !important;
+}
+html[data-theme=light] .panel-title,
+body.premium-light .panel-title { color: #0D1B2E !important; }
+html[data-theme=light] .panel-head,
+body.premium-light .panel-head { border-bottom-color: rgba(13,27,46,.06) !important; }
+html[data-theme=light] .data-grid,
+body.premium-light .data-grid { background: transparent !important; }
+
+/* ===== ANALIZ ALT SAYFALARI ICIN PREMIUM-SHELL FIX (light) ===== */
+html[data-theme=light] body,
+body.premium-light {
+  background: #F0F4F8 !important;
+  color: #0D1B2E !important;
+}
+html[data-theme=light] .header,
+html[data-theme=light] .footer,
+body.premium-light .header,
+body.premium-light .footer { background: #fff !important; border-color: rgba(13,27,46,.1) !important; }
+html[data-theme=light] .header,
+body.premium-light .header { background: rgba(255,255,255,.95) !important; }
+html[data-theme=light] .nav-menu a,
+body.premium-light .nav-menu a { color: #3D5068 !important; }
+html[data-theme=light] .nav-menu a:hover,
+html[data-theme=light] .nav-menu a.active,
+body.premium-light .nav-menu a:hover,
+body.premium-light .nav-menu a.active { color: #0D1B2E !important; }
+html[data-theme=light] .brand-text h1,
+body.premium-light .brand-text h1 { color: #C8A96B !important; }
+html[data-theme=light] .brand-text small,
+body.premium-light .brand-text small { color: #6b7e94 !important; }
+html[data-theme=light] .brand-mark,
+body.premium-light .brand-mark { background: linear-gradient(135deg,#C8A96B,#9d7a40) !important; color: #08121E !important; }
+
+/* Ticker */
+html[data-theme=light] .ticker,
+body.premium-light .ticker { background: #E8EDF5 !important; border-bottom-color: rgba(13,27,46,.08) !important; }
+html[data-theme=light] .tick-name,
+body.premium-light .tick-name { color: #3D5068 !important; }
+html[data-theme=light] .tick-val,
+body.premium-light .tick-val { color: #0D1B2E !important; }
+
+/* Premium command bar */
+html[data-theme=light] .premium-command,
+body.premium-light .premium-command { background: #fff !important; border-color: rgba(13,27,46,.08) !important; }
+html[data-theme=light] .premium-search,
+body.premium-light .premium-search { background: #F4F7FB !important; border-color: rgba(13,27,46,.1) !important; }
+html[data-theme=light] .premium-search input,
+body.premium-light .premium-search input { color: #0D1B2E !important; }
+html[data-theme=light] .premium-search input::placeholder,
+body.premium-light .premium-search input::placeholder { color: #6b7e94 !important; }
+
+/* Premium-shell */
+html[data-theme=light] .premium-shell,
+body.premium-light .premium-shell {
+  background: transparent !important;
+}
+html[data-theme=light] .premium-section,
+body.premium-light .premium-section {
+  background: #fff !important;
+  border: 1px solid rgba(13,27,46,.08) !important;
+  border-radius: 14px !important;
+  padding: 24px !important;
+  margin-bottom: 20px !important;
+  color: #0D1B2E !important;
+}
+html[data-theme=light] .premium-section .premium-kicker,
+body.premium-light .premium-section .premium-kicker { color: #C8A96B !important; }
+html[data-theme=light] .premium-title,
+body.premium-light .premium-title { color: #0D1B2E !important; font-size: 22px !important; font-weight: 700 !important; }
+html[data-theme=light] .premium-desc,
+body.premium-light .premium-desc { color: #3D5068 !important; }
+html[data-theme=light] .premium-head,
+body.premium-light .premium-head { display: flex !important; align-items: flex-start !important; justify-content: space-between !important; margin-bottom: 16px !important; }
+
+html[data-theme=light] .premium-grid,
+body.premium-light .premium-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3,1fr) !important;
+  gap: 14px !important;
+  margin-bottom: 16px !important;
+}
+@media (max-width: 700px) {
+  html[data-theme=light] .premium-grid,
+  body.premium-light .premium-grid { grid-template-columns: 1fr !important; }
+}
+html[data-theme=light] .premium-card,
+body.premium-light .premium-card {
+  background: #F4F7FB !important;
+  border: 1px solid rgba(13,27,46,.06) !important;
+  border-radius: 10px !important;
+  padding: 16px !important;
+  color: #0D1B2E !important;
+}
+html[data-theme=light] .premium-card h3,
+body.premium-light .premium-card h3 {
+  color: #0D1B2E !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  margin-bottom: 6px !important;
+}
+html[data-theme=light] .premium-card p,
+body.premium-light .premium-card p {
+  color: #6b7e94 !important;
+  font-size: 12px !important;
+}
+html[data-theme=light] .premium-stat,
+body.premium-light .premium-stat {
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  color: #C8A96B !important;
+}
+
+html[data-theme=light] .bar-track,
+body.premium-light .bar-track {
+  height: 6px !important;
+  background: rgba(13,27,46,.08) !important;
+  border-radius: 3px !important;
+  overflow: hidden !important;
+  margin: 10px 0 !important;
+}
+html[data-theme=light] .bar-fill,
+body.premium-light .bar-fill {
+  height: 100% !important;
+  background: linear-gradient(90deg, #C8A96B, #00B56E) !important;
+  border-radius: 3px !important;
+}
+
+html[data-theme=light] .premium-table-wrap,
+body.premium-light .premium-table-wrap {
+  background: #fff !important;
+  border: 1px solid rgba(13,27,46,.08) !important;
+  border-radius: 10px !important;
+  overflow: hidden !important;
+  margin-top: 16px !important;
+}
+html[data-theme=light] .premium-table,
+body.premium-light .premium-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  font-size: 13px !important;
+}
+html[data-theme=light] .premium-table th,
+body.premium-light .premium-table th {
+  background: #F4F7FB !important;
+  color: #6b7e94 !important;
+  padding: 11px 14px !important;
+  text-align: left !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: .1em !important;
+  text-transform: uppercase !important;
+  border-bottom: 1px solid rgba(13,27,46,.08) !important;
+}
+html[data-theme=light] .premium-table td,
+body.premium-light .premium-table td {
+  padding: 11px 14px !important;
+  color: #0D1B2E !important;
+  border-bottom: 1px solid rgba(13,27,46,.04) !important;
+}
+
+html[data-theme=light] .premium-btn,
+body.premium-light .premium-btn {
+  background: #fff !important;
+  border: 1px solid rgba(13,27,46,.1) !important;
+  color: #3D5068 !important;
+  padding: 8px 14px !important;
+  border-radius: 8px !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+}
+html[data-theme=light] .premium-btn:hover,
+body.premium-light .premium-btn:hover {
+  background: #F4F7FB !important;
+  color: #0D1B2E !important;
+}
+html[data-theme=light] .premium-btn.gold,
+body.premium-light .premium-btn.gold {
+  background: #C8A96B !important;
+  color: #08121E !important;
+  border-color: transparent !important;
+}
+
+html[data-theme=light] .premium-badge,
+body.premium-light .premium-badge {
+  display: inline-flex !important;
+  padding: 4px 10px !important;
+  border-radius: 6px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+}
+html[data-theme=light] .premium-badge.green,
+body.premium-light .premium-badge.green {
+  background: rgba(0,181,110,.13) !important;
+  color: #00B56E !important;
+}
+html[data-theme=light] .premium-badge.red,
+body.premium-light .premium-badge.red {
+  background: rgba(224,79,95,.13) !important;
+  color: #E04F5F !important;
+}
+html[data-theme=light] .premium-badge.pro,
+body.premium-light .premium-badge.pro {
+  background: rgba(200,169,107,.13) !important;
+  color: #C8A96B !important;
+}
+
+html[data-theme=light] .premium-actions,
+body.premium-light .premium-actions { display: flex !important; gap: 8px !important; flex-wrap: wrap !important; }
+
+
+/* ===== HAM METİN BLOK GİZLEME (any leftover content blocks) ===== */
+/* Hide standalone premium-shell/section content that appears as raw text */
+.premium-shell:empty,
+.premium-section:empty { display: none !important; }
+
+/* Hide any block with these specific Turkish texts when shown as raw */
+body > div:not([class]):not([id]):not([style]) { display: none !important; }
+
+/* If light mode + premium-shell content shows as raw paragraphs, force container styling */
+html[data-theme=light] .premium-shell > *,
+body.premium-light .premium-shell > * {
+  background: transparent !important;
+}
+
+/* Bottom info boxes that user is seeing — give them basic styling */
+.premium-shell {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+.premium-section {
+  background: var(--panel, #111C2B) !important;
+  border: 1px solid var(--line, rgba(255,255,255,.07)) !important;
+  border-radius: 14px !important;
+  padding: 24px !important;
+  margin: 16px 0 !important;
+  color: var(--text, #F3F7FA);
+}
+html[data-theme=light] .premium-section,
+body.premium-light .premium-section {
+  background: #fff !important;
+  border-color: rgba(13,27,46,.08) !important;
+  color: #0D1B2E !important;
+}
+.premium-section h1, .premium-section h2, .premium-section h3 {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  margin-bottom: 8px !important;
+}
+.premium-section p { font-size: 13px; color: var(--dim, #B0B9C5); line-height: 1.55; margin-bottom: 6px; }
+html[data-theme=light] .premium-section p,
+body.premium-light .premium-section p { color: #3D5068 !important; }
+.premium-section table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13px; }
+.premium-section th, .premium-section td { padding: 8px 12px; border-bottom: 1px solid rgba(255,255,255,.05); text-align: left; }
+html[data-theme=light] .premium-section th,
+html[data-theme=light] .premium-section td,
+body.premium-light .premium-section th,
+body.premium-light .premium-section td { border-color: rgba(13,27,46,.06) !important; }
+
+/* Inputs in premium-shell */
+.premium-shell input[type="text"],
+.premium-shell input[type="number"],
+.premium-shell input[type="email"] {
+  background: var(--bg-2, #0B1623);
+  border: 1px solid var(--line);
+  color: var(--text);
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  width: 100%;
+}
+html[data-theme=light] .premium-shell input,
+body.premium-light .premium-shell input {
+  background: #F4F7FB !important;
+  border-color: rgba(13,27,46,.1) !important;
+  color: #0D1B2E !important;
+}
+
+/* Premium-modal hide by default */
+.premium-modal {
+  display: none !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 9999 !important;
+  background: rgba(0,0,0,.7) !important;
+  backdrop-filter: blur(4px) !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 20px !important;
+}
+.premium-modal.open { display: flex !important; }
+
+/* Bilgilendirme önemli box */
+.premium-section[style*="background"] {
+  /* keep inline styles */
+}
+
+/* Tedbirli hisseler tooltip block at bottom */
+.premium-section.info-box,
+.premium-section[data-type="info"] {
+  background: linear-gradient(135deg, rgba(91,157,217,.05), rgba(91,157,217,.02)) !important;
+  border-color: rgba(91,157,217,.18) !important;
+}
+
+
+/* ════ MOBİL UYUMLULUK — GLOBAL ════ */
+@media(max-width:768px){
+  /* Tablo taşmasını engelle */
+  .data-table,.tw table,table.tbl{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap}
+  /* Sabit kolon genişliklerini sıfırla */
+  .dt-row[style*="grid-template-columns"]{grid-template-columns:1.6fr 1fr 1fr!important}
+  /* Özet kart gridleri */
+  .stat-grid,.stats-3,.sek-stats,.bs-stats,.summary-cards{grid-template-columns:1fr 1fr!important}
+  /* Grafik alan */
+  .chart-wrap,.chart-card{min-height:220px!important}
+  /* Font boyutları */
+  .price-big,.big-price{font-size:24px!important}
+  h1{font-size:20px!important;letter-spacing:-.02em!important}
+  /* Period sekmeleri */
+  .period-tabs,.hm-periods,.chart-tabs,.fil-bar{overflow-x:auto;white-space:nowrap;scrollbar-width:none;flex-wrap:nowrap!important}
+  .period-tabs::-webkit-scrollbar,.chart-tabs::-webkit-scrollbar{display:none}
+  /* Kartlar tek sütun */
+  .card-grid,.eg,.sektor-grid,.sek-hub-grid{grid-template-columns:1fr!important}
+  /* Sidebar gizle */
+  .sidebar,.right-col{display:none!important}
+  /* Full width */
+  .main-col,.content-area{width:100%!important;max-width:100%!important}
+}
+@media(max-width:480px){
+  .stats-3,.sek-stats,.bs-stats{grid-template-columns:1fr!important}
+  .ticker{font-size:11px}
+  .btn,.gh-cmd-btn{font-size:11px;padding:6px 10px}
+  .hm-pbtn{font-size:10px;padding:4px 7px}
+}
+@media(max-width:900px){
+  [style*="grid-template-columns:minmax(0,2.55fr)"]{grid-template-columns:1fr!important}
+  [style*="repeat(3, minmax(280px"]{grid-template-columns:1fr 1fr!important}
+  [style*="repeat(3, minmax(260px"]{grid-template-columns:1fr 1fr!important}
+}
+@media(max-width:600px){
+  [style*="grid-template-columns:1.6fr .9fr"]{grid-template-columns:1fr 80px 60px 60px 60px!important;font-size:11px}
+  [style*="grid-template-columns:200px"]{grid-template-columns:1fr!important}
+  [style*="repeat(3, minmax"]{grid-template-columns:1fr!important}
+}
+
+/* ════════════════ HAMBURGER MENÜ ════════════════ */
+.ham-btn{
+  display:none;flex-direction:column;justify-content:space-between;
+  width:38px;height:38px;padding:10px 8px;cursor:pointer;
+  border:1px solid var(--line,rgba(255,255,255,.1));border-radius:8px;
+  background:var(--panel,rgba(255,255,255,.05));
+  -webkit-tap-highlight-color:transparent;
+}
+.ham-btn span{
+  display:block;height:2px;width:100%;background:var(--text,#f0f4f8);
+  border-radius:2px;transition:all .28s ease;
+}
+.ham-btn.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.ham-btn.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.ham-btn.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* Mobil overlay menü */
+.mob-nav{
+  position:fixed;inset:0;z-index:998;
+  background:rgba(8,18,30,.97);backdrop-filter:blur(16px);
+  display:flex;flex-direction:column;padding:80px 24px 40px;gap:6px;
+  opacity:0;pointer-events:none;
+  transform:translateX(100%);
+  transition:opacity .3s ease,transform .3s ease;
+  overflow-y:auto;
+}
+.mob-nav.open{
+  opacity:1;pointer-events:auto;transform:translateX(0)
+}
+.mob-nav a{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 18px;border-radius:12px;
+  font-size:16px;font-weight:600;color:rgba(240,244,248,.85);
+  text-decoration:none;border:1px solid transparent;
+  transition:all .2s;
+}
+.mob-nav a:hover,.mob-nav a.active{
+  background:rgba(200,169,107,.12);
+  border-color:rgba(200,169,107,.28);
+  color:#C8A96B;
+}
+.mob-nav-divider{height:1px;background:rgba(255,255,255,.07);margin:8px 0}
+.mob-nav-close{
+  position:absolute;top:18px;right:18px;
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  cursor:pointer;display:grid;place-items:center;
+  color:rgba(240,244,248,.8);font-size:22px;line-height:1;
+}
+
+/* Light tema uyumu */
+html[data-theme=light] .mob-nav{background:rgba(248,250,252,.97)}
+html[data-theme=light] .mob-nav a{color:#374151}
+html[data-theme=light] .mob-nav a:hover,
+html[data-theme=light] .mob-nav a.active{background:rgba(200,169,107,.1);color:#9d7a40}
+html[data-theme=light] .mob-nav-close{background:rgba(0,0,0,.06);border-color:rgba(0,0,0,.1);color:#374151}
+html[data-theme=light] .ham-btn{background:#fff;border-color:rgba(0,0,0,.12)}
+html[data-theme=light] .ham-btn span{background:#1f2937}
+
+@media(max-width:860px){
+  /* Hamburger göster */
+  .ham-btn{display:flex}
+  /* Desktop menü gizle */
+  .nav-menu,.nl{display:none!important}
+}
+
+</style>
+
+<style id="bk-mob-fix">
+/* ══════════════════════════════════════════════
+   BK MOBİL FİX — Tablo Taşma Engeli
+   Tüm sayfalarda <768px
+══════════════════════════════════════════════ */
+@media(max-width:768px){
+  /* Genel tablo wrapper */
+  .tbl-wrap, .tbl-scroll, [style*="overflow-x:auto"], .dt-wrap { 
+    overflow-x:auto!important;-webkit-overflow-scrolling:touch;
+  }
+  /* Tablo içi white-space kaldır - taşmayı önle */
+  table.tbl, table.premium-table, table.data-table {
+    min-width:0!important; width:100%!important;
+    white-space:normal!important;
+  }
+  /* Hücre içi wrap */
+  table.tbl td, table.tbl th {
+    white-space:nowrap; font-size:11.5px!important; padding:7px 8px!important;
+  }
+  /* Uzun kolon gizle - sadece kritikler kalsın */
+  table.tbl .hide-mob { display:none!important; }
+  /* Endeks tablo mobil kart - .mob-card-list ile */
+  .mob-card-list { display:block }
+  .mob-card-list .tbl-desktop-only { display:none!important }
+  /* Masaüstünde mobil kart gizle */
+  .mob-tbl-card { display:none }
+}
+@media(min-width:769px){
+  .mob-tbl-card { display:none!important }
+  .mob-sektor-tbl { display:none!important }
+}
+</style>
+
+<style id="bk-desktop-hide">
+/* Masaüstünde mobil görünümler KESINLIKLE gizli */
+@media(min-width:769px){
+  .mob-tbl-card,
+  .mob-tbl-card--wide,
+  .mob-sp-row,
+  .mob-sp-list,
+  .mob-endeks-list,
+  .mob-sektor-tbl,
+  .tbl-mobile,
+  .mob-stk-row { display:none!important }
+}
+/* Mobilde masaüstü tabloları gizle */
+@media(max-width:768px){
+  .tbl-desktop,
+  .tbl-endeks-wrap,
+  .tbl-special-wrap { display:none!important }
+}
+</style>
+
+  <!-- Schema.org Structured Data for AI Agents & Search Engines -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FinancialService",
+    "name": "BorsaKaynak",
+    "url": "https://borsakaynak.com/",
+    "logo": "https://borsakaynak.com/logo.jpg",
+    "description": "Borsa İstanbul (BIST) 586 şirket hissesi, 674 enstrüman, canlı borsa fiyatları, para giriş/çıkış analizleri ve TradingView entegrasyonu.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://borsakaynak.com/piyasalar.html?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta property="og:image" content="https://borsakaynak.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://borsakaynak.com/og-image.png">
+<link rel="stylesheet" href="premium-light-fixes.css">
+<link rel="stylesheet" href="header-footer-shared.css">
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="bk-shared-chrome">
+<div class="ticker">
+<div class="ticker-track" id="ticker-track">
+<div class="tick" data-tsym="XU100"><span class="tick-dot"></span><span class="tick-name">BIST 100</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="USDTRY"><span class="tick-name">USD/TRY</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="EURTRY"><span class="tick-name">EUR/TRY</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="GBPTRY"><span class="tick-name">GBP/TRY</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="XAUGRAM"><span class="tick-name">ALTIN/GR</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="XAUUSD"><span class="tick-name">XAU/USD</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="BRENT"><span class="tick-name">BRENT</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="BTCUSDT"><span class="tick-name">BTC/USDT</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="ETHUSDT"><span class="tick-name">ETH/USDT</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="DAX"><span class="tick-name">DAX</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="SPX"><span class="tick-name">S&amp;P 500</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+<div class="tick" data-tsym="IXIC"><span class="tick-name">NASDAQ</span><span class="tick-val">—</span><span class="tick-chg">—</span></div>
+</div>
+</div>
+<!-- HEADER -->
+<header class="header">
+<div class="container">
+<nav class="nav">
+<a aria-label="Sayfa Bağlantısı" href="index.html" style="text-decoration:none;color:inherit;display:flex;align-items:center">
+<img src="logo-kaynak.png" alt="BorsaKaynak" style="height:32px;width:auto;flex-shrink:0">
+</a>
+<div class="nav-menu">
+<a aria-label="Sayfa Bağlantısı" href="index.html">Anasayfa</a>
+<a aria-label="Sayfa Bağlantısı" href="piyasalar.html">Piyasalar</a>
+<a aria-label="Sayfa Bağlantısı" href="piyasa-hareketleri.html">Piyasa Hareketleri</a>
+<a aria-label="Sayfa Bağlantısı" href="endeksler.html">Endeksler</a>
+<a aria-label="Sayfa Bağlantısı" href="sektorler.html">Sektörler</a>
+<a aria-label="Sayfa Bağlantısı" href="haberler.html">Haberler</a>
+<a aria-label="Sayfa Bağlantısı" href="analizler.html">Analizler</a>
+<a aria-label="Sayfa Bağlantısı" class="active" href="araci-kurum.html">Aracı Kurum</a>
+<a aria-label="Sayfa Bağlantısı" href="halka-arz.html">Halka Arz</a>
+<a aria-label="Sayfa Bağlantısı" href="viop.html">VİOP</a>
+<a aria-label="Sayfa Bağlantısı" href="kripto.html">Kripto</a>
+</div>
+<div class="nav-actions"><button class="ham-btn" aria-label="Menü" aria-expanded="false"><span></span><span></span><span></span></button>
+<button aria-label="BİST Veri Butonu" class="nav-btn"><svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg></button>
+<button aria-label="BİST Veri Butonu" class="nav-btn"><svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg></button>
+</div>
+</nav>
+</div>
+</header>
+<div class="mob-nav" id="mobNav">
+<button class="mob-nav-close" aria-label="Kapat">✕</button>
+
+<!-- Mini canlı ticker -->
+<div class="mob-ticker-grid">
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">BIST 100</span>
+    <span class="mob-tick-val" id="ham-bist">—</span>
+    <span class="mob-tick-chg" id="ham-bist-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">USD/TRY</span>
+    <span class="mob-tick-val" id="ham-usd">—</span>
+    <span class="mob-tick-chg" id="ham-usd-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">EUR/TRY</span>
+    <span class="mob-tick-val" id="ham-eur">—</span>
+    <span class="mob-tick-chg" id="ham-eur-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">ALTIN/GR</span>
+    <span class="mob-tick-val" id="ham-altin">—</span>
+    <span class="mob-tick-chg" id="ham-altin-chg">—</span>
+  </div>
+  <div class="mob-tick-item">
+    <span class="mob-tick-label">BTC/USD</span>
+    <span class="mob-tick-val" id="ham-btc">—</span>
+    <span class="mob-tick-chg" id="ham-btc-chg">—</span>
+  </div>
+</div>
+<div class="mob-nav-divider"></div>
+
+<div class="mob-nav-section-title">ANA SAYFALAR</div>
+  <a aria-label="Sayfa Bağlantısı" href="index.html">🏠 Anasayfa</a>
+  <a aria-label="Sayfa Bağlantısı" href="piyasalar.html">📈 Piyasalar</a>
+  <a aria-label="Sayfa Bağlantısı" href="sektorler.html">🏭 Sektörler</a>
+  <a aria-label="Sayfa Bağlantısı" href="haberler.html">📰 Haberler</a>
+  <a aria-label="Sayfa Bağlantısı" href="analizler.html">📊 Analizler</a>
+  <a aria-label="Sayfa Bağlantısı" href="model-portfoy.html">💼 Model Portföy</a>
+<div class="mob-nav-divider"></div>
+<div class="mob-nav-section-title">ENDEKSİ</div>
+  <a aria-label="Sayfa Bağlantısı" href="endeksler.html">📊 Tüm Endeksler</a>
+  <a aria-label="Sayfa Bağlantısı" href="endeks-XU100.html">📈 BIST 100</a>
+  <a aria-label="Sayfa Bağlantısı" href="endeks-XU030.html">📉 BIST 30</a>
+<div class="mob-nav-divider"></div>
+<div class="mob-nav-section-title">YATIRIM</div>
+  <a aria-label="Sayfa Bağlantısı" href="araci-kurum.html">🏦 Aracı Kurum</a>
+  <a aria-label="Sayfa Bağlantısı" href="halka-arz.html">📋 Halka Arz</a>
+  <a aria-label="Sayfa Bağlantısı" href="viop.html">📉 VİOP</a>
+  <a aria-label="Sayfa Bağlantısı" href="kripto.html">₿ Kripto</a>
+<div class="mob-nav-divider"></div>
+  <a aria-label="Sayfa Bağlantısı" href="hakkimizda.html">ℹ️ Hakkımızda</a>
+</div>
+<div class="premium-command"><div class="premium-command__inner"><label class="premium-search">⌕ <input data-premium-search="" placeholder="Site içinde hisse, haber, analiz veya halka arz ara..."/></label><div class="premium-actions"><button aria-label="BİST Veri Butonu" class="premium-btn" data-theme-toggle="">🌗 Tema</button><button aria-label="BİST Veri Butonu" class="premium-btn" data-export=".premium-table">⬇ Excel/CSV</button><button aria-label="BİST Veri Butonu" class="premium-btn" data-open-modal="#notifyModal">🔔 Bildirim</button><a aria-label="Sayfa Bağlantısı" class="premium-btn gold" href="model-portfoy.html">PRO Model Portföy</a></div></div></div>
+<script>
+  // Tema (aydınlık/koyu) değiştirici
+  (function () {
+    const STORAGE_KEY = 'bk-theme-light';
+    function applyTheme(isLight) {
+      document.body.classList.toggle('premium-light', isLight);
+    }
+    const saved = localStorage.getItem(STORAGE_KEY) === '1';
+    applyTheme(saved);
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.querySelector('[data-theme-toggle]');
+      if (!btn) return;
+      btn.addEventListener('click', () => {
+        const nowLight = !document.body.classList.contains('premium-light');
+        applyTheme(nowLight);
+        localStorage.setItem(STORAGE_KEY, nowLight ? '1' : '0');
+      });
+    });
+  })();
+</script>
+
+<script>
+// Site geneli arama kutusu: Enter'a basilinca piyasalar.html'e yonlendirir.
+(function(){
+  document.querySelectorAll('[data-premium-search]').forEach(function(inp){
+    inp.addEventListener('keydown', function(e){
+      if (e.key === 'Enter') {
+        var q = inp.value.trim();
+        if (q) window.location.href = 'piyasalar.html?q=' + encodeURIComponent(q);
+      }
+    });
+  });
+})();
+</script>
+</div>
+
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+<div class="container">
+<div class="ph-inner">
+<div>
+<div class="ph-eyebrow">ARACI KURUM</div>
+<h1 class="ph-title">Kurum İşlem Verileri</h1>
+<p class="ph-desc">Borsa İstanbul'da aracı kurum bazlı alım-satım işlemleri, yabancı yatırımcı akışları ve günlük kurum dağılımı verileri.</p>
+</div>
+<div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0">
+  <div style="font-size:12px;color:#8B98A9">Son Güncelleme: <span style="color:#F3F7FA;font-family:monospace;font-weight:600" id="lastUpdate">15:32:45</span></div>
+  <div style="display:flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;background:rgba(0,181,110,.12);border:1px solid rgba(0,181,110,.3)">
+    <span style="width:8px;height:8px;border-radius:50%;background:#00B56E;animation:akPulse 1.5s ease-in-out infinite;box-shadow:0 0 8px #00B56E"></span>
+    <span style="font-size:11px;color:#00B56E;font-weight:700;letter-spacing:.06em">CANLI</span>
+  </div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ========= 4 STAT CARDS (icon + big number) ========= -->
+<div class="container" style="margin-top:-32px;margin-bottom:24px;position:relative;z-index:5">
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px" class="ak-4-stats">
+
+  <!-- Yabancı Girişi -->
+  <div style="background:#111C2B;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:18px;display:flex;align-items:center;gap:14px;transition:all .2s">
+    <div style="width:54px;height:54px;border-radius:12px;background:linear-gradient(135deg,#00B56E,#0a8a5e);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 8px 20px rgba(0,181,110,.35)">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 12h13M11 6l-6 6 6 6"/><path d="M21 4v16" opacity=".6"/>
+      </svg>
+    </div>
+    <div style="min-width:0;flex:1">
+      <div style="font-size:26px;font-weight:800;color:#00B56E;line-height:1;letter-spacing:-.02em;font-family:monospace;margin-bottom:5px">+4,2 Mr ₺</div>
+      <div style="font-size:12.5px;color:#B0B9C5;font-weight:500">Yabancı Girişi</div>
+    </div>
+  </div>
+
+  <!-- Yabancı Çıkışı -->
+  <div style="background:#111C2B;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:18px;display:flex;align-items:center;gap:14px;transition:all .2s">
+    <div style="width:54px;height:54px;border-radius:12px;background:linear-gradient(135deg,#E04F5F,#a8242f);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 8px 20px rgba(224,79,95,.35)">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12H8M13 6l6 6-6 6"/><path d="M3 4v16" opacity=".6"/>
+      </svg>
+    </div>
+    <div style="min-width:0;flex:1">
+      <div style="font-size:26px;font-weight:800;color:#E04F5F;line-height:1;letter-spacing:-.02em;font-family:monospace;margin-bottom:5px">−2,8 Mr ₺</div>
+      <div style="font-size:12.5px;color:#B0B9C5;font-weight:500">Yabancı Çıkışı</div>
+    </div>
+  </div>
+
+  <!-- Yabancı Payı -->
+  <div style="background:#111C2B;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:18px;display:flex;align-items:center;gap:14px;transition:all .2s">
+    <div style="width:54px;height:54px;border-radius:12px;background:linear-gradient(135deg,#fbbf24,#b88a18);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 8px 20px rgba(251,191,36,.35)">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#08121E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/>
+      </svg>
+    </div>
+    <div style="min-width:0;flex:1">
+      <div style="font-size:26px;font-weight:800;color:#fbbf24;line-height:1;letter-spacing:-.02em;font-family:monospace;margin-bottom:5px">%38,6</div>
+      <div style="font-size:12.5px;color:#B0B9C5;font-weight:500">Yabancı Payı</div>
+    </div>
+  </div>
+
+  <!-- Aktif Kurum -->
+  <div style="background:#111C2B;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:18px;display:flex;align-items:center;gap:14px;transition:all .2s">
+    <div style="width:54px;height:54px;border-radius:12px;background:linear-gradient(135deg,#5B9DD9,#2c5f8c);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 8px 20px rgba(91,157,217,.35)">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 21h18M5 21V8l7-4 7 4v13M9 9v12M15 9v12"/>
+      </svg>
+    </div>
+    <div style="min-width:0;flex:1">
+      <div style="font-size:26px;font-weight:800;color:#5B9DD9;line-height:1;letter-spacing:-.02em;font-family:monospace;margin-bottom:5px">142</div>
+      <div style="font-size:12.5px;color:#B0B9C5;font-weight:500">Aktif Kurum</div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<style>
+@media(max-width:900px){.ak-4-stats{grid-template-columns:1fr 1fr!important}}
+@media(max-width:480px){.ak-4-stats{grid-template-columns:1fr!important}}
+
+/* ===== SEKTÖR TABLOSU TİPOGRAFİSİ — isim: Inter (okunabilirlik), değer: Geist Mono (sitenin tüm rakamlarıyla aynı, hizalı/tabular) ===== */
+.sek-name, .fp-name, .fp-name span, .fp-row .fp-name div {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  letter-spacing: -.005em;
+}
+.sek-row .sek-name { font-weight: 500; font-size: 13.5px; }
+.sek-row .sek-val {
+  font-family: var(--font-mono), 'Geist Mono', 'SF Mono', ui-monospace, monospace !important;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: -.01em;
+  font-feature-settings: "tnum" 1;
+  font-variant-numeric: tabular-nums;
+}
+.sek-row { transition: background .15s ease, transform .15s ease; }
+.sek-row:hover { background: rgba(200,169,107,.06) !important; transform: translateX(2px); }
+.sek-row:hover .sek-name { color: #C8A96B !important; }
+
+.fp-row { font-family: 'Inter', -apple-system, sans-serif !important; }
+.fp-row .fp-val, .fp-row .fp-pct {
+  font-family: 'Inter', 'SF Pro Display', system-ui, sans-serif !important;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.01em;
+}
+
+/* ===== 3-CHART TRIO PREMIUM CARDS ===== */
+.charts-trio { gap: 18px !important; }
+.chart-card {
+  background: linear-gradient(135deg, #131f30 0%, #0e1a2a 100%);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 22px 24px 18px;
+  position: relative;
+  overflow: hidden;
+  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+html[data-theme=light] .chart-card ,
+body.premium-light .chart-card{
+  background: linear-gradient(135deg, #fff 0%, #f4f7fb 100%) !important;
+  border-color: rgba(13,27,46,.08) !important;
+}
+.chart-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
+  pointer-events: none;
+}
+.chart-card::after {
+  content: "";
+  position: absolute;
+  top: -50%; right: -30%;
+  width: 60%; height: 100%;
+  background: radial-gradient(circle, var(--card-glow, rgba(0,181,110,.08)), transparent 60%);
+  pointer-events: none;
+  opacity: .6;
+  transition: opacity .3s ease;
+}
+.chart-card.chart-green { --card-glow: rgba(0,181,110,.12); }
+.chart-card.chart-red { --card-glow: rgba(224,79,95,.12); }
+.chart-card.chart-blue { --card-glow: rgba(91,157,217,.12); }
+
+.chart-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(200,169,107,.3) !important;
+  box-shadow: 0 24px 56px rgba(0,0,0,.5);
+}
+.chart-card:hover::after { opacity: 1; }
+
+.chart-card.chart-green:hover { border-color: rgba(0,181,110,.5) !important; box-shadow: 0 24px 56px rgba(0,181,110,.15) !important; }
+.chart-card.chart-red:hover { border-color: rgba(224,79,95,.5) !important; box-shadow: 0 24px 56px rgba(224,79,95,.15) !important; }
+.chart-card.chart-blue:hover { border-color: rgba(91,157,217,.5) !important; box-shadow: 0 24px 56px rgba(91,157,217,.15) !important; }
+
+.cc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.cc-eyebrow {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+html[data-theme=light] .cc-eyebrow ,
+body.premium-light .cc-eyebrow{ color: #6b7e94 !important; }
+.cc-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: ccPulse 1.5s ease-in-out infinite;
+}
+@keyframes ccPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .5; transform: scale(1.3); }
+}
+.cc-pill {
+  padding: 3px 9px;
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  font-family: var(--mono);
+}
+.cc-value {
+  font-size: 38px;
+  font-weight: 800;
+  letter-spacing: -.03em;
+  line-height: 1;
+  margin-bottom: 8px;
+  font-family: var(--mono);
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 1100px) { .cc-value { font-size: 32px; } }
+.cc-sub {
+  font-size: 12.5px;
+  color: var(--dim);
+  margin-bottom: 18px;
+  position: relative;
+  z-index: 1;
+}
+html[data-theme=light] .cc-sub ,
+body.premium-light .cc-sub{ color: #3D5068 !important; }
+body.premium-light [style*="color:#34d399"]{ color:#00875A !important; text-shadow:none !important; }
+body.premium-light [style*="color:#fca5a5"]{ color:#C0392B !important; text-shadow:none !important; }
+body.premium-light [style*="color:#93c5fd"]{ color:#1d6fae !important; text-shadow:none !important; }
+.cc-chart {
+  margin: 0 -8px;
+  position: relative;
+  z-index: 1;
+}
+.cc-x-axis {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9.5px;
+  color: var(--mute);
+  font-family: var(--mono);
+  margin-top: 8px;
+  padding: 0 4px;
+  position: relative;
+  z-index: 1;
+}
+html[data-theme=light] .cc-x-axis ,
+body.premium-light .cc-x-axis{ color: #6b7e94 !important; }
+html[data-theme=light] .chart-card svg line ,
+body.premium-light .chart-card svg line{ stroke: rgba(13,27,46,.06) !important; }
+
+
+/* ===== INTER FONT - FINTABLES TARZI ===== */
+body, .premium-table, .tbl, .bil-table, .ak-table,
+.psum-card, .arz-card, .bs-card, .info-card,
+.fp-row, .sek-row, .sek-name, .sek-val,
+.akis-row, .akis-code, .akis-name, .akis-val, .akis-tutar, .akis-pay,
+table tbody, table thead, table td, table th,
+.h-code, .h-name, .bil-code, .bil-name,
+.kg-val, .stat-val, .hero-stat-val {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  letter-spacing: -.005em;
+}
+
+/* Tabular nums for numeric data */
+.tbl td, .premium-table td, .bil-td,
+.fp-val, .fp-pct, .akis-val, .akis-pay,
+.sek-val, .h-code, .stat-val,
+.kg-val, .hero-stat-val,
+[class*="val"], [class*="num"], td.r {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Heading hierarchy with Inter */
+h1, h2, h3, h4, h5, h6,
+.htitle, .premium-title, .arz-title,
+.bil-title, .hero h1, .hero h2 {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  letter-spacing: -.015em;
+  font-feature-settings: "ss01" 1, "ss02" 1, "cv11" 1;
+}
+
+/* CHARTS TRIO — 3 yan yana her zaman */
+@media (max-width: 1024px) {
+  .cards-3.charts-trio {
+    grid-template-columns: repeat(3, minmax(280px, 1fr)) !important;
+  }
+}
+@media (max-width: 768px) {
+  .cards-3.charts-trio {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(260px, 1fr)) !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 6px;
+  }
+  .cards-3.charts-trio .chart-card {
+    scroll-snap-align: start;
+    min-width: 260px;
+  }
+  .cards-3.charts-trio .cc-value { font-size: 26px !important; }
+}
+@media (max-width: 480px) {
+  .cards-3.charts-trio { grid-template-columns: repeat(3, minmax(240px, 1fr)) !important; }
+  .cards-3.charts-trio .chart-card { min-width: 240px; padding: 16px 18px 14px !important; }
+  .cards-3.charts-trio .cc-value { font-size: 24px !important; }
+  .cards-3.charts-trio .cc-chart svg { height: 150px !important; }
+}
+</style>
+
+<main class="main">
+<div class="container">
+
+<!-- 3-CHART NET CARDS -->
+<div class="cards-3 charts-trio" style="margin-bottom:22px;">
+
+<!-- YABANCI YATIRIMCI NET — GREEN -->
+<div class="chart-card chart-green">
+  <div class="cc-head">
+    <div class="cc-eyebrow">
+      <span class="cc-dot" style="background:#00B56E;box-shadow:0 0 8px #00B56E"></span>
+      YABANCI YATIRIMCI NET
+    </div>
+    <span class="cc-pill" style="background:rgba(0,181,110,.13);color:#00B56E;border:1px solid rgba(0,181,110,.3)">▲ CANLI</span>
+  </div>
+  <div class="cc-value" style="color:#34d399;text-shadow:0 0 32px rgba(0,181,110,.55),0 0 12px rgba(0,181,110,.4)">+1,42 Mr ₺</div>
+  <div class="cc-sub">Bugünkü toplam net alım</div>
+  <div class="cc-chart">
+    <svg viewBox="0 0 300 130" preserveAspectRatio="none" style="width:100%;height:200px;display:block">
+      <defs>
+        <linearGradient id="cg_green" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#00B56E" stop-opacity=".55"/>
+          <stop offset="50%" stop-color="#00B56E" stop-opacity=".18"/>
+          <stop offset="100%" stop-color="#00B56E" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="cg_green_line" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#0a8a5e"/>
+          <stop offset="50%" stop-color="#00B56E"/>
+          <stop offset="100%" stop-color="#34d399"/>
+        </linearGradient>
+        <filter id="cg_green_glow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="2.5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <!-- grid lines -->
+      <line x1="0" y1="32" x2="300" y2="32" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+      <line x1="0" y1="65" x2="300" y2="65" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+      <line x1="0" y1="98" x2="300" y2="98" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+      <!-- area fill -->
+      <path d="M0,95 L0,90 L27,84 L55,78 L82,75 L110,68 L137,60 L165,52 L192,44 L220,36 L247,28 L275,22 L300,18 L300,130 L0,130 Z" fill="url(#cg_green)"/>
+      <!-- main line -->
+      <polyline points="0,90 27,84 55,78 82,75 110,68 137,60 165,52 192,44 220,36 247,28 275,22 300,18" fill="none" stroke="url(#cg_green_line)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#cg_green_glow)"/>
+      <!-- dots -->
+      <circle cx="0" cy="90" r="2" fill="#00B56E"/>
+      <circle cx="27" cy="84" r="2" fill="#00B56E"/>
+      <circle cx="55" cy="78" r="2" fill="#00B56E"/>
+      <circle cx="82" cy="75" r="2" fill="#00B56E"/>
+      <circle cx="110" cy="68" r="2" fill="#00B56E"/>
+      <circle cx="137" cy="60" r="2" fill="#00B56E"/>
+      <circle cx="165" cy="52" r="2" fill="#00B56E"/>
+      <circle cx="192" cy="44" r="2" fill="#00B56E"/>
+      <circle cx="220" cy="36" r="2" fill="#00B56E"/>
+      <circle cx="247" cy="28" r="2" fill="#00B56E"/>
+      <circle cx="275" cy="22" r="2" fill="#00B56E"/>
+      <!-- latest pulse -->
+      <circle cx="300" cy="18" r="4" fill="#00B56E" opacity=".4">
+        <animate attributeName="r" values="4;9;4" dur="1.8s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values=".5;0;.5" dur="1.8s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="300" cy="18" r="3.5" fill="#34d399" stroke="#0B1623" stroke-width="2"/>
+    </svg>
+  </div>
+  <div class="cc-x-axis">
+    <span>10:00</span><span>11:00</span><span>12:00</span><span>13:00</span><span>14:00</span><span>15:00</span><span>16:00</span>
+  </div>
+</div>
+
+<!-- YERLİ KURUMSAL NET — RED -->
+<div class="chart-card chart-red">
+  <div class="cc-head">
+    <div class="cc-eyebrow">
+      <span class="cc-dot" style="background:#E04F5F;box-shadow:0 0 8px #E04F5F"></span>
+      YERLİ KURUMSAL NET
+    </div>
+    <span class="cc-pill" style="background:rgba(224,79,95,.13);color:#fca5a5;border:1px solid rgba(224,79,95,.3)">▼ CANLI</span>
+  </div>
+  <div class="cc-value" style="color:#fca5a5;text-shadow:0 0 32px rgba(224,79,95,.55),0 0 12px rgba(224,79,95,.4)">−680 Mn ₺</div>
+  <div class="cc-sub">Bugünkü toplam net satış</div>
+  <div class="cc-chart">
+    <svg viewBox="0 0 300 130" preserveAspectRatio="none" style="width:100%;height:200px;display:block">
+      <defs>
+        <linearGradient id="cg_red" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#E04F5F" stop-opacity=".55"/>
+          <stop offset="50%" stop-color="#E04F5F" stop-opacity=".18"/>
+          <stop offset="100%" stop-color="#E04F5F" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="cg_red_line" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#a8242f"/>
+          <stop offset="50%" stop-color="#E04F5F"/>
+          <stop offset="100%" stop-color="#fca5a5"/>
+        </linearGradient>
+        <filter id="cg_red_glow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="2.5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <line x1="0" y1="32" x2="300" y2="32" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+      <line x1="0" y1="65" x2="300" y2="65" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+      <line x1="0" y1="98" x2="300" y2="98" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+      <path d="M0,55 L0,50 L27,46 L55,42 L82,40 L110,42 L137,46 L165,52 L192,58 L220,65 L247,72 L275,80 L300,88 L300,130 L0,130 Z" fill="url(#cg_red)"/>
+      <polyline points="0,50 27,46 55,42 82,40 110,42 137,46 165,52 192,58 220,65 247,72 275,80 300,88" fill="none" stroke="url(#cg_red_line)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#cg_red_glow)"/>
+      <circle cx="0" cy="50" r="2" fill="#E04F5F"/>
+      <circle cx="27" cy="46" r="2" fill="#E04F5F"/>
+      <circle cx="55" cy="42" r="2" fill="#E04F5F"/>
+      <circle cx="82" cy="40" r="2" fill="#E04F5F"/>
+      <circle cx="110" cy="42" r="2" fill="#E04F5F"/>
+      <circle cx="137" cy="46" r="2" fill="#E04F5F"/>
+      <circle cx="165" cy="52" r="2" fill="#E04F5F"/>
+      <circle cx="192" cy="58" r="2" fill="#E04F5F"/>
+      <circle cx="220" cy="65" r="2" fill="#E04F5F"/>
+      <circle cx="247" cy="72" r="2" fill="#E04F5F"/>
+      <circle cx="275" cy="80" r="2" fill="#E04F5F"/>
+      <circle cx="300" cy="88" r="4" fill="#E04F5F" opacity=".4">
+        <animate attributeName="r" values="4;9;4" dur="1.8s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values=".5;0;.5" dur="1.8s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="300" cy="88" r="3.5" fill="#fca5a5" stroke="#0B1623" stroke-width="2"/>
+    </svg>
+  </div>
+  <div class="cc-x-axis">
+    <span>10:00</span><span>11:00</span><span>12:00</span><span>13:00</span><span>14:00</span><span>15:00</span><span>16:00</span>
+  </div>
+</div>
+
+<!-- BİREYSEL YATIRIMCI NET — BLUE -->
+<div class="chart-card chart-blue">
+  <div class="cc-head">
+    <div class="cc-eyebrow">
+      <span class="cc-dot" style="background:#5B9DD9;box-shadow:0 0 8px #5B9DD9"></span>
+      BİREYSEL YATIRIMCI NET
+    </div>
+    <span class="cc-pill" style="background:rgba(91,157,217,.13);color:#93c5fd;border:1px solid rgba(91,157,217,.3)">▲ CANLI</span>
+  </div>
+  <div class="cc-value" style="color:#93c5fd;text-shadow:0 0 32px rgba(91,157,217,.55),0 0 12px rgba(91,157,217,.4)">+240 Mn ₺</div>
+  <div class="cc-sub">Bugünkü toplam net alım</div>
+  <div class="cc-chart">
+    <svg viewBox="0 0 300 130" preserveAspectRatio="none" style="width:100%;height:200px;display:block">
+      <defs>
+        <linearGradient id="cg_blue" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#5B9DD9" stop-opacity=".55"/>
+          <stop offset="50%" stop-color="#5B9DD9" stop-opacity=".18"/>
+          <stop offset="100%" stop-color="#5B9DD9" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="cg_blue_line" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#2c5f8c"/>
+          <stop offset="50%" stop-color="#5B9DD9"/>
+          <stop offset="100%" stop-color="#93c5fd"/>
+        </linearGradient>
+        <filter id="cg_blue_glow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="2.5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <line x1="0" y1="32" x2="300" y2="32" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+      <line x1="0" y1="65" x2="300" y2="65" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+      <line x1="0" y1="98" x2="300" y2="98" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+      <path d="M0,100 L0,95 L27,88 L55,80 L82,76 L110,68 L137,58 L165,48 L192,40 L220,32 L247,26 L275,20 L300,14 L300,130 L0,130 Z" fill="url(#cg_blue)"/>
+      <polyline points="0,95 27,88 55,80 82,76 110,68 137,58 165,48 192,40 220,32 247,26 275,20 300,14" fill="none" stroke="url(#cg_blue_line)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#cg_blue_glow)"/>
+      <circle cx="0" cy="95" r="2" fill="#5B9DD9"/>
+      <circle cx="27" cy="88" r="2" fill="#5B9DD9"/>
+      <circle cx="55" cy="80" r="2" fill="#5B9DD9"/>
+      <circle cx="82" cy="76" r="2" fill="#5B9DD9"/>
+      <circle cx="110" cy="68" r="2" fill="#5B9DD9"/>
+      <circle cx="137" cy="58" r="2" fill="#5B9DD9"/>
+      <circle cx="165" cy="48" r="2" fill="#5B9DD9"/>
+      <circle cx="192" cy="40" r="2" fill="#5B9DD9"/>
+      <circle cx="220" cy="32" r="2" fill="#5B9DD9"/>
+      <circle cx="247" cy="26" r="2" fill="#5B9DD9"/>
+      <circle cx="275" cy="20" r="2" fill="#5B9DD9"/>
+      <circle cx="300" cy="14" r="4" fill="#5B9DD9" opacity=".4">
+        <animate attributeName="r" values="4;9;4" dur="1.8s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values=".5;0;.5" dur="1.8s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="300" cy="14" r="3.5" fill="#93c5fd" stroke="#0B1623" stroke-width="2"/>
+    </svg>
+  </div>
+  <div class="cc-x-axis">
+    <span>10:00</span><span>11:00</span><span>12:00</span><span>13:00</span><span>14:00</span><span>15:00</span><span>16:00</span>
+  </div>
+</div>
+
+</div>
+
+<!-- 3-PANEL: SEKTÖR GİRİŞ/ÇIKIŞ + GÜNÜN ÖZETİ -->
+<div class="cards-3" style="margin-bottom:28px">
+
+<!-- En çok para girişi sektörler -->
+<div class="info-card" style="padding:20px 22px">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+    <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#00B56E,#0a8a5e);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(0,181,110,.35)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    </div>
+    <span style="font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#F3F7FA">En Çok Para Girişi Olan Sektörler</span>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:2px">
+    <a href="sektor-bankacilik.html" class="sek-row" style="text-decoration:none;color:inherit;display:grid;cursor:pointer"><span class="sek-num">1</span><svg class="sek-icon" viewBox="0 0 24 24" fill="none" stroke="#8B98A9" stroke-width="1.6"><path d="M3 21h18M5 21V8l7-4 7 4v13M9 9v12M15 9v12"/></svg><span class="sek-name">Bankacılık</span><span class="sek-val up">+1,15 Mr ₺</span></a>
+    <a href="sektor-savunma.html" class="sek-row" style="text-decoration:none;color:inherit;display:grid;cursor:pointer"><span class="sek-num">2</span><svg class="sek-icon" viewBox="0 0 24 24" fill="none" stroke="#8B98A9" stroke-width="1.6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span class="sek-name">Savunma</span><span class="sek-val up">+620 Mn ₺</span></a>
+    <a href="sektor-havacilik.html" class="sek-row" style="text-decoration:none;color:inherit;display:grid;cursor:pointer"><span class="sek-num">3</span><svg class="sek-icon" viewBox="0 0 24 24" fill="none" stroke="#8B98A9" stroke-width="1.6"><path d="M3 12l9-9 9 9M3 12h18M5 12v8h14v-8"/></svg><span class="sek-name">Havacılık</span><span class="sek-val up">+310 Mn ₺</span></a>
+    <a href="sektor-sanayi.html" class="sek-row" style="text-decoration:none;color:inherit;display:grid;cursor:pointer"><span class="sek-num">4</span><svg class="sek-icon" viewBox="0 0 24 24" fill="none" stroke="#8B98A9" stroke-width="1.6"><path d="M3 22V8l5-3 5 3v14M13 22V11l4-2 4 2v11"/></svg><span class="sek-name">Sanayi</span><span class="sek-val up">+185 Mn ₺</span></a>
+    <a href="sektor-perakende.html" class="sek-row" style="text-decoration:none;color:inherit;display:grid;cursor:pointer"><span class="sek-num">5</span><svg class="sek-icon" viewBox="0 0 24 24" fill="none" stroke="#8B98A9" stroke-width="1.6"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg><span class="sek-name">Perakende</span><span class="sek-val up">+120 Mn ₺</span></a>
+  </div>
+  <div style="font-size:10px;color:#6B7A8D;margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.04)">Tüm tutarlar milyon TL cinsindendir.</div>
+</div>
+
+<!-- En çok para çıkışı sektörler -->
+<div class="info-card" style="padding:20px 22px">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+    <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#E04F5F,#a8242f);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(224,79,95,.35)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    </div>
+    <span style="font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#F3F7FA">En Çok Para Çıkışı Olan Sektörler</span>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:2px">
+    <a href="sektor-metal.html" class="sek-row" style="text-decoration:none;color:inherit;display:grid;cursor:pointer"><span class="sek-num">1</span><svg class="sek-icon" viewBox="0 0 24 24" fill="none" stroke="#8B98A9" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.01a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.01a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.01a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span class="sek-name">Metal</span><span class="sek-val dn">−482 Mn ₺</span></a>
+    <a href="sektor-gida.html" class="sek-row" style="text-decoration:none;color:inherit;display:grid;cursor:pointer"><span class="sek-num">2</span><svg class="sek-icon" viewBox="0 0 24 24" fill="none" stroke="#8B98A9" stroke-width="1.6"><path d="M4 2v6l4 4-4 4v6h16v-6l-4-4 4-4V2z"/></svg><span class="sek-name">Gıda</span><span class="sek-val dn">−215 Mn ₺</span></a>
+    <a href="sektor-petrokimya.html" class="sek-row" style="text-decoration:none;color:inherit;display:grid;cursor:pointer"><span class="sek-num">3</span><svg class="sek-icon" viewBox="0 0 24 24" fill="none" stroke="#8B98A9" stroke-width="1.6"><path d="M9 2h6l1 4v10a3 3 0 0 1-6 0V6z"/><path d="M9 11h6"/></svg><span class="sek-name">Petrokimya</span><span class="sek-val dn">−140 Mn ₺</span></a>
+    <a href="sektor-elektrik.html" class="sek-row" style="text-decoration:none;color:inherit;display:grid;cursor:pointer"><span class="sek-num">4</span><svg class="sek-icon" viewBox="0 0 24 24" fill="none" stroke="#8B98A9" stroke-width="1.6"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg><span class="sek-name">Elektrik</span><span class="sek-val dn">−110 Mn ₺</span></a>
+    <a href="sektor-tekstil.html" class="sek-row" style="text-decoration:none;color:inherit;display:grid;cursor:pointer"><span class="sek-num">5</span><svg class="sek-icon" viewBox="0 0 24 24" fill="none" stroke="#8B98A9" stroke-width="1.6"><path d="M20.4 14.5L16 10 4 20M4 4l8 8M14 16l4-4"/></svg><span class="sek-name">Tekstil</span><span class="sek-val dn">−85 Mn ₺</span></a>
+  </div>
+  <div style="font-size:10px;color:#6B7A8D;margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.04)">Tüm tutarlar milyon TL cinsindendir.</div>
+</div>
+
+<!-- Günün özeti -->
+<div class="info-card gunun-ozeti" style="padding:20px 22px">
+  <div style="font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#F3F7FA;margin-bottom:16px">Günün Özeti</div>
+  <div class="gunun-ozeti-list" style="display:flex;flex-direction:column;gap:14px">
+    <div style="display:flex;gap:12px">
+      <div style="width:30px;height:30px;border-radius:50%;background:rgba(0,181,110,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00B56E" stroke-width="3"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+      </div>
+      <div style="font-size:13px;color:#B0B9C5;line-height:1.55"><strong style="color:#F3F7FA">Yabancı yatırımcılar</strong> bugün net <span style="color:#00B56E;font-weight:600">alıcı</span> konumunda.</div>
+    </div>
+    <div style="display:flex;gap:12px">
+      <div style="width:30px;height:30px;border-radius:50%;background:rgba(224,79,95,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E04F5F" stroke-width="3"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      </div>
+      <div style="font-size:13px;color:#B0B9C5;line-height:1.55"><strong style="color:#F3F7FA">Yerli kurumsal yatırımcılar</strong> net <span style="color:#E04F5F;font-weight:600">satıcı</span> konumunda.</div>
+    </div>
+    <div style="display:flex;gap:12px">
+      <div style="width:30px;height:30px;border-radius:50%;background:rgba(91,157,217,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5B9DD9" stroke-width="2.4"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2"/></svg>
+      </div>
+      <div style="font-size:13px;color:#B0B9C5;line-height:1.55"><strong style="color:#F3F7FA">Bireysel yatırımcılar</strong> bugün net <span style="color:#5B9DD9;font-weight:600">alım</span> gerçekleştirdi.</div>
+    </div>
+  </div>
+  <div style="border-top:1px solid rgba(255,255,255,.04);margin-top:14px;padding-top:12px;display:flex;align-items:center;gap:8px">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C8A96B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <span style="font-size:11.5px;color:#C8A96B;font-weight:700">Son Güncelleme</span>
+    <span style="margin-left:auto;font-family:monospace;font-size:12px;color:#C8A96B;font-weight:700">15:32:45</span>
+  </div>
+</div>
+
+</div>
+
+<!-- ===== ENDEKS ETKİLEYENLER MİNİ PANEL (yatırımcı akışı altında boş alanı dolduran) ===== -->
+<div class="endeks-mini-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:28px">
+
+<div style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--line)">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#00B56E,#0a8a5e);display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M7 17l5-5 5 5M7 7l5-5 5 5"/></svg></span>
+      <div><div style="font-size:14px;font-weight:700;letter-spacing:-.01em;color:var(--text)">BIST 100'ü Etkileyenler</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">Endekse en çok katkı</div></div>
+    </div>
+    <span style="padding:3px 9px;border-radius:5px;background:rgba(0,181,110,.13);color:#00B56E;font-size:10px;font-weight:700;letter-spacing:.06em;font-family:var(--font-mono)">▲ POZİTİF</span>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:10px;font-family:'Inter',sans-serif">
+    <div style="display:grid;grid-template-columns:32px 1fr 80px;gap:10px;align-items:center"><span style="width:30px;height:30px;border-radius:50%;background:#fff;overflow:hidden;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/garan_icon.png" alt="GARAN" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><div><div style="font-size:13px;font-weight:700">GARAN</div><div style="font-size:10.5px;color:var(--text-muted)">Garanti BBVA</div></div><div style="text-align:right;font-variant-numeric:tabular-nums"><div style="color:#00B56E;font-weight:700;font-size:13px">+28,42</div><div style="font-size:10.5px;color:var(--text-muted)">puan</div></div></div>
+    <div style="display:grid;grid-template-columns:32px 1fr 80px;gap:10px;align-items:center"><span style="width:30px;height:30px;border-radius:50%;background:#fff;overflow:hidden;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/akbnk_icon.png" alt="AKBNK" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><div><div style="font-size:13px;font-weight:700">AKBNK</div><div style="font-size:10.5px;color:var(--text-muted)">Akbank</div></div><div style="text-align:right;font-variant-numeric:tabular-nums"><div style="color:#00B56E;font-weight:700;font-size:13px">+24,15</div><div style="font-size:10.5px;color:var(--text-muted)">puan</div></div></div>
+    <div style="display:grid;grid-template-columns:32px 1fr 80px;gap:10px;align-items:center"><span style="width:30px;height:30px;border-radius:50%;background:#fff;overflow:hidden;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/thyao_icon.png" alt="THYAO" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><div><div style="font-size:13px;font-weight:700">THYAO</div><div style="font-size:10.5px;color:var(--text-muted)">Türk Hava Yolları</div></div><div style="text-align:right;font-variant-numeric:tabular-nums"><div style="color:#00B56E;font-weight:700;font-size:13px">+18,72</div><div style="font-size:10.5px;color:var(--text-muted)">puan</div></div></div>
+    <div style="display:grid;grid-template-columns:32px 1fr 80px;gap:10px;align-items:center"><span style="width:30px;height:30px;border-radius:50%;background:#fff;overflow:hidden;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/asels_icon.png" alt="ASELS" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><div><div style="font-size:13px;font-weight:700">ASELS</div><div style="font-size:10.5px;color:var(--text-muted)">Aselsan</div></div><div style="text-align:right;font-variant-numeric:tabular-nums"><div style="color:#00B56E;font-weight:700;font-size:13px">+16,84</div><div style="font-size:10.5px;color:var(--text-muted)">puan</div></div></div>
+    <div style="display:grid;grid-template-columns:32px 1fr 80px;gap:10px;align-items:center"><span style="width:30px;height:30px;border-radius:50%;background:#fff;overflow:hidden;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/kchol_icon.png" alt="KCHOL" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><div><div style="font-size:13px;font-weight:700">KCHOL</div><div style="font-size:10.5px;color:var(--text-muted)">Koç Holding</div></div><div style="text-align:right;font-variant-numeric:tabular-nums"><div style="color:#00B56E;font-weight:700;font-size:13px">+8,42</div><div style="font-size:10.5px;color:var(--text-muted)">puan</div></div></div>
+  </div>
+</div>
+
+<div style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--line)">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#E04F5F,#a8242f);display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M17 7l-5 5-5-5M17 17l-5 5-5-5"/></svg></span>
+      <div><div style="font-size:14px;font-weight:700;letter-spacing:-.01em;color:var(--text)">Endeksi Düşürenler</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px">Endeksten en çok puan götüren</div></div>
+    </div>
+    <span style="padding:3px 9px;border-radius:5px;background:rgba(224,79,95,.13);color:#E04F5F;font-size:10px;font-weight:700;letter-spacing:.06em;font-family:var(--font-mono)">▼ NEGATİF</span>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:10px;font-family:'Inter',sans-serif">
+    <div style="display:grid;grid-template-columns:32px 1fr 80px;gap:10px;align-items:center"><span style="width:30px;height:30px;border-radius:50%;background:#fff;overflow:hidden;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/eregl_icon.png" alt="EREGL" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><div><div style="font-size:13px;font-weight:700">EREGL</div><div style="font-size:10.5px;color:var(--text-muted)">Ereğli Demir Çelik</div></div><div style="text-align:right;font-variant-numeric:tabular-nums"><div style="color:#E04F5F;font-weight:700;font-size:13px">−6,84</div><div style="font-size:10.5px;color:var(--text-muted)">puan</div></div></div>
+    <div style="display:grid;grid-template-columns:32px 1fr 80px;gap:10px;align-items:center"><span style="width:30px;height:30px;border-radius:50%;background:#fff;overflow:hidden;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/bimas_icon.png" alt="BIMAS" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><div><div style="font-size:13px;font-weight:700">BIMAS</div><div style="font-size:10.5px;color:var(--text-muted)">BİM Mağazalar</div></div><div style="text-align:right;font-variant-numeric:tabular-nums"><div style="color:#E04F5F;font-weight:700;font-size:13px">−3,12</div><div style="font-size:10.5px;color:var(--text-muted)">puan</div></div></div>
+    <div style="display:grid;grid-template-columns:32px 1fr 80px;gap:10px;align-items:center"><span style="width:30px;height:30px;border-radius:50%;background:#fff;overflow:hidden;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/petkm_icon.png" alt="PETKM" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><div><div style="font-size:13px;font-weight:700">PETKM</div><div style="font-size:10.5px;color:var(--text-muted)">Petkim</div></div><div style="text-align:right;font-variant-numeric:tabular-nums"><div style="color:#E04F5F;font-weight:700;font-size:13px">−2,84</div><div style="font-size:10.5px;color:var(--text-muted)">puan</div></div></div>
+    <div style="display:grid;grid-template-columns:32px 1fr 80px;gap:10px;align-items:center"><span style="width:30px;height:30px;border-radius:50%;background:#fff;overflow:hidden;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/toaso_icon.png" alt="TOASO" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><div><div style="font-size:13px;font-weight:700">TOASO</div><div style="font-size:10.5px;color:var(--text-muted)">Tofaş</div></div><div style="text-align:right;font-variant-numeric:tabular-nums"><div style="color:#E04F5F;font-weight:700;font-size:13px">−1,82</div><div style="font-size:10.5px;color:var(--text-muted)">puan</div></div></div>
+    <div style="display:grid;grid-template-columns:32px 1fr 80px;gap:10px;align-items:center"><span style="width:30px;height:30px;border-radius:50%;background:#fff;overflow:hidden;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/pgsus_icon.png" alt="PGSUS" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><div><div style="font-size:13px;font-weight:700">PGSUS</div><div style="font-size:10.5px;color:var(--text-muted)">Pegasus</div></div><div style="text-align:right;font-variant-numeric:tabular-nums"><div style="color:#E04F5F;font-weight:700;font-size:13px">−1,42</div><div style="font-size:10.5px;color:var(--text-muted)">puan</div></div></div>
+  </div>
+</div>
+
+</div>
+<style>@media(max-width:880px){.endeks-mini-grid{grid-template-columns:1fr!important}}</style>
+
+<!-- YABANCI AKIŞ -->
+
+<!-- ====== ARACI KURUM İŞLEM HACİMLERİ — Donut + Tablo + Tıklanabilir ====== -->
+<style>
+.kh-section{margin-bottom:32px}
+.kh-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.kh-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;font-family:'Inter',sans-serif}
+.kh-card h3{font-size:13px;font-weight:700;letter-spacing:-.005em;color:var(--text);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.kh-card .kh-sub{font-size:11px;color:var(--text-muted);margin-bottom:18px}
+.kh-donut-wrap{display:flex;justify-content:center;margin:8px 0 18px}
+.kh-donut{width:180px;height:180px;position:relative}
+.kh-donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;pointer-events:none}
+.kh-donut-center-val{font-size:18px;font-weight:800;color:var(--text);font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:1}
+.kh-donut-center-lbl{font-size:10px;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase;margin-top:4px;font-weight:600}
+.kh-list{display:flex;flex-direction:column;gap:8px}
+.kh-row{display:grid;grid-template-columns:14px 1fr 70px 50px;gap:10px;align-items:center;padding:8px 10px;border-radius:6px;cursor:pointer;transition:background .15s}
+.kh-row:hover{background:rgba(255,255,255,.03)}
+html[data-theme=light] .kh-row:hover,
+body.premium-light .kh-row:hover{background:rgba(13,27,46,.03)}
+.kh-color{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+.kh-row-name{font-size:13px;font-weight:600;color:var(--text);letter-spacing:-.005em}
+.kh-row-val{text-align:right;font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums}
+.kh-row-pct{text-align:right;font-size:11.5px;color:var(--text-muted);font-variant-numeric:tabular-nums}
+
+@media(max-width:980px){.kh-grid{grid-template-columns:1fr}}
+
+/* Modal */
+.kh-modal{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px}
+.kh-modal.open{display:flex}
+.kh-modal-inner{background:var(--panel);border:1px solid var(--line);border-radius:16px;max-width:720px;width:100%;max-height:90vh;overflow-y:auto;padding:28px}
+.kh-modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.kh-modal-title{display:flex;align-items:center;gap:14px}
+.kh-modal-title-logo{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:14px;letter-spacing:-.02em}
+.kh-modal-title-text h3{font-size:17px;font-weight:700;color:var(--text);margin-bottom:3px;letter-spacing:-.005em}
+.kh-modal-title-text p{font-size:11.5px;color:var(--text-muted)}
+.kh-modal-close{background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--text);width:36px;height:36px;border-radius:8px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center}
+html[data-theme=light] .kh-modal-close,
+body.premium-light .kh-modal-close{background:rgba(13,27,46,.04)}
+.kh-modal-tabs{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.kh-modal-col h4{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.kh-modal-col.buy h4{color:#00B56E}
+.kh-modal-col.sell h4{color:#E04F5F}
+.kh-modal-hisse{display:grid;grid-template-columns:32px 1fr 90px;gap:10px;align-items:center;padding:10px;border-radius:8px;background:rgba(255,255,255,.025);margin-bottom:8px;font-family:'Inter',sans-serif}
+html[data-theme=light] .kh-modal-hisse,
+body.premium-light .kh-modal-hisse{background:rgba(13,27,46,.03)}
+.kh-modal-hisse-logo{width:30px;height:30px;border-radius:50%;background:#fff;overflow:hidden;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)}
+.kh-modal-hisse-logo img{width:100%;height:100%;object-fit:cover}
+.kh-modal-hisse-info{min-width:0}
+.kh-modal-hisse-code{font-size:12.5px;font-weight:700;color:var(--text);letter-spacing:-.005em}
+.kh-modal-hisse-name{font-size:10.5px;color:var(--text-muted);margin-top:1px}
+.kh-modal-hisse-val{text-align:right;font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums}
+
+@media(max-width:560px){.kh-modal-tabs{grid-template-columns:1fr}.kh-modal-inner{padding:20px}}
+</style>
+
+<div class="kh-section">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+    <h2 style="font-size:18px;font-weight:700;letter-spacing:-.015em;display:flex;align-items:center;gap:10px;color:var(--text)">
+      <span style="width:4px;height:20px;background:var(--accent);border-radius:2px"></span>
+      Aracı Kurum İşlem Hacimleri
+    </h2>
+    <span style="font-size:11.5px;color:var(--text-muted)">Bugün · Tıklayınca detay</span>
+  </div>
+
+  <div class="kh-grid">
+
+    <!-- DONUT 1: NET ALICILAR -->
+    <div class="kh-card">
+      <h3><span style="width:8px;height:8px;border-radius:50%;background:#00B56E"></span>Net Alıcılar</h3>
+      <div class="kh-sub">Bugün en çok net alım yapan kurumlar</div>
+      <div class="kh-donut-wrap">
+        <div class="kh-donut">
+          <svg viewBox="0 0 100 100" style="width:100%;height:100%;transform:rotate(-90deg)">
+            <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(255,255,255,.04)" stroke-width="14"/>
+            <!-- Segments: Garanti 38%, Is 24%, Yapi Kredi 16%, AK 12%, Deniz 6%, Diğer 4% -->
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#00B56E" stroke-width="14" stroke-dasharray="90.7 238.8" stroke-dashoffset="0"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#5B9DD9" stroke-width="14" stroke-dasharray="57.3 238.8" stroke-dashoffset="-90.7"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#9d7bc7" stroke-width="14" stroke-dasharray="38.2 238.8" stroke-dashoffset="-148"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#fbbf24" stroke-width="14" stroke-dasharray="28.6 238.8" stroke-dashoffset="-186.2"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#06b6d4" stroke-width="14" stroke-dasharray="14.3 238.8" stroke-dashoffset="-214.8"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(139,152,169,.5)" stroke-width="14" stroke-dasharray="9.6 238.8" stroke-dashoffset="-229.1"/>
+          </svg>
+          <div class="kh-donut-center">
+            <div class="kh-donut-center-val">2,98 Mr</div>
+            <div class="kh-donut-center-lbl">TOPLAM ALIM</div>
+          </div>
+        </div>
+      </div>
+      <div class="kh-list">
+        <div class="kh-row" onclick="openKurumDetail('GARAN','Garanti Yat.','#00B56E')"><span class="kh-color" style="background:#00B56E"></span><span class="kh-row-name">Garanti Yat.</span><span class="kh-row-val" style="color:#00B56E">1,13 Mr</span><span class="kh-row-pct">%38</span></div>
+        <div class="kh-row" onclick="openKurumDetail('ISCTR','İş Yatırım','#5B9DD9')"><span class="kh-color" style="background:#5B9DD9"></span><span class="kh-row-name">İş Yatırım</span><span class="kh-row-val" style="color:#00B56E">715 Mn</span><span class="kh-row-pct">%24</span></div>
+        <div class="kh-row" onclick="openKurumDetail('YKBNK','Yapı Kredi Yat.','#9d7bc7')"><span class="kh-color" style="background:#9d7bc7"></span><span class="kh-row-name">Yapı Kredi Yat.</span><span class="kh-row-val" style="color:#00B56E">477 Mn</span><span class="kh-row-pct">%16</span></div>
+        <div class="kh-row" onclick="openKurumDetail('AKBNK','AK Yatırım','#fbbf24')"><span class="kh-color" style="background:#fbbf24"></span><span class="kh-row-name">AK Yatırım</span><span class="kh-row-val" style="color:#00B56E">358 Mn</span><span class="kh-row-pct">%12</span></div>
+        <div class="kh-row" onclick="openKurumDetail('DENIZ','Deniz Yatırım','#06b6d4')"><span class="kh-color" style="background:#06b6d4"></span><span class="kh-row-name">Deniz Yatırım</span><span class="kh-row-val" style="color:#00B56E">179 Mn</span><span class="kh-row-pct">%6</span></div>
+        <div class="kh-row" style="cursor:default"><span class="kh-color" style="background:rgba(139,152,169,.5)"></span><span class="kh-row-name" style="color:var(--text-muted)">Diğer</span><span class="kh-row-val" style="color:var(--text-muted)">119 Mn</span><span class="kh-row-pct">%4</span></div>
+      </div>
+    </div>
+
+    <!-- DONUT 2: NET SATICILAR -->
+    <div class="kh-card">
+      <h3><span style="width:8px;height:8px;border-radius:50%;background:#E04F5F"></span>Net Satıcılar</h3>
+      <div class="kh-sub">Bugün en çok net satış yapan kurumlar</div>
+      <div class="kh-donut-wrap">
+        <div class="kh-donut">
+          <svg viewBox="0 0 100 100" style="width:100%;height:100%;transform:rotate(-90deg)">
+            <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(255,255,255,.04)" stroke-width="14"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#E04F5F" stroke-width="14" stroke-dasharray="98.8 238.8" stroke-dashoffset="0"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#dc2626" stroke-width="14" stroke-dasharray="62.1 238.8" stroke-dashoffset="-98.8"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#7c3aed" stroke-width="14" stroke-dasharray="40.6 238.8" stroke-dashoffset="-160.9"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#ea580c" stroke-width="14" stroke-dasharray="23.9 238.8" stroke-dashoffset="-201.5"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#0891b2" stroke-width="14" stroke-dasharray="9.5 238.8" stroke-dashoffset="-225.4"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(139,152,169,.5)" stroke-width="14" stroke-dasharray="3.8 238.8" stroke-dashoffset="-234.9"/>
+          </svg>
+          <div class="kh-donut-center">
+            <div class="kh-donut-center-val">2,42 Mr</div>
+            <div class="kh-donut-center-lbl">TOPLAM SATIM</div>
+          </div>
+        </div>
+      </div>
+      <div class="kh-list">
+        <div class="kh-row" onclick="openKurumDetail('BANK','Bank of America','#E04F5F')"><span class="kh-color" style="background:#E04F5F"></span><span class="kh-row-name">Bank of America</span><span class="kh-row-val" style="color:#E04F5F">−1,00 Mr</span><span class="kh-row-pct">%41</span></div>
+        <div class="kh-row" onclick="openKurumDetail('HSBC','HSBC Yatırım','#dc2626')"><span class="kh-color" style="background:#dc2626"></span><span class="kh-row-name">HSBC Yatırım</span><span class="kh-row-val" style="color:#E04F5F">−630 Mn</span><span class="kh-row-pct">%26</span></div>
+        <div class="kh-row" onclick="openKurumDetail('MLYN','Merrill Lynch','#7c3aed')"><span class="kh-color" style="background:#7c3aed"></span><span class="kh-row-name">Merrill Lynch</span><span class="kh-row-val" style="color:#E04F5F">−412 Mn</span><span class="kh-row-pct">%17</span></div>
+        <div class="kh-row" onclick="openKurumDetail('JPMG','JPMorgan Sec.','#ea580c')"><span class="kh-color" style="background:#ea580c"></span><span class="kh-row-name">JPMorgan Sec.</span><span class="kh-row-val" style="color:#E04F5F">−243 Mn</span><span class="kh-row-pct">%10</span></div>
+        <div class="kh-row" onclick="openKurumDetail('DEUT','Deutsche Bank','#0891b2')"><span class="kh-color" style="background:#0891b2"></span><span class="kh-row-name">Deutsche Bank</span><span class="kh-row-val" style="color:#E04F5F">−97 Mn</span><span class="kh-row-pct">%4</span></div>
+        <div class="kh-row" style="cursor:default"><span class="kh-color" style="background:rgba(139,152,169,.5)"></span><span class="kh-row-name" style="color:var(--text-muted)">Diğer</span><span class="kh-row-val" style="color:var(--text-muted)">−38 Mn</span><span class="kh-row-pct">%2</span></div>
+      </div>
+    </div>
+
+    <!-- DONUT 3: TOPLAM HACİM (KURUM) -->
+    <div class="kh-card">
+      <h3><span style="width:8px;height:8px;border-radius:50%;background:#C8A96B"></span>Toplam Hacim Lideri</h3>
+      <div class="kh-sub">İşlem hacmi en büyük kurumlar</div>
+      <div class="kh-donut-wrap">
+        <div class="kh-donut">
+          <svg viewBox="0 0 100 100" style="width:100%;height:100%;transform:rotate(-90deg)">
+            <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(255,255,255,.04)" stroke-width="14"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#9d7bc7" stroke-width="14" stroke-dasharray="46.1 238.8" stroke-dashoffset="0"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#fbbf24" stroke-width="14" stroke-dasharray="40.6 238.8" stroke-dashoffset="-46.1"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#5B9DD9" stroke-width="14" stroke-dasharray="32.3 238.8" stroke-dashoffset="-86.7"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#00B56E" stroke-width="14" stroke-dasharray="22.9 238.8" stroke-dashoffset="-119"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#06b6d4" stroke-width="14" stroke-dasharray="12 238.8" stroke-dashoffset="-141.9"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(139,152,169,.5)" stroke-width="14" stroke-dasharray="84.9 238.8" stroke-dashoffset="-153.9"/>
+          </svg>
+          <div class="kh-donut-center">
+            <div class="kh-donut-center-val">485 Mr</div>
+            <div class="kh-donut-center-lbl">TOPLAM HACİM</div>
+          </div>
+        </div>
+      </div>
+      <div class="kh-list">
+        <div class="kh-row" onclick="openKurumDetail('YKBNK','Yapı Kredi Yat.','#9d7bc7')"><span class="kh-color" style="background:#9d7bc7"></span><span class="kh-row-name">Yapı Kredi Yat.</span><span class="kh-row-val" style="color:var(--accent)">93,7 Mr</span><span class="kh-row-pct">%19</span></div>
+        <div class="kh-row" onclick="openKurumDetail('AKBNK','AK Yatırım','#fbbf24')"><span class="kh-color" style="background:#fbbf24"></span><span class="kh-row-name">AK Yatırım</span><span class="kh-row-val" style="color:var(--accent)">82,5 Mr</span><span class="kh-row-pct">%17</span></div>
+        <div class="kh-row" onclick="openKurumDetail('ISCTR','İş Yatırım','#5B9DD9')"><span class="kh-color" style="background:#5B9DD9"></span><span class="kh-row-name">İş Yatırım</span><span class="kh-row-val" style="color:var(--accent)">65,5 Mr</span><span class="kh-row-pct">%14</span></div>
+        <div class="kh-row" onclick="openKurumDetail('GARAN','Garanti Yat.','#00B56E')"><span class="kh-color" style="background:#00B56E"></span><span class="kh-row-name">Garanti Yat.</span><span class="kh-row-val" style="color:var(--accent)">46,6 Mr</span><span class="kh-row-pct">%10</span></div>
+        <div class="kh-row" onclick="openKurumDetail('DENIZ','Deniz Yatırım','#06b6d4')"><span class="kh-color" style="background:#06b6d4"></span><span class="kh-row-name">Deniz Yatırım</span><span class="kh-row-val" style="color:var(--accent)">24,4 Mr</span><span class="kh-row-pct">%5</span></div>
+        <div class="kh-row" style="cursor:default"><span class="kh-color" style="background:rgba(139,152,169,.5)"></span><span class="kh-row-name" style="color:var(--text-muted)">Diğer 15 Kurum</span><span class="kh-row-val" style="color:var(--text-muted)">172,3 Mr</span><span class="kh-row-pct">%35</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL: Kurum tıklayınca açılan detay -->
+<div class="kh-modal" id="kurumModal" onclick="if(event.target===this)closeKurumModal()">
+  <div class="kh-modal-inner">
+    <div class="kh-modal-head">
+      <div class="kh-modal-title">
+        <div class="kh-modal-title-logo" id="khModalLogo">GA</div>
+        <div class="kh-modal-title-text">
+          <h3 id="khModalName">Kurum Adı</h3>
+          <p>Bugünkü en çok işlem yapılan hisseler</p>
+        </div>
+      </div>
+      <button class="kh-modal-close" onclick="closeKurumModal()">✕</button>
+    </div>
+    <div class="kh-modal-tabs">
+      <div class="kh-modal-col buy">
+        <h4>▲ EN ÇOK ALDIĞI 5 HİSSE</h4>
+        <div id="khModalBuy"></div>
+      </div>
+      <div class="kh-modal-col sell">
+        <h4>▼ EN ÇOK SATTIĞI 5 HİSSE</h4>
+        <div id="khModalSell"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Kurum bazlı en çok alınan/satılan hisseler (mock data)
+var KURUM_DETAIL = {
+  'GARAN': { buy:[['THYAO','Türk Hava Yolları','+285 Mn'],['ASELS','Aselsan','+142 Mn'],['GARAN','Garanti BBVA','+128 Mn'],['AKBNK','Akbank','+96 Mn'],['SISE','Şişecam','+82 Mn']], sell:[['EREGL','Ereğli Demir Çelik','−74 Mn'],['BIMAS','BİM Mağazalar','−62 Mn'],['PETKM','Petkim','−48 Mn'],['VESTL','Vestel','−32 Mn'],['TOASO','Tofaş','−24 Mn']] },
+  'ISCTR': { buy:[['ASELS','Aselsan','+184 Mn'],['THYAO','Türk Hava Yolları','+148 Mn'],['KCHOL','Koç Holding','+92 Mn'],['SAHOL','Sabancı Holding','+78 Mn'],['SISE','Şişecam','+62 Mn']], sell:[['EREGL','Ereğli Demir Çelik','−112 Mn'],['BIMAS','BİM Mağazalar','−84 Mn'],['MGROS','Migros','−58 Mn'],['PGSUS','Pegasus','−42 Mn'],['ARCLK','Arçelik','−28 Mn']] },
+  'YKBNK': { buy:[['TUPRS','Tüpraş','+98 Mn'],['THYAO','Türk Hava Yolları','+86 Mn'],['SAHOL','Sabancı Holding','+72 Mn'],['ASELS','Aselsan','+64 Mn'],['ENKAI','Enka İnşaat','+48 Mn']], sell:[['PETKM','Petkim','−68 Mn'],['EREGL','Ereğli Demir Çelik','−54 Mn'],['VESTL','Vestel','−42 Mn'],['BIMAS','BİM Mağazalar','−32 Mn'],['MGROS','Migros','−18 Mn']] },
+  'AKBNK': { buy:[['KCHOL','Koç Holding','+128 Mn'],['THYAO','Türk Hava Yolları','+98 Mn'],['AKBNK','Akbank','+86 Mn'],['ASELS','Aselsan','+72 Mn'],['ENKAI','Enka İnşaat','+54 Mn']], sell:[['EREGL','Ereğli Demir Çelik','−84 Mn'],['BIMAS','BİM Mağazalar','−62 Mn'],['TOASO','Tofaş','−48 Mn'],['PETKM','Petkim','−38 Mn'],['ARCLK','Arçelik','−24 Mn']] },
+  'DENIZ': { buy:[['SAHOL','Sabancı Holding','+78 Mn'],['THYAO','Türk Hava Yolları','+62 Mn'],['GARAN','Garanti BBVA','+54 Mn'],['SISE','Şişecam','+42 Mn'],['ASELS','Aselsan','+36 Mn']], sell:[['EREGL','Ereğli Demir Çelik','−52 Mn'],['BIMAS','BİM Mağazalar','−38 Mn'],['PETKM','Petkim','−28 Mn'],['VESTL','Vestel','−22 Mn'],['PGSUS','Pegasus','−14 Mn']] },
+  'BANK': { buy:[['THYAO','Türk Hava Yolları','+184 Mn'],['ASELS','Aselsan','+142 Mn'],['SAHOL','Sabancı Holding','+98 Mn'],['KCHOL','Koç Holding','+72 Mn'],['TUPRS','Tüpraş','+54 Mn']], sell:[['EREGL','Ereğli Demir Çelik','−248 Mn'],['BIMAS','BİM Mağazalar','−184 Mn'],['PETKM','Petkim','−142 Mn'],['TOASO','Tofaş','−98 Mn'],['ARCLK','Arçelik','−68 Mn']] },
+  'HSBC': { buy:[['ASELS','Aselsan','+98 Mn'],['THYAO','Türk Hava Yolları','+72 Mn'],['GARAN','Garanti BBVA','+54 Mn'],['AKBNK','Akbank','+42 Mn'],['SAHOL','Sabancı Holding','+28 Mn']], sell:[['EREGL','Ereğli Demir Çelik','−184 Mn'],['BIMAS','BİM Mağazalar','−128 Mn'],['VESTL','Vestel','−92 Mn'],['PETKM','Petkim','−72 Mn'],['MGROS','Migros','−48 Mn']] },
+  'MLYN': { buy:[['KCHOL','Koç Holding','+82 Mn'],['THYAO','Türk Hava Yolları','+68 Mn'],['ASELS','Aselsan','+54 Mn'],['SAHOL','Sabancı Holding','+42 Mn'],['SISE','Şişecam','+28 Mn']], sell:[['EREGL','Ereğli Demir Çelik','−128 Mn'],['BIMAS','BİM Mağazalar','−84 Mn'],['PETKM','Petkim','−62 Mn'],['VESTL','Vestel','−48 Mn'],['ARCLK','Arçelik','−24 Mn']] },
+  'JPMG': { buy:[['THYAO','Türk Hava Yolları','+58 Mn'],['GARAN','Garanti BBVA','+42 Mn'],['ASELS','Aselsan','+32 Mn'],['TUPRS','Tüpraş','+24 Mn'],['AKBNK','Akbank','+18 Mn']], sell:[['EREGL','Ereğli Demir Çelik','−72 Mn'],['BIMAS','BİM Mağazalar','−48 Mn'],['VESTL','Vestel','−38 Mn'],['PETKM','Petkim','−28 Mn'],['PGSUS','Pegasus','−18 Mn']] },
+  'DEUT': { buy:[['ASELS','Aselsan','+48 Mn'],['THYAO','Türk Hava Yolları','+38 Mn'],['SAHOL','Sabancı Holding','+28 Mn'],['SISE','Şişecam','+22 Mn'],['ENKAI','Enka İnşaat','+18 Mn']], sell:[['EREGL','Ereğli Demir Çelik','−48 Mn'],['BIMAS','BİM Mağazalar','−32 Mn'],['VESTL','Vestel','−24 Mn'],['PETKM','Petkim','−18 Mn'],['TOASO','Tofaş','−12 Mn']] }
+};
+function openKurumDetail(key, name, color){
+  var d = KURUM_DETAIL[key];
+  if(!d) d = KURUM_DETAIL['GARAN']; // fallback
+  document.getElementById('khModalName').textContent = name;
+  var logo = document.getElementById('khModalLogo');
+  logo.textContent = name.split(' ').map(function(w){return w[0];}).join('').substring(0,2).toUpperCase();
+  logo.style.background = 'linear-gradient(135deg,'+color+','+shadeColor(color,-30)+')';
+  document.getElementById('khModalBuy').innerHTML = d.buy.map(function(h){
+    return '<div class="kh-modal-hisse"><span class="kh-modal-hisse-logo"><img src="https://storage.fintables.com/media/uploads/company-logos/'+h[0].toLowerCase()+'_icon.png" alt="'+h[0]+'" onerror="if(!this.dataset.fb){this.dataset.fb=\'1\';this.src=\'https://web-api.forinvestcdn.com/definitions/icon?code=\'+this.alt}else{this.style.display=\'none\'}"></span><div class="kh-modal-hisse-info"><div class="kh-modal-hisse-code">'+h[0]+'</div><div class="kh-modal-hisse-name">'+h[1]+'</div></div><div class="kh-modal-hisse-val" style="color:#00B56E">'+h[2]+'</div></div>';
+  }).join('');
+  document.getElementById('khModalSell').innerHTML = d.sell.map(function(h){
+    return '<div class="kh-modal-hisse"><span class="kh-modal-hisse-logo"><img src="https://storage.fintables.com/media/uploads/company-logos/'+h[0].toLowerCase()+'_icon.png" alt="'+h[0]+'" onerror="if(!this.dataset.fb){this.dataset.fb=\'1\';this.src=\'https://web-api.forinvestcdn.com/definitions/icon?code=\'+this.alt}else{this.style.display=\'none\'}"></span><div class="kh-modal-hisse-info"><div class="kh-modal-hisse-code">'+h[0]+'</div><div class="kh-modal-hisse-name">'+h[1]+'</div></div><div class="kh-modal-hisse-val" style="color:#E04F5F">'+h[2]+'</div></div>';
+  }).join('');
+  document.getElementById('kurumModal').classList.add('open');
+}
+function closeKurumModal(){ document.getElementById('kurumModal').classList.remove('open'); }
+</script>
+
+<div class="section-head" style="margin-top:8px;">
+<h2>Yabancı Yatırımcı Akışı</h2>
+<div class="head-right">
+<span class="mono-cap" style="color:var(--text-muted)">Son Güncelleme: 15:32</span>
+<span class="premium-badge" style="font-size:11px;padding:4px 10px;">● Canlı</span>
+</div>
+</div>
+
+<div class="yabanci-grid">
+<!-- Yabancı Girişi -->
+<div class="flow-panel green">
+<div class="fp-head">
+<div class="fp-title"><span class="fp-dot green"></span>Yabancı Girişi</div>
+<span class="fp-unit">Milyon TL</span>
+</div>
+<div class="fp-body">
+<div class="fp-col-head"><span>Hisse</span><span>Tutar</span><span>Pay (%)</span></div>
+<div class="fp-row"><div class="fp-name" style="display:flex;align-items:center;gap:10px"><span style="width:32px;height:32px;border-radius:50%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/thyao_icon.png" alt="THYAO" loading="lazy" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div style="font-weight:700;font-family:monospace;font-size:13px;letter-spacing:.02em;color:#F3F7FA">THYAO</div><div style="font-size:11px;color:#8B98A9;margin-top:1px">Türk Hava Yolları</div></span></div><div class="fp-val in" style="color:#00B56E;font-family:monospace;font-weight:700">+4.250,0</div><div class="fp-pct" style="font-family:monospace;color:#8B98A9">%38,2</div></div>
+<div class="fp-row"><div class="fp-name" style="display:flex;align-items:center;gap:10px"><span style="width:32px;height:32px;border-radius:50%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/akbnk_icon.png" alt="AKBNK" loading="lazy" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div style="font-weight:700;font-family:monospace;font-size:13px;letter-spacing:.02em;color:#F3F7FA">AKBNK</div><div style="font-size:11px;color:#8B98A9;margin-top:1px">Akbank</div></span></div><div class="fp-val in" style="color:#00B56E;font-family:monospace;font-weight:700">+1.950,0</div><div class="fp-pct" style="font-family:monospace;color:#8B98A9">%17,5</div></div>
+<div class="fp-row"><div class="fp-name" style="display:flex;align-items:center;gap:10px"><span style="width:32px;height:32px;border-radius:50%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/garan_icon.png" alt="GARAN" loading="lazy" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div style="font-weight:700;font-family:monospace;font-size:13px;letter-spacing:.02em;color:#F3F7FA">GARAN</div><div style="font-size:11px;color:#8B98A9;margin-top:1px">Garanti BBVA</div></span></div><div class="fp-val in" style="color:#00B56E;font-family:monospace;font-weight:700">+1.125,0</div><div class="fp-pct" style="font-family:monospace;color:#8B98A9">%10,1</div></div>
+<div class="fp-row"><div class="fp-name" style="display:flex;align-items:center;gap:10px"><span style="width:32px;height:32px;border-radius:50%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/sise_icon.png" alt="SISE" loading="lazy" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div style="font-weight:700;font-family:monospace;font-size:13px;letter-spacing:.02em;color:#F3F7FA">SISE</div><div style="font-size:11px;color:#8B98A9;margin-top:1px">Şişecam</div></span></div><div class="fp-val in" style="color:#00B56E;font-family:monospace;font-weight:700">+850,0</div><div class="fp-pct" style="font-family:monospace;color:#8B98A9">%7,6</div></div>
+<div class="fp-row"><div class="fp-name" style="display:flex;align-items:center;gap:10px"><span style="width:32px;height:32px;border-radius:50%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/asels_icon.png" alt="ASELS" loading="lazy" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div style="font-weight:700;font-family:monospace;font-size:13px;letter-spacing:.02em;color:#F3F7FA">ASELS</div><div style="font-size:11px;color:#8B98A9;margin-top:1px">Aselsan</div></span></div><div class="fp-val in" style="color:#00B56E;font-family:monospace;font-weight:700">+620,0</div><div class="fp-pct" style="font-family:monospace;color:#8B98A9">%5,6</div></div>
+<div class="fp-row"><div class="fp-name" style="display:flex;align-items:center;gap:10px"><span style="width:32px;height:32px;border-radius:50%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/kchol_icon.png" alt="KCHOL" loading="lazy" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div style="font-weight:700;font-family:monospace;font-size:13px;letter-spacing:.02em;color:#F3F7FA">KCHOL</div><div style="font-size:11px;color:#8B98A9;margin-top:1px">Koç Holding</div></span></div><div class="fp-val in" style="color:#00B56E;font-family:monospace;font-weight:700">+480,0</div><div class="fp-pct" style="font-family:monospace;color:#8B98A9">%4,3</div></div>
+<div class="fp-row"><div class="fp-name" style="display:flex;align-items:center;gap:10px"><span style="width:32px;height:32px;border-radius:50%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/sahol_icon.png" alt="SAHOL" loading="lazy" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div style="font-weight:700;font-family:monospace;font-size:13px;letter-spacing:.02em;color:#F3F7FA">SAHOL</div><div style="font-size:11px;color:#8B98A9;margin-top:1px">Sabancı Holding</div></span></div><div class="fp-val in" style="color:#00B56E;font-family:monospace;font-weight:700">+318,0</div><div class="fp-pct" style="font-family:monospace;color:#8B98A9">%2,9</div></div>
+<div class="fp-row"><div class="fp-name" style="display:flex;align-items:center;gap:10px"><span style="width:32px;height:32px;border-radius:50%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/enkai_icon.png" alt="ENKAI" loading="lazy" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div style="font-weight:700;font-family:monospace;font-size:13px;letter-spacing:.02em;color:#F3F7FA">ENKAI</div><div style="font-size:11px;color:#8B98A9;margin-top:1px">Enka İnşaat</div></span></div><div class="fp-val in" style="color:#00B56E;font-family:monospace;font-weight:700">+245,0</div><div class="fp-pct" style="font-family:monospace;color:#8B98A9">%2,2</div></div>
+<div class="fp-row"><div class="fp-name" style="display:flex;align-items:center;gap:10px"><span style="width:32px;height:32px;border-radius:50%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/tuprs_icon.png" alt="TUPRS" loading="lazy" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div style="font-weight:700;font-family:monospace;font-size:13px;letter-spacing:.02em;color:#F3F7FA">TUPRS</div><div style="font-size:11px;color:#8B98A9;margin-top:1px">Tüpraş</div></span></div><div class="fp-val in" style="color:#00B56E;font-family:monospace;font-weight:700">+180,0</div><div class="fp-pct" style="font-family:monospace;color:#8B98A9">%1,6</div></div>
+<div class="fp-row"><div class="fp-name" style="display:flex;align-items:center;gap:10px"><span style="width:32px;height:32px;border-radius:50%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/froto_icon.png" alt="FROTO" loading="lazy" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div style="font-weight:700;font-family:monospace;font-size:13px;letter-spacing:.02em;color:#F3F7FA">FROTO</div><div style="font-size:11px;color:#8B98A9;margin-top:1px">Ford Otosan</div></span></div><div class="fp-val in" style="color:#00B56E;font-family:monospace;font-weight:700">+148,0</div><div class="fp-pct" style="font-family:monospace;color:#8B98A9">%1,3</div></div>
+</div>
+</div>
+<!-- Yabancı Çıkışı -->
+<div class="flow-panel red">
+<div class="fp-head">
+<div class="fp-title"><span class="fp-dot red"></span>Yabancı Çıkışı</div>
+<span class="fp-unit">Milyon TL</span>
+</div>
+<div class="fp-body">
+<div class="fp-col-head"><span>Hisse</span><span>Tutar</span><span>Pay (%)</span></div>
+<div class="fp-row"><div class="fp-name" style="display:flex;align-items:center;gap:10px"><span style="width:32px;height:32px;border-radius:50%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/eregl_icon.png" alt="EREGL" loading="lazy" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div style="font-weight:700;font-family:monospace;font-size:13px;letter-spacing:.02em;color:#F3F7FA">EREGL</div><div style="font-size:11px;color:#8B98A9;margin-top:1px">Ereğli Demir Çelik</div></span></div><div class="fp-val out" style="color:#E04F5F;font-family:monospace;font-weight:700">−2.310,0</div><div class="fp-pct" style="font-family:monospace;color:#8B98A9">%43,5</div></div>
+<div class="fp-row"><div class="fp-name" style="display:flex;align-items:center;gap:10px"><span style="width:32px;height:32px;border-radius:50%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/bimas_icon.png" alt="BIMAS" loading="lazy" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div style="font-weight:700;font-family:monospace;font-size:13px;letter-spacing:.02em;color:#F3F7FA">BIMAS</div><div style="font-size:11px;color:#8B98A9;margin-top:1px">BİM Mağazalar</div></span></div><div class="fp-val out" style="color:#E04F5F;font-family:monospace;font-weight:700">−1.275,0</div><div class="fp-pct" style="font-family:monospace;color:#8B98A9">%24,0</div></div>
+<div class="fp-row"><div class="fp-name" style="display:flex;align-items:center;gap:10px"><span style="width:32px;height:32px;border-radius:50%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/petkm_icon.png" alt="PETKM" loading="lazy" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div style="font-weight:700;font-family:monospace;font-size:13px;letter-spacing:.02em;color:#F3F7FA">PETKM</div><div style="font-size:11px;color:#8B98A9;margin-top:1px">Petkim</div></span></div><div class="fp-val out" style="color:#E04F5F;font-family:monospace;font-weight:700">−480,0</div><div class="fp-pct" style="font-family:monospace;color:#8B98A9">%9,0</div></div>
+<div class="fp-row"><div class="fp-name" style="display:flex;align-items:center;gap:10px"><span style="width:32px;height:32px;border-radius:50%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/ykbnk_icon.png" alt="YKBNK" loading="lazy" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div style="font-weight:700;font-family:monospace;font-size:13px;letter-spacing:.02em;color:#F3F7FA">YKBNK</div><div style="font-size:11px;color:#8B98A9;margin-top:1px">Yapı Kredi</div></span></div><div class="fp-val out" style="color:#E04F5F;font-family:monospace;font-weight:700">−362,0</div><div class="fp-pct" style="font-family:monospace;color:#8B98A9">%6,8</div></div>
+<div class="fp-row"><div class="fp-name" style="display:flex;align-items:center;gap:10px"><span style="width:32px;height:32px;border-radius:50%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/toaso_icon.png" alt="TOASO" loading="lazy" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div style="font-weight:700;font-family:monospace;font-size:13px;letter-spacing:.02em;color:#F3F7FA">TOASO</div><div style="font-size:11px;color:#8B98A9;margin-top:1px">Tofaş</div></span></div><div class="fp-val out" style="color:#E04F5F;font-family:monospace;font-weight:700">−248,0</div><div class="fp-pct" style="font-family:monospace;color:#8B98A9">%4,7</div></div>
+<div class="fp-row"><div class="fp-name" style="display:flex;align-items:center;gap:10px"><span style="width:32px;height:32px;border-radius:50%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/kontr_icon.png" alt="KONTR" loading="lazy" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div style="font-weight:700;font-family:monospace;font-size:13px;letter-spacing:.02em;color:#F3F7FA">KONTR</div><div style="font-size:11px;color:#8B98A9;margin-top:1px">Kontrolmatik</div></span></div><div class="fp-val out" style="color:#E04F5F;font-family:monospace;font-weight:700">−195,0</div><div class="fp-pct" style="font-family:monospace;color:#8B98A9">%3,7</div></div>
+<div class="fp-row"><div class="fp-name" style="display:flex;align-items:center;gap:10px"><span style="width:32px;height:32px;border-radius:50%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/mgros_icon.png" alt="MGROS" loading="lazy" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div style="font-weight:700;font-family:monospace;font-size:13px;letter-spacing:.02em;color:#F3F7FA">MGROS</div><div style="font-size:11px;color:#8B98A9;margin-top:1px">Migros</div></span></div><div class="fp-val out" style="color:#E04F5F;font-family:monospace;font-weight:700">−150,0</div><div class="fp-pct" style="font-family:monospace;color:#8B98A9">%2,8</div></div>
+<div class="fp-row"><div class="fp-name" style="display:flex;align-items:center;gap:10px"><span style="width:32px;height:32px;border-radius:50%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/pgsus_icon.png" alt="PGSUS" loading="lazy" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div style="font-weight:700;font-family:monospace;font-size:13px;letter-spacing:.02em;color:#F3F7FA">PGSUS</div><div style="font-size:11px;color:#8B98A9;margin-top:1px">Pegasus</div></span></div><div class="fp-val out" style="color:#E04F5F;font-family:monospace;font-weight:700">−130,0</div><div class="fp-pct" style="font-family:monospace;color:#8B98A9">%2,4</div></div>
+<div class="fp-row"><div class="fp-name" style="display:flex;align-items:center;gap:10px"><span style="width:32px;height:32px;border-radius:50%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/isctr_icon.png" alt="ISCTR" loading="lazy" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div style="font-weight:700;font-family:monospace;font-size:13px;letter-spacing:.02em;color:#F3F7FA">ISCTR</div><div style="font-size:11px;color:#8B98A9;margin-top:1px">İş Bankası</div></span></div><div class="fp-val out" style="color:#E04F5F;font-family:monospace;font-weight:700">−85,0</div><div class="fp-pct" style="font-family:monospace;color:#8B98A9">%1,6</div></div>
+<div class="fp-row"><div class="fp-name" style="display:flex;align-items:center;gap:10px"><span style="width:32px;height:32px;border-radius:50%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)"><img src="https://storage.fintables.com/media/uploads/company-logos/arclk_icon.png" alt="ARCLK" loading="lazy" style="width:100%;height:100%;object-fit:cover" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://web-api.forinvestcdn.com/definitions/icon?code='+this.alt}else{this.style.display='none'}"></span><span><div style="font-weight:700;font-family:monospace;font-size:13px;letter-spacing:.02em;color:#F3F7FA">ARCLK</div><div style="font-size:11px;color:#8B98A9;margin-top:1px">Arçelik</div></span></div><div class="fp-val out" style="color:#E04F5F;font-family:monospace;font-weight:700">−68,0</div><div class="fp-pct" style="font-family:monospace;color:#8B98A9">%1,3</div></div>
+</div>
+</div>
+</div>
+
+
+</div>
+</div>
+</main>
+<!-- FOOTER -->
+  <footer style="background: #08121E; border-top: 1px solid rgba(255,255,255,0.08); padding: 40px 20px 25px 20px; width: 100%; margin-top: 50px;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 25px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 20px;">
+        <div>
+          <div style="font-size: 20px; font-weight: 800; color: #C8A96B; letter-spacing: 0.5px;">BORSA KAYNAK</div>
+          <div style="font-size: 13px; color: #D0DCEB; margin-top: 4px;">Türkiye Canlı BİST Borsa İstanbul Piyasa Verileri ve Analiz Portalı</div>
+        </div>
+        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+          <a href="index.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Anasayfa</a>
+          <a href="piyasalar.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Piyasalar</a>
+          <a href="bist-liderler.html" style="color: #C8A96B; text-decoration: none; font-size: 13px; font-weight: 700;">🔥 BİST Liderler</a>
+          <a href="radar.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Radar</a>
+          <a href="bist-tum-enstrumanlar.html" style="color: #D0DCEB; text-decoration: none; font-size: 13px; font-weight: 600;">Tüm Enstrümanlar</a>
+          <a href="veri-dogrulama.html" style="color: #00B56E; text-decoration: none; font-size: 13px; font-weight: 700;">🔍 Veri Doğrulama</a>
+          <a href="karsilastirma-kontrol.html" style="color: #C8A96B; text-decoration: none; font-size: 13px; font-weight: 700;">📊 TV Karşılaştırma</a>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 12px; color: #8B98A9;">
+        <div>© 2026 BorsaKaynak. Tüm hakları saklıdır. Veriler 0ms gecikmeli canlı seans akışıdır.</div>
+        <div>Yasal Uyarı: Burada yer alan yatırım bilgi, yorum ve tavsiyeleri yatırım danışmanlığı kapsamında değildir.</div>
+      </div>
+    </div>
+  </footer>
+
+
+
+<!-- MODAL -->
+<div class="premium-modal" id="notifyModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px">
+<div class="premium-modal__box">
+<button class="premium-btn premium-close" data-close-modal="">&#10005;</button>
+<h2>Bildirim Merkezi</h2>
+<p>Analiz güncellemelerinde bildirim almak için tercihlerinizi seçin.</p>
+<button class="premium-btn gold" data-close-modal="">Kaydet</button>
+</div>
+</div>
+
+<script>
+function shadeColor(color, percent) {
+  var R = parseInt(color.substring(1,3),16);
+  var G = parseInt(color.substring(3,5),16);
+  var B = parseInt(color.substring(5,7),16);
+  R = parseInt(R * (100 + percent) / 100);
+  G = parseInt(G * (100 + percent) / 100);
+  B = parseInt(B * (100 + percent) / 100);
+  R = (R<255)?R:255; G = (G<255)?G:255; B = (B<255)?B:255;
+  R = Math.max(0,R); G = Math.max(0,G); B = Math.max(0,B);
+  var RR = ((R.toString(16).length==1)?"0"+R.toString(16):R.toString(16));
+  var GG = ((G.toString(16).length==1)?"0"+G.toString(16):G.toString(16));
+  var BB = ((B.toString(16).length==1)?"0"+B.toString(16):B.toString(16));
+  return "#"+RR+GG+BB;
+}
+
+
+
+// Tema
+var _st=localStorage.getItem("piyasalarTheme");
+if(_st==="light")document.body.classList.add("premium-light");
+document.querySelectorAll("[data-theme-toggle]").forEach(function(b){
+  b.addEventListener("click",function(){
+    document.body.classList.toggle("premium-light");
+    localStorage.setItem("piyasalarTheme",document.body.classList.contains("premium-light")?"light":"dark");
+  });
+});
+
+// Modal
+document.querySelectorAll("[data-close-modal],.premium-modal").forEach(function(el){
+  el.addEventListener("click",function(e){
+    if(e.target===el||e.target.hasAttribute("data-close-modal"))
+      el.closest(".premium-modal").classList.remove("open");
+  });
+});
+
+</script>
+<script src="bk-live.js" defer></script>
+<script>
+// Site geneli arama kutusu: Enter'a basilinca piyasalar.html'e yonlendirir.
+(function(){
+  document.querySelectorAll('[data-premium-search]').forEach(function(inp){
+    inp.addEventListener('keydown', function(e){
+      if (e.key === 'Enter') {
+        var q = inp.value.trim();
+        if (q) window.location.href = 'piyasalar.html?q=' + encodeURIComponent(q);
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
